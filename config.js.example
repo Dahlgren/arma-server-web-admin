@@ -1,0 +1,3 @@
+module.exports = {
+  path: 'path-to-arma3-directory'
+};

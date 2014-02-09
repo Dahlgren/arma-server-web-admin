@@ -1,0 +1,9 @@
+{
+  "name": "arma3-server-management",
+  "description": "ArmA3 Server Management Backbone.js App",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x"
+  }
+}
