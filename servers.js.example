@@ -1,4 +1,0 @@
-module.exports = [
-  {name: "first-server"},
-  {name: "second-server"}
-];

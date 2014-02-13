@@ -1,10 +1,13 @@
 var express = require('express'),
-    fs = require('fs');
+    fs = require('fs'),
+    slug = require('slug');
 
 var config = require('./config'),
+    Manager = require('./manager'),
     servers = require('./servers');
 
 var app = express();
+var manager = new Manager();
 
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
@@ -39,7 +42,19 @@ app.get('/api/mods', function (req, res){
 });
 
 app.get('/api/servers', function (req, res){
-  res.send(servers);
+  res.send(manager.servers);
+});
+
+app.post('/api/servers', function (req, res){
+  var title = req.body.title;
+  var id = slug(title);
+  manager.addServer(id, title);
+  res.send(manager.servers);
+});
+
+app.get('/api/servers/:id/start', function (req, res){
+  manager.runServer();
+  res.send({status:"ok"});
 });
 
 app.get('/api/settings', function (req, res){
