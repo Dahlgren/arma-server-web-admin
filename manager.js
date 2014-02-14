@@ -47,7 +47,9 @@ function Manager() {
 Manager.prototype.addServer = (function (id, title) {
   mods = [];
   port = 2302;
-  this.servers.push(new Server(id, title, port, mods));
+  var server = new Server(id, title, port, mods)
+  this.servers.push(server);
+  return server;
 });
 
 module.exports = Manager;

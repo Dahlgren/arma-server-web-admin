@@ -47,8 +47,7 @@ app.get('/api/servers', function (req, res){
 app.post('/api/servers', function (req, res){
   var title = req.body.title;
   var id = slug(title);
-  manager.addServer(id, title);
-  res.send(manager.servers);
+  res.send(manager.addServer(id, title));
 });
 
 app.get('/api/servers/:id/start', function (req, res){

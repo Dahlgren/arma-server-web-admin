@@ -9,7 +9,8 @@ define(function (require) {
   return Backbone.Model.extend({
     defaults: {
       title: ''
-    }
+    },
+    url: '/api/servers'
   });
   
 });

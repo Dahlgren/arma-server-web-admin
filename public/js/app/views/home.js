@@ -21,7 +21,7 @@ define(function (require) {
     },
     
     addServer: function () {
-      var view = new AddServerView();
+      var view = new AddServerView({servers: this.servers});
       new Backbone.BootstrapModal({ content: view, servers: this.servers }).open()
     },
   });
