@@ -3,8 +3,7 @@ var express = require('express'),
     slug = require('slug');
 
 var config = require('./config'),
-    Manager = require('./manager'),
-    servers = require('./servers');
+    Manager = require('./manager');
 
 var app = express();
 var manager = new Manager();
