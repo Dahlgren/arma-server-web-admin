@@ -8,13 +8,25 @@ exports.index = function(req, res){
     if (err) {
       res.send(err);
     } else {
-      res.send(files);
+      var missions = files.map(function (filename) {
+        return { name: filename }
+      });
+      res.send(missions);
     }
   });
 };
 
 exports.create = function(req, res){
   res.send('create mission');
+  
+  var missionFile = req.files.mission;
+  
+  fs.readFile(missionFile.path, function (err, data) {
+    var newPath = config.path + '/mpmissions' + missionFile.name;
+    fs.writeFile(newPath, data, function (err) {
+      res.json(missionFile);
+    });
+  });
 };
 
 exports.show = function(req, res){

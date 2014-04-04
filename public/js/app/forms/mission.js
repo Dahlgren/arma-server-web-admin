@@ -15,16 +15,17 @@ define(function (require) {
     
     fields: {
       path: {
-        el: ".path",
-        required: "Please enter a valid path.",
-        validations: {
-          email: "Please enter a valid path."
-        }
+        el: ".mission",
+        required: "Please select a file."
       }
     },
     
     initialize: function () {
       var self = this;
+      new Mission().fetch({success: function (model, response, options) {
+        self.model = model;
+        self.runInitializers();
+      }});
     }
   });
   
