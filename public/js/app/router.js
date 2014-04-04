@@ -45,7 +45,7 @@ define(function (require) {
     },
     
     server: function () {
-      layoutView.content.show(new ServerView());
+      layoutView.content.show(new ServerView({model: servers.first()}));
     }
     
   });
