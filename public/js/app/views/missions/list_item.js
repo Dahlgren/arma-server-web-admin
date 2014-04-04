@@ -11,7 +11,7 @@ define(function (require) {
       template = _.template(tpl);
   
   return Marionette.ItemView.extend({
-    tagName: "li",
+    tagName: "td",
     template: template
   });
 });

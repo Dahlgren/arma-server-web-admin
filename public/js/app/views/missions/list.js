@@ -6,10 +6,14 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      ListItemView        = require('app/views/missions/list_item');
+      ListItemView        = require('app/views/missions/list_item'),
+      tpl                 = require('text!tpl/missions/list.html'),
+      
+      template = _.template(tpl);
   
-  return Marionette.CollectionView.extend({
-    tagName: 'ul',
+  return Marionette.CompositeView.extend({
     itemView: ListItemView,
+    itemViewContainer: "tbody",
+    template: template,
   });
 });
