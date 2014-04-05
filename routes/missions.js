@@ -17,12 +17,11 @@ exports.index = function(req, res){
 };
 
 exports.create = function(req, res){
-  res.send('create mission');
-  
   var missionFile = req.files.mission;
   
   fs.readFile(missionFile.path, function (err, data) {
-    var newPath = config.path + '/mpmissions' + missionFile.name;
+    var newPath = config.path + '/mpmissions/' + missionFile.name;
+    console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
       res.json(missionFile);
     });
