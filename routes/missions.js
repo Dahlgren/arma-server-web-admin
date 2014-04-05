@@ -20,7 +20,7 @@ exports.create = function(req, res){
   var missionFile = req.files.mission;
 
   fs.readFile(missionFile.path, function (err, data) {
-    var newPath = config.path + '/mpmissions/' + missionFile.name;
+    var newPath = config.path + '/mpmissions/' + missionFile.name.toLowerCase();
     fs.writeFile(newPath, data, function (err) {
       res.json(missionFile);
     });
