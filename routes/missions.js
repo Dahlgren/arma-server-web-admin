@@ -21,7 +21,6 @@ exports.create = function(req, res){
 
   fs.readFile(missionFile.path, function (err, data) {
     var newPath = config.path + '/mpmissions/' + missionFile.name;
-    console.log(newPath);
     fs.writeFile(newPath, data, function (err) {
       res.json(missionFile);
     });
@@ -29,7 +28,13 @@ exports.create = function(req, res){
 };
 
 exports.show = function(req, res){
-  res.send('download mission ' + req.params.mission);
+  var path = config.path + '/mpmissions/' + req.params.mission;
+
+  if (req.params.format) {
+    path += '.' + req.params.format;
+  }
+
+  res.download(path);
 };
 
 exports.destroy = function(req, res){
