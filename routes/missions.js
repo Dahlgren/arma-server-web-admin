@@ -18,7 +18,7 @@ exports.index = function(req, res){
 
 exports.create = function(req, res){
   var missionFile = req.files.mission;
-  
+
   fs.readFile(missionFile.path, function (err, data) {
     var newPath = config.path + '/mpmissions/' + missionFile.name;
     console.log(newPath);
@@ -33,5 +33,17 @@ exports.show = function(req, res){
 };
 
 exports.destroy = function(req, res){
-  res.send('destroy mission ' + req.params.mission);
+  var path = config.path + '/mpmissions/' + req.params.mission;
+
+  if (req.params.format) {
+    path += '.' + req.params.format;
+  }
+
+  fs.unlink(path, function (err) {
+    if (err) {
+      res.json(500, {success: false});
+    } else {
+      res.json({success: true});
+    }
+  });
 };
