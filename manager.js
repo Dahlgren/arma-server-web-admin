@@ -102,7 +102,7 @@ function Manager() {
 Manager.prototype.addServer = (function (id, title) {
   mods = [];
   port = 2302;
-  var server = this._addServer(id, title, mods, port);
+  var server = this._addServer(id, title, port, mods);
   this.save();
   return server;
 });
