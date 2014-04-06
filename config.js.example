@@ -1,3 +1,4 @@
 module.exports = {
-  path: 'path-to-arma3-directory'
+  path: 'path-to-arma3-directory',
+  type: 'linux', // Can be either linux, windows or wine
 };

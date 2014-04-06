@@ -12,7 +12,11 @@ function Server(id, title, port, mods) {
 }
 
 Server.prototype.armaServerPath = function() {
-  return config.path + '/arma3server';
+  if (config.type === "linux") {
+    return config.path + '/arma3server';
+  }
+
+  return config.path + '/arma3server.exe';
 }
 
 Server.prototype.makeModsParameter = function() {
@@ -24,10 +28,27 @@ Server.prototype.makePortParameter = function() {
 }
 
 Server.prototype.start = function() {
-  var mods = this.makeModsParameter();
-  var port = this.makePortParameter();
+  var startParams = [];
+  var gamePath = this.armaServerPath();
 
-  var process = spawn(this.armaServerPath(), [mods, port, '-config=server.cfg', '-noSound', '-world=empty']);
+  if (config.type === "wine") {
+    gamePath = "wine";
+    startParams.push(this.armaServerPath());
+  }
+
+  startParams.push(this.makePortParameter());
+  startParams.push('-config=server.cfg');
+  startParams.push('-noSound');
+  startParams.push('-world=empty');
+
+  if (this.mods.length) {
+    startParams.push(this.makeModsParameter());
+  }
+
+  console.log(gamePath);
+  console.log(startParams);
+
+  var process = spawn(gamePath, startParams);
   var self = this;
 
   process.stdout.on('data', function (data) {
