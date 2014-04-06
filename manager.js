@@ -1,6 +1,8 @@
-var spawn = require('child_process').spawn;
+var fs = require('fs'),
+    spawn = require('child_process').spawn;
 
 var config = require('./config');
+var filePath = "servers.json";
 
 function Server(id, title, port, mods) {
   this.id = id;
@@ -42,10 +44,17 @@ Server.prototype.start = function() {
 
 function Manager() {
   this.serversArr = [];
-  this.serversHash = {}
+  this.serversHash = {};
+  this.load();
 };
 
 Manager.prototype.addServer = (function (id, title) {
+  var server = this._addServer(id, title);
+  this.save();
+  return server;
+});
+
+Manager.prototype._addServer = (function (id, title) {
   mods = [];
   port = 2302;
   var server = new Server(id, title, port, mods)
@@ -60,6 +69,27 @@ Manager.prototype.getServer = (function (id) {
 
 Manager.prototype.getServers = (function () {
   return this.serversArr;
+});
+
+Manager.prototype.load = (function () {
+  var self = this;
+
+  fs.readFile(filePath, function (err, data) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+
+    JSON.parse(data).forEach(function (server) {
+      self._addServer(server.id, server.title);
+    });
+  });
+});
+
+Manager.prototype.save = (function () {
+  fs.writeFile(filePath, JSON.stringify(this.serversArr), function(err) {
+    if(err) throw err;
+  });
 });
 
 module.exports = Manager;

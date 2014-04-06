@@ -2,3 +2,4 @@ node_modules
 
 # Project stuff
 config.js
+servers.json
