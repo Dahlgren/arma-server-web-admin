@@ -49,14 +49,19 @@ define(function (require) {
       layoutView.content.show(missionsListView);
       missionsListView.delegateEvents();
     },
-    
+
     mods: function () {
       layoutView.content.show(modsListView);
       modsListView.delegateEvents();
     },
 
     server: function (id) {
-      layoutView.content.show(new ServerView({model: servers.get(id)}));
+      var server = servers.get(id);
+      if (server) {
+        layoutView.content.show(new ServerView({model: server}));
+      } else {
+        this.navigate("#", true)
+      }
     }
 
   });
