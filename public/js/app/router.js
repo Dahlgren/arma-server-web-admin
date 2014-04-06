@@ -1,7 +1,7 @@
 define(function (require) {
-  
+
   "use strict";
-  
+
   var $               = require('jquery'),
       Backbone        = require('backbone'),
       LayoutView      = require('app/views/layout'),
@@ -13,7 +13,7 @@ define(function (require) {
       Missions        = require('app/collections/missions'),
       Mods            = require('app/collections/mods'),
       Servers         = require('app/collections/servers'),
-      
+
       $body = $('body'),
       missions = new Missions(),
       mods = new Mods(),
@@ -23,28 +23,28 @@ define(function (require) {
       homeView = new HomeView({servers: servers}),
       missionsListView = new MissionsListView({collection: missions}),
       modsListView = new ModsListView({collection: mods});
-  
+
   return Backbone.Router.extend({
-    
+
     routes: {
       "missions": "missions",
       "mods": "mods",
       "servers/:id": "server",
       "": "home",
     },
-    
+
     initialize: function () {
       layoutView.navigation.show(navigationView);
       missions.fetch();
       mods.fetch();
       servers.fetch();
     },
-    
+
     home: function () {
       layoutView.content.show(homeView);
       homeView.delegateEvents();
     },
-    
+
     missions: function () {
       layoutView.content.show(missionsListView);
       missionsListView.delegateEvents();
@@ -54,11 +54,11 @@ define(function (require) {
       layoutView.content.show(modsListView);
       modsListView.delegateEvents();
     },
-    
-    server: function () {
-      layoutView.content.show(new ServerView({model: servers.first()}));
+
+    server: function (id) {
+      layoutView.content.show(new ServerView({model: servers.get(id)}));
     }
-    
+
   });
-  
+
 });

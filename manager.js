@@ -41,15 +41,25 @@ Server.prototype.start = function() {
 }
 
 function Manager() {
-  this.servers = [];
+  this.serversArr = [];
+  this.serversHash = {}
 };
 
 Manager.prototype.addServer = (function (id, title) {
   mods = [];
   port = 2302;
   var server = new Server(id, title, port, mods)
-  this.servers.push(server);
+  this.serversArr.push(server);
+  this.serversHash[id] = server;
   return server;
+});
+
+Manager.prototype.getServer = (function (id) {
+  return this.serversHash[id];
+});
+
+Manager.prototype.getServers = (function () {
+  return this.serversArr;
 });
 
 module.exports = Manager;

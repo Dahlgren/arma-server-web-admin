@@ -11,15 +11,14 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(__dirname + '/public'));
 
+var servers = require('./routes/servers');
+
 app.resource('api/missions', require('./routes/missions'));
 app.resource('api/mods', require('./routes/mods'));
-app.resource('api/servers', require('./routes/servers'));
+app.resource('api/servers', servers);
 app.resource('api/settings', require('./routes/settings'));
 
-app.get('/api/servers/:id/start', function (req, res){
-  manager.runServer();
-  res.send({status:"ok"});
-});
+app.get('/api/servers/:server/start', servers.start);
 
 app.get('/', function (req, res){
   res.sendfile(__dirname + '/public/index.html');
