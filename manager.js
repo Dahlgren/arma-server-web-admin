@@ -79,14 +79,14 @@ function Manager() {
 };
 
 Manager.prototype.addServer = (function (id, title) {
-  var server = this._addServer(id, title);
+  mods = [];
+  port = 2302;
+  var server = this._addServer(id, title, mods, port);
   this.save();
   return server;
 });
 
-Manager.prototype._addServer = (function (id, title) {
-  mods = [];
-  port = 2302;
+Manager.prototype._addServer = (function (id, title, port, mods) {
   var server = new Server(id, title, port, mods)
   this.serversArr.push(server);
   this.serversHash[id] = server;
@@ -111,7 +111,7 @@ Manager.prototype.load = (function () {
     }
 
     JSON.parse(data).forEach(function (server) {
-      self._addServer(server.id, server.title);
+      self._addServer(server.id, server.title, server.port, server.mods);
     });
   });
 });
