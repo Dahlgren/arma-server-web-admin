@@ -5,7 +5,18 @@ var Manager = require('./../manager');
 var manager = new Manager();
 
 exports.index = function (req, res){
-  res.send(manager.getServers());
+  var servers = [];
+
+  manager.getServers().forEach(function (server) {
+    servers.push({
+      id: server.id,
+      title: server.title,
+      port: server.port,
+      mods: server.mods,
+    })
+  });
+
+  res.send(servers);
 };
 
 exports.create = function (req, res){
@@ -29,5 +40,16 @@ exports.destroy = function(req, res){
 exports.start = function (req, res){
   var server = manager.getServer(req.params.server);
   server.start();
-  res.send({status:"ok"});
+  res.send({status:"ok", pid: server.pid});
+};
+
+exports.stop = function (req, res){
+  var server = manager.getServer(req.params.server);
+  server.stop(function () {
+    if (!server.pid) {
+      res.send({status: true, pid: server.pid});
+    } else {
+      res.send({status: false, pid: server.pid});
+    }
+  });
 };

@@ -27,19 +27,49 @@ Server.prototype.start = function() {
   var mods = this.makeModsParameter();
   var port = this.makePortParameter();
 
-  var server = spawn(this.armaServerPath(), [mods, port, '-config=server.cfg', '-noSound', '-world=empty']);
+  var process = spawn(this.armaServerPath(), [mods, port, '-config=server.cfg', '-noSound', '-world=empty']);
+  var self = this;
 
-  server.stdout.on('data', function (data) {
+  process.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
 
-  server.stderr.on('data', function (data) {
+  process.stderr.on('data', function (data) {
     console.log('stderr: ' + data);
   });
 
-  server.on('close', function (code) {
+  process.on('close', function (code) {
     console.log('child process exited with code ' + code);
+    self.pid = null;
+    self.process = null;
   });
+
+  this.pid = process.pid;
+  this.process = process;
+
+  return this;
+}
+
+Server.prototype.stop = function(cb) {
+  var handled = false;
+
+  this.process.on('close', function (code) {
+    if (!handled) {
+      handled = true;
+      cb();
+    }
+  });
+
+  this.process.kill();
+
+  setTimeout(function() {
+    if (!handled) {
+      handled = true;
+      cb();
+    }
+  }, 5000);
+
+  return this;
 }
 
 function Manager() {
@@ -87,7 +117,18 @@ Manager.prototype.load = (function () {
 });
 
 Manager.prototype.save = (function () {
-  fs.writeFile(filePath, JSON.stringify(this.serversArr), function(err) {
+  var data = [];
+
+  this.serversArr.forEach(function (server) {
+    data.push({
+      id: server.id,
+      title: server.title,
+      port: server.port,
+      mods: server.mods,
+    })
+  });
+
+  fs.writeFile(filePath, JSON.stringify(data), function(err) {
     if(err) throw err;
   });
 });

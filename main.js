@@ -19,6 +19,7 @@ app.resource('api/servers', servers);
 app.resource('api/settings', require('./routes/settings'));
 
 app.get('/api/servers/:server/start', servers.start);
+app.get('/api/servers/:server/stop', servers.stop);
 
 app.get('/', function (req, res){
   res.sendfile(__dirname + '/public/index.html');

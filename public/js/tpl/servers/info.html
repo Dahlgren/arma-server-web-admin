@@ -1,1 +1,7 @@
-<a class="btn btn-primary" href="#" id="start">Start</a>
+<% if (typeof(pid) != "undefined" && pid) { %>
+  Server is running as <%= pid %>
+
+  <a class="btn btn-primary" href="#" id="stop">Stop</a>
+<% } else { %>
+  <a class="btn btn-primary" href="#" id="start">Start</a>
+<% } %>
