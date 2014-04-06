@@ -25,6 +25,10 @@ define(function (require) {
     
     initialize: function () {
       var self = this;
+      new Settings().fetch({success: function (model, response, options) {
+        self.model = model;
+        self.runInitializers();
+      }});
     }
   });
   
