@@ -13,7 +13,8 @@ exports.index = function (req, res){
       title: server.title,
       port: server.port,
       mods: server.mods,
-    })
+      pid: server.pid,
+    });
   });
 
   res.send(servers);
@@ -26,7 +27,14 @@ exports.create = function (req, res){
 };
 
 exports.show = function (req, res){
-  res.send(manager.getServer(req.params.server));
+  var server = manager.getServer(req.params.server)
+  res.send({
+    id: server.id,
+    title: server.title,
+    port: server.port,
+    mods: server.mods,
+    pid: server.pid,
+  });
 };
 
 exports.update = function(req, res){
