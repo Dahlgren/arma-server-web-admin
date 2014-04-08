@@ -15,8 +15,11 @@ var servers = require('./routes/servers');
 
 app.resource('api/missions', require('./routes/missions'));
 app.resource('api/mods', require('./routes/mods'));
-app.resource('api/servers', servers);
+var serversResource = app.resource('api/servers', servers);
 app.resource('api/settings', require('./routes/settings'));
+
+var gamespyResource = app.resource('gamespy', require('./routes/servers/gamespy'));
+serversResource.add(gamespyResource);
 
 app.get('/api/servers/:server/start', servers.start);
 app.get('/api/servers/:server/stop', servers.stop);

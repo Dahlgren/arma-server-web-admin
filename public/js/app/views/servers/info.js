@@ -6,14 +6,23 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
+      GamespyView         = require('app/views/servers/gamespy'),
       tpl                 = require('text!tpl/servers/info.html');
 
-  return Marionette.ItemView.extend({
+  return Marionette.Layout.extend({
     template: _.template(tpl),
+
+    regions: {
+      gamespyView: "#gamespy",
+    },
 
     events: {
       "click #start": "start",
       "click #stop": "stop",
+    },
+
+    onRender: function() {
+      this.gamespyView.show(new GamespyView({server: this.model}));
     },
 
     start: function (event) {
