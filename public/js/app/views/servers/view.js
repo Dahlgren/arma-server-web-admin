@@ -8,15 +8,15 @@ define(function (require) {
       Marionette          = require('marionette'),
       Mods                = require('app/collections/mods'),
       InfoView            = require('app/views/servers/info'),
-      ModsListView        = require('app/views/mods/list'),
+      ModsListView        = require('app/views/servers/mods/list'),
       tpl                 = require('text!tpl/servers/view.html');
 
   return Marionette.Layout.extend({
     template: _.template(tpl),
 
     regions: {
-      info: "#tab-info",
-      mods: "#tab-mods",
+      infoView: "#tab-info",
+      modsView: "#tab-mods",
       settings: "#tab-settings"
     },
 
@@ -24,9 +24,13 @@ define(function (require) {
       "click .nav-tabs a" : "tabs",
     },
 
+    initialize: function (options) {
+      this.mods = options.mods;
+    },
+
     onRender: function() {
-      this.info.show(new InfoView({model: this.model}));
-      this.mods.show(new ModsListView({collection: new Mods(this.model.get('mods'))}));
+      this.infoView.show(new InfoView({model: this.model}));
+      this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
     },
 
     tabs: function(e) {

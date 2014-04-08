@@ -30,7 +30,15 @@ exports.show = function (req, res){
 };
 
 exports.update = function(req, res){
-  res.send('update server ' + req.params.server);
+  var server = manager.getServer(req.params.server);
+
+  if (req.body.mods) {
+    server.mods = req.body.mods;
+  }
+
+  manager.save();
+
+  res.send(server);
 };
 
 exports.destroy = function(req, res){
