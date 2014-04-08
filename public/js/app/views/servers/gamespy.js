@@ -26,6 +26,7 @@ define(function (require) {
     },
 
     refresh: function () {
+      this.model.unset("error");
       if (this.options.server.get("pid")) {
         var self = this;
         this.model.fetch({
