@@ -6,7 +6,7 @@ define(function (require) {
       Backbone        = require('backbone'),
       LayoutView      = require('app/views/layout'),
       NavigationView  = require('app/views/navigation'),
-      HomeView        = require('app/views/home'),
+      ServersView     = require('app/views/servers/list'),
       MissionsListView= require('app/views/missions/list'),
       ModsListView    = require('app/views/mods/list'),
       ServerView      = require('app/views/servers/view'),
@@ -20,7 +20,7 @@ define(function (require) {
       servers = new Servers(),
       layoutView = new LayoutView({el: $body}).render(),
       navigationView = new NavigationView({servers: servers}),
-      homeView = new HomeView({servers: servers}),
+      serversView = new ServersView({collection: servers}),
       missionsListView = new MissionsListView({collection: missions}),
       modsListView = new ModsListView({collection: mods});
 
@@ -41,8 +41,8 @@ define(function (require) {
     },
 
     home: function () {
-      layoutView.content.show(homeView);
-      homeView.delegateEvents();
+      layoutView.content.show(serversView);
+      serversView.delegateEvents();
     },
 
     missions: function () {
