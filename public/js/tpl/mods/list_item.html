@@ -1,3 +1,9 @@
 <td>
   <a href='#mods/<%-name%>'><%-name%></a>
+  <% if (outdated) { %>
+    <a class="btn btn-primary btn-xs update pull-right">
+      <span class="glyphicon glyphicon-save"></span>
+      Update
+    </a>
+  <% } %>
 </td>

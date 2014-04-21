@@ -12,6 +12,23 @@ define(function (require) {
 
   return Marionette.ItemView.extend({
     tagName: "tr",
-    template: template
+    template: template,
+
+    events: {
+      "click .update": "update"
+    },
+
+    update: function (event) {
+      var self = this;
+      event.preventDefault();
+      $.ajax({
+        url: "/api/mods/" + this.model.get('name'),
+        type: 'PUT',
+        success: function (resp) {
+          self.trigger("mods:update", mods);
+        },
+        error: $.noop
+      });
+    },
   });
 });

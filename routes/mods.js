@@ -1,9 +1,14 @@
 var fs = require('fs')
 , path = require('path')
+, playwithsix = require('playwithsix')
 , when = require('when')
 , nodefn = require('when/node/function');
 
 var config = require('./../config');
+
+function downloadMod(mod, cb) {
+  playwithsix.downloadMod(config.path, mod, cb);
+}
 
 function walk (directory) {
   createFile = function (file, stat) {
@@ -49,10 +54,13 @@ exports.index = function(req, res){
     } else {
       var mods = files.filter(function (file) {
         return file.charAt(0) == "@";
-      }).map(function (mod) {
-        return { name: mod }
       });
-      res.send(mods);
+
+      playwithsix.checkOutdated(config.path, function (outdatedMods, err) {
+        res.send(mods.map(function (mod) {
+          return { name: mod, outdated: outdatedMods.indexOf(mod) >= 0 };
+        }));
+      });
     }
   });
 };
@@ -67,6 +75,16 @@ exports.show = function(req, res){
   }).otherwise(function(error) {
     console.error(error.stack || error);
     res.send({success: false});
+  });
+};
+
+exports.update = function(req, res){
+  downloadMod(req.params.mod, function (mods, err) {
+    if (mods && !err) {
+      res.send(mods);
+    } else {
+      res.send(500, err);
+    }
   });
 };
 

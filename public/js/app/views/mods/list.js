@@ -15,5 +15,13 @@ define(function (require) {
     itemView: ListItemView,
     itemViewContainer: "tbody",
     template: template,
+
+    initialize: function (options) {
+      this.on("itemview:mods:update", this.update, this);
+    },
+
+    update: function() {
+      this.collection.fetch();
+    },
   });
 });

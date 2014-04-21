@@ -9,6 +9,7 @@
     "express-resource": "~1.0.0",
     "when": "~3.1.0",
     "gamedig": "^0.2.4",
-    "ip": "^0.3.0"
+    "ip": "^0.3.0",
+    "playwithsix": "0.0.1"
   }
 }
