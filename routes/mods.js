@@ -66,7 +66,13 @@ exports.index = function(req, res){
 };
 
 exports.create = function(req, res){
-  res.send('create mod');
+  downloadMod(req.body.name, function (mods, err) {
+    if (mods && !err) {
+      res.send(mods);
+    } else {
+      res.send(500, err);
+    }
+  });
 };
 
 exports.show = function(req, res){
