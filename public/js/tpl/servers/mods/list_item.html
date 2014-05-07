@@ -1,4 +1,8 @@
 <td>
-  <input type="checkbox" value="<%-name%>" <%if (enabled) {%>checked<%}%>
-  <a href='#mods/<%-name%>'><%-name%></a>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" value="<%-name%>" <% if (enabled) { %>checked<% } %> >
+      <%-name%>
+    </label>
+  </div>
 </td>
