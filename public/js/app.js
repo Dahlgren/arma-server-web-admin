@@ -1,12 +1,12 @@
 require.config({
-  
+
   baseUrl: 'js/lib',
-  
+
   paths: {
     app: '../app',
     tpl: '../tpl'
   },
-  
+
   shim: {
     'backbone': {
       deps: ['underscore', 'jquery'],
@@ -17,6 +17,9 @@ require.config({
     },
     'bootstrap': {
       deps: ['jquery']
+    },
+    'ladda': {
+      deps: ['bootstrap']
     },
     'marionette': {
       deps: ['backbone'],

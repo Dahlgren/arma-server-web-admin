@@ -32,7 +32,7 @@ define(function (require) {
     download: function (event) {
       event.preventDefault();
       var view = new FormView({mods: this.collection});
-      new Backbone.BootstrapModal({ content: view }).open();
+      new Backbone.BootstrapModal({ content: view, animate: true }).open();
     },
   });
 });

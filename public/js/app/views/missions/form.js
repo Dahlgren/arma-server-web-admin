@@ -7,6 +7,7 @@ define(function (require) {
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
       FormView            = require('marionette-formview'),
+      Ladda               = require('ladda'),
       IframeTransport     = require('jquery.iframe-transport'),
       Mission             = require('app/models/mission'),
       tpl                 = require('text!tpl/missions/form.html');
@@ -18,21 +19,35 @@ define(function (require) {
       this.missions = options.missions;
       this.model = new Mission();
       this.bind("ok", this.submit);
+      this.bind('shown', this.shown);
+    },
+
+    shown: function (modal) {
+      var $okBtn = modal.$el.find('.btn.ok');
+      $okBtn.addClass('ladda-button').attr('data-style', 'expand-left');
+
+      this.laddaBtn = Ladda.create($okBtn.get(0));
     },
 
     submit: function (modal) {
       var self = this;
+      var $form = $('form');
 
       modal.preventClose();
 
-      var $form = $("form");
+      $form.find('.form-group').removeClass('has-error');
+      $form.find('.help-block').text('');
+
+      this.laddaBtn.start();
+      modal.$el.find('.btn.cancel').addClass('disabled');
+
       $.ajax("/api/missions", {
         files: $form.find(":file"),
         iframe: true
       }).complete(function(data) {
-        modal.close();
         self.missions.fetch({success : function () {
-          Backbone.history.navigate('#missions', true);
+          self.laddaBtn.stop();
+          modal.close();
         }});
       });
     },
