@@ -24,6 +24,10 @@ define(function (require) {
       "click .nav-tabs a" : "tabs",
     },
 
+    modelEvents: {
+      "change": "serverUpdated",
+    },
+
     initialize: function (options) {
       this.mods = options.mods;
     },
@@ -31,6 +35,10 @@ define(function (require) {
     onRender: function() {
       this.infoView.show(new InfoView({model: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
+    },
+
+    serverUpdated: function() {
+      this.modsView.currentView.render();
     },
 
     tabs: function(e) {

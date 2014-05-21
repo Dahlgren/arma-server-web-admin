@@ -1,3 +1,4 @@
+var playwithsix = require('playwithsix');
 var slug = require('slug');
 
 var Manager = require('./../manager');
@@ -27,7 +28,7 @@ exports.create = function (req, res){
 };
 
 exports.show = function (req, res){
-  var server = manager.getServer(req.params.server)
+  var server = manager.getServer(req.params.server);
   res.send({
     id: server.id,
     title: server.title,
@@ -42,11 +43,20 @@ exports.update = function(req, res){
 
   if (req.body.mods) {
     server.mods = req.body.mods;
+    manager.save();
+
+    playwithsix.resolveDependencies(server.mods, function (err, mods) {
+      if (!err && mods) {
+        server.mods = mods;
+      }
+
+      manager.save();
+      res.send(server);
+    });
+  } else {
+    manager.save();
+    res.send(server);
   }
-
-  manager.save();
-
-  res.send(server);
 };
 
 exports.destroy = function(req, res){
