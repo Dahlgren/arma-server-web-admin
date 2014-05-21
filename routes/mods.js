@@ -56,7 +56,7 @@ exports.index = function(req, res){
         return file.charAt(0) == "@";
       });
 
-      playwithsix.checkOutdated(config.path, function (outdatedMods, err) {
+      playwithsix.checkOutdated(config.path, function (err, outdatedMods) {
         res.send(mods.map(function (mod) {
           return { name: mod, outdated: outdatedMods.indexOf(mod) >= 0 };
         }));
@@ -66,7 +66,7 @@ exports.index = function(req, res){
 };
 
 exports.create = function(req, res){
-  downloadMod(req.body.name, function (mods, err) {
+  downloadMod(req.body.name, function (err, mods) {
     if (mods && !err) {
       res.send(mods);
     } else {
@@ -85,7 +85,7 @@ exports.show = function(req, res){
 };
 
 exports.update = function(req, res){
-  downloadMod(req.params.mod, function (mods, err) {
+  downloadMod(req.params.mod, function (err, mods) {
     if (mods && !err) {
       res.send(mods);
     } else {
