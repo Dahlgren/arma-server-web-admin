@@ -12,6 +12,11 @@ define(function (require) {
       tpl                 = require('text!tpl/mods/form.html');
 
   return Marionette.ItemView.extend({
+
+    events: {
+      'submit': 'beforeSubmit',
+    },
+
     template: _.template(tpl),
 
     initialize: function (options) {
@@ -19,6 +24,11 @@ define(function (require) {
       this.model = new Mod();
       this.bind('ok', this.submit);
       this.bind('shown', this.shown);
+    },
+
+    beforeSubmit: function(e) {
+      e.preventDefault();
+      this.submit();
     },
 
     shown: function (modal) {
@@ -32,20 +42,22 @@ define(function (require) {
       var self = this;
       var $form = $('form');
 
-      modal.preventClose();
+      if (modal) {
+        self.modal.preventClose();
+      }
 
       $form.find('.form-group').removeClass('has-error');
       $form.find('.help-block').text('');
 
       this.laddaBtn.start();
-      modal.$el.find('.btn.cancel').addClass('disabled');
+      self.modal.$el.find('.btn.cancel').addClass('disabled');
 
       this.model.save({ name: $form.find('.mod').val() }, {
         success: function () {
           self.mods.fetch({
             success : function () {
               self.laddaBtn.stop();
-              modal.close();
+              self.modal.close();
             }
           });
         },
@@ -53,7 +65,7 @@ define(function (require) {
           self.laddaBtn.stop();
           $form.find('.form-group').addClass('has-error');
           $form.find('.help-block').text('Problem downloading mod');
-          modal.$el.find('.btn.cancel').removeClass('disabled');
+          self.modal.$el.find('.btn.cancel').removeClass('disabled');
         }
       });
     },
