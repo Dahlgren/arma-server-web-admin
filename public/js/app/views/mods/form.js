@@ -36,6 +36,8 @@ define(function (require) {
       $okBtn.addClass('ladda-button').attr('data-style', 'expand-left');
 
       this.laddaBtn = Ladda.create($okBtn.get(0));
+
+      this.$el.find('form .mod').focus();
     },
 
     submit: function (modal) {
