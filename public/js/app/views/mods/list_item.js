@@ -6,6 +6,7 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
+      Ladda               = require('ladda'),
       tpl                 = require('text!tpl/mods/list_item.html'),
 
       template = _.template(tpl);
@@ -21,13 +22,23 @@ define(function (require) {
     update: function (event) {
       var self = this;
       event.preventDefault();
+
+      this.laddaBtn = Ladda.create(this.$el.find(".ladda-button").get(0));
+      this.laddaBtn.start();
+      this.$el.find('.ladda-button').addClass('disabled');
+
       $.ajax({
         url: "/api/mods/" + this.model.get('name'),
         type: 'PUT',
         success: function (resp) {
+          self.laddaBtn.stop();
+          self.$el.find('.ladda-button').removeClass('disabled');
           self.trigger("mods:update", mods);
         },
-        error: $.noop
+        error: function (resp) {
+          self.laddaBtn.stop();
+          self.$el.find('.ladda-button').removeClass('disabled');
+        },
       });
     },
   });
