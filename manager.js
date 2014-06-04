@@ -131,9 +131,13 @@ Manager.prototype.load = (function () {
       return;
     }
 
-    JSON.parse(data).forEach(function (server) {
-      self._addServer(server.id, server.title, server.port, server.mods);
-    });
+    try {
+      JSON.parse(data).forEach(function (server) {
+        self._addServer(server.id, server.title, server.port, server.mods);
+      });
+    } catch(e) {
+        console.error("Manager load error: " + e);
+    }
   });
 });
 
