@@ -37,7 +37,11 @@ define(function (require) {
       layoutView.navigation.show(navigationView);
       missions.fetch();
       mods.fetch();
-      servers.fetch();
+
+      var socket = io.connect('http://localhost');
+      socket.on('servers', function (_servers) {
+        servers.set(_servers);
+      });
     },
 
     home: function () {

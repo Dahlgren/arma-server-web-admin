@@ -1,15 +1,18 @@
-var fs = require('fs'),
-    spawn = require('child_process').spawn;
+var events = require('events');
+var fs = require('fs');
+var spawn = require('child_process').spawn;
 
 var config = require('./config');
 var filePath = "servers.json";
 
-function Server(id, title, port, mods) {
+var Server = function (id, title, port, mods) {
   this.id = id;
   this.title = title;
   this.port = port;
   this.mods = mods;
-}
+};
+
+Server.prototype = new events.EventEmitter();
 
 Server.prototype.armaServerPath = function() {
   if (config.type === "linux") {
@@ -17,15 +20,15 @@ Server.prototype.armaServerPath = function() {
   }
 
   return config.path + '/arma3server.exe';
-}
+};
 
 Server.prototype.makeModsParameter = function() {
   return '-mod=' + this.mods.join(';');
-}
+};
 
 Server.prototype.makePortParameter = function() {
   return '-port=' + this.port;
-}
+};
 
 Server.prototype.start = function() {
   var startParams = [];
@@ -68,15 +71,19 @@ Server.prototype.start = function() {
   this.pid = process.pid;
   this.process = process;
 
+  this.emit('started');
+
   return this;
-}
+};
 
 Server.prototype.stop = function(cb) {
   var handled = false;
+  var self = this;
 
   this.process.on('close', function (code) {
     if (!handled) {
       handled = true;
+      self.emit('stopped');
       cb();
     }
   });
@@ -86,6 +93,7 @@ Server.prototype.stop = function(cb) {
   setTimeout(function() {
     if (!handled) {
       handled = true;
+      self.emit('stopped');
       cb();
     }
   }, 5000);
@@ -103,11 +111,12 @@ Server.prototype.toJSON = function () {
   };
 };
 
-function Manager() {
+var Manager = function () {
   this.serversArr = [];
   this.serversHash = {};
-  this.load();
 };
+
+Manager.prototype = new events.EventEmitter();
 
 Manager.prototype.addServer = (function (id, title) {
   mods = [];
@@ -118,9 +127,17 @@ Manager.prototype.addServer = (function (id, title) {
 });
 
 Manager.prototype._addServer = (function (id, title, port, mods) {
-  var server = new Server(id, title, port, mods)
+  var server = new Server(id, title, port, mods);
   this.serversArr.push(server);
   this.serversHash[id] = server;
+
+  var self = this;
+  var statusChanged = function () {
+    self.emit('servers');
+  };
+  server.on('started', statusChanged);
+  server.on('stopped', statusChanged);
+
   return server;
 });
 
@@ -160,11 +177,17 @@ Manager.prototype.save = (function () {
       title: server.title,
       port: server.port,
       mods: server.mods,
-    })
+    });
   });
 
+  var self = this;
+
   fs.writeFile(filePath, JSON.stringify(data), function(err) {
-    if(err) throw err;
+    if (err) {
+      throw err;
+    } else {
+      self.emit('servers');
+    }
   });
 });
 

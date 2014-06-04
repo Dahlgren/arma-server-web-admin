@@ -10,6 +10,7 @@
     "when": "~3.1.0",
     "gamedig": "^0.2.4",
     "ip": "^0.3.0",
-    "playwithsix": "0.0.5"
+    "playwithsix": "0.0.5",
+    "socket.io": "^1.0.4"
   }
 }

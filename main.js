@@ -1,9 +1,12 @@
-var express = require('express'),
-    Resource = require('express-resource');
+var express = require('express');
+var Resource = require('express-resource');
 
 var config = require('./config');
+var manager = require('./manager');
 
 var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
@@ -28,4 +31,12 @@ app.get('/', function (req, res){
   res.sendfile(__dirname + '/public/index.html');
 });
 
-app.listen(3000);
+io.on('connection', function (socket) {
+  socket.emit('servers', manager.getServers());
+});
+
+manager.on('servers', function() {
+  io.emit('servers', manager.getServers());
+});
+
+server.listen(3000);

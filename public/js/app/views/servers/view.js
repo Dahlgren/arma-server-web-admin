@@ -38,6 +38,7 @@ define(function (require) {
     },
 
     serverUpdated: function() {
+      this.infoView.currentView.render();
       this.modsView.currentView.render();
     },
 
