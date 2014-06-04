@@ -1,9 +1,7 @@
 var playwithsix = require('playwithsix');
 var slug = require('slug');
 
-var Manager = require('./../manager');
-
-var manager = new Manager();
+var manager = require('./../manager');
 
 function isPlayWithSixIgnoredMod(mod) {
   var ignoredMods = ["@acre"];

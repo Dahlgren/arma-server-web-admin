@@ -168,4 +168,7 @@ Manager.prototype.save = (function () {
   });
 });
 
-module.exports = Manager;
+var manager = new Manager();
+manager.load();
+
+module.exports = manager;
