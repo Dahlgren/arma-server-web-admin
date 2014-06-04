@@ -64,14 +64,23 @@ exports.update = function(req, res){
     playwithsix.resolveDependencies(modsToResolve, function (err, mods) {
       if (!err && mods) {
         server.mods = removeDuplicates(server.mods.concat(mods));
+        manager.save();
       }
 
-      manager.save();
-      res.send(server);
+      res.send({
+        id: server.id,
+        title: server.title,
+        port: server.port,
+        mods: server.mods,
+      });
     });
   } else {
-    manager.save();
-    res.send(server);
+    res.send({
+      id: server.id,
+      title: server.title,
+      port: server.port,
+      mods: server.mods,
+    });
   }
 };
 
