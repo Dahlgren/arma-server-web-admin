@@ -12,6 +12,14 @@ define(function (require) {
 
   return Marionette.ItemView.extend({
     tagName: "tr",
-    template: template
+    template: template,
+
+    events: {
+      "click .delete": "delete"
+    },
+
+    delete: function (event) {
+      this.model.destroy({wait: true});
+    },
   });
 });

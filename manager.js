@@ -84,7 +84,10 @@ Server.prototype.stop = function(cb) {
     if (!handled) {
       handled = true;
       self.emit('stopped');
-      cb();
+
+      if (cb) {
+        cb();
+      }
     }
   });
 
@@ -94,7 +97,10 @@ Server.prototype.stop = function(cb) {
     if (!handled) {
       handled = true;
       self.emit('stopped');
-      cb();
+
+      if (cb) {
+        cb();
+      }
     }
   }, 5000);
 
@@ -123,6 +129,27 @@ Manager.prototype.addServer = (function (id, title) {
   port = 2302;
   var server = this._addServer(id, title, port, mods);
   this.save();
+  return server;
+});
+
+Manager.prototype.removeServer = (function (id) {
+  var server = this.serversHash[id];
+
+  if (!server) {
+    return {};
+  }
+
+  var index = this.serversArr.indexOf(server);
+  if (index > -1) {
+    this.serversArr.splice(index, 1);
+  }
+  delete this.serversHash[id];
+  this.save();
+
+  if (server.pid) {
+    server.stop();
+  }
+
   return server;
 });
 

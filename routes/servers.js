@@ -67,7 +67,8 @@ exports.update = function(req, res){
 };
 
 exports.destroy = function(req, res){
-  res.send('destroy server ' + req.params.server);
+  var server = manager.removeServer(req.params.server);
+  res.send(server);
 };
 
 exports.start = function (req, res){
