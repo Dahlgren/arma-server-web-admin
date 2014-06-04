@@ -91,7 +91,17 @@ Server.prototype.stop = function(cb) {
   }, 5000);
 
   return this;
-}
+};
+
+Server.prototype.toJSON = function () {
+  return {
+    id: this.id,
+    title: this.title,
+    port: this.port,
+    mods: this.mods,
+    pid: this.pid,
+  };
+};
 
 function Manager() {
   this.serversArr = [];

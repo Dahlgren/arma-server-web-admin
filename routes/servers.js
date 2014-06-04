@@ -41,13 +41,7 @@ exports.create = function (req, res){
 
 exports.show = function (req, res){
   var server = manager.getServer(req.params.server);
-  res.send({
-    id: server.id,
-    title: server.title,
-    port: server.port,
-    mods: server.mods,
-    pid: server.pid,
-  });
+  res.send(server);
 };
 
 exports.update = function(req, res){
@@ -67,20 +61,10 @@ exports.update = function(req, res){
         manager.save();
       }
 
-      res.send({
-        id: server.id,
-        title: server.title,
-        port: server.port,
-        mods: server.mods,
-      });
+      res.send(server);
     });
   } else {
-    res.send({
-      id: server.id,
-      title: server.title,
-      port: server.port,
-      mods: server.mods,
-    });
+    res.send(server);
   }
 };
 
