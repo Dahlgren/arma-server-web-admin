@@ -38,7 +38,7 @@ define(function (require) {
       missions.fetch();
       mods.fetch();
 
-      var socket = io.connect('//');
+      var socket = io.connect();
       socket.on('servers', function (_servers) {
         servers.set(_servers);
       });
