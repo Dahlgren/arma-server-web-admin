@@ -23,7 +23,18 @@ Server.prototype.armaServerPath = function() {
 };
 
 Server.prototype.makeModsParameter = function() {
-  return '-mod=' + this.mods.join(';');
+  var mods = this.mods;
+
+  ["@a3mp", "@a3mp_ap", "@agm"].forEach(function (modToMoveLast) {
+    if (mods.indexOf(modToMoveLast) > -1) {
+      mods = mods.filter(function (mod) {
+        return mod != modToMoveLast;
+      });
+      mods.push(modToMoveLast);
+    }
+  });
+
+  return '-mod=' + mods.join(';');
 };
 
 Server.prototype.makePortParameter = function() {
