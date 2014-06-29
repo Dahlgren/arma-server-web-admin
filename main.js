@@ -21,9 +21,6 @@ app.resource('api/mods', require('./routes/mods'));
 var serversResource = app.resource('api/servers', servers);
 app.resource('api/settings', require('./routes/settings'));
 
-var gamespyResource = app.resource('gamespy', require('./routes/servers/gamespy'));
-serversResource.add(gamespyResource);
-
 app.get('/api/servers/:server/start', servers.start);
 app.get('/api/servers/:server/stop', servers.stop);
 
