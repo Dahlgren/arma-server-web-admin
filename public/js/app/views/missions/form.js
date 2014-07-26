@@ -15,31 +15,27 @@ define(function (require) {
   return Marionette.ItemView.extend({
     template: _.template(tpl),
 
+    events: {
+      'click form button': 'submit',
+    },
+
     initialize: function (options) {
       this.missions = options.missions;
       this.model = new Mission();
-      this.bind("ok", this.submit);
-      this.bind('shown', this.shown);
     },
 
-    shown: function (modal) {
-      var $okBtn = modal.$el.find('.btn.ok');
+    onShow: function () {
+      var $okBtn = this.$el.find('form button[type=submit]');
       $okBtn.addClass('ladda-button').attr('data-style', 'expand-left');
 
       this.laddaBtn = Ladda.create($okBtn.get(0));
     },
 
-    submit: function (modal) {
+    submit: function () {
       var self = this;
       var $form = $('form');
 
-      modal.preventClose();
-
-      $form.find('.form-group').removeClass('has-error');
-      $form.find('.help-block').text('');
-
       this.laddaBtn.start();
-      modal.$el.find('.btn.cancel').addClass('disabled');
 
       $.ajax("/api/missions", {
         files: $form.find(":file"),
@@ -47,8 +43,10 @@ define(function (require) {
       }).complete(function(data) {
         self.missions.fetch({success : function () {
           self.laddaBtn.stop();
-          modal.close();
+          self.render();
         }});
+      }).error(function() {
+        self.laddaBtn.stop();
       });
     },
   });

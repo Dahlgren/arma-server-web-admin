@@ -7,7 +7,7 @@ define(function (require) {
       LayoutView      = require('app/views/layout'),
       NavigationView  = require('app/views/navigation'),
       ServersView     = require('app/views/servers/list'),
-      MissionsListView= require('app/views/missions/list'),
+      MissionsView    = require('app/views/missions/index'),
       ModsListView    = require('app/views/mods/list'),
       ServerView      = require('app/views/servers/view'),
       Missions        = require('app/collections/missions'),
@@ -21,7 +21,7 @@ define(function (require) {
       layoutView = new LayoutView({el: $body}).render(),
       navigationView = new NavigationView({servers: servers}),
       serversView = new ServersView({collection: servers}),
-      missionsListView = new MissionsListView({collection: missions}),
+      missionsView = new MissionsView({missions: missions}),
       modsListView = new ModsListView({collection: mods});
 
   return Backbone.Router.extend({
@@ -50,8 +50,8 @@ define(function (require) {
     },
 
     missions: function () {
-      layoutView.content.show(missionsListView);
-      missionsListView.delegateEvents();
+      layoutView.content.show(missionsView);
+      missionsView.delegateEvents();
     },
 
     mods: function () {
