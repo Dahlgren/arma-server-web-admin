@@ -1,3 +1,10 @@
+<td>
+  <% if (typeof(pid) != "undefined" && pid) { %>
+    <span class="label label-success">Online</span>
+  <% } else { %>
+    <span class="label label-default">Offline</span>
+  <% } %>
+</td>
 <td style="width: 100%;">
   <a href='#servers/<%-id%>'><%-title%></a>
 </td>
