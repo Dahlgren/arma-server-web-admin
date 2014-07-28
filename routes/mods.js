@@ -1,5 +1,6 @@
 var fs = require('fs')
 , path = require('path')
+, async = require('async')
 , playwithsix = require('playwithsix')
 , when = require('when')
 , nodefn = require('when/node/function');
@@ -47,6 +48,15 @@ function walk (directory) {
   });
 };
 
+function isPlayWithSixMod(modPath, cb) {
+  var pwsFile = path.join(modPath, '.repository.yml');
+  fs.exists(pwsFile, function (exists) {
+    if (cb) {
+      cb(exists);
+    }
+  });
+};
+
 exports.index = function(req, res){
   fs.readdir(config.path, function (err, files) {
     if (err) {
@@ -57,9 +67,14 @@ exports.index = function(req, res){
       });
 
       playwithsix.checkOutdated(config.path, function (err, outdatedMods) {
-        res.send(mods.map(function (mod) {
-          return { name: mod, outdated: outdatedMods.indexOf(mod) >= 0 };
-        }));
+        async.map(mods, function (mod, cb) {
+          var modPath = path.join(config.path, mod);
+          isPlayWithSixMod(modPath, function (isPlayWithSixMod) {
+            cb(null, { name: mod, outdated: outdatedMods.indexOf(mod) >= 0, playWithSix: isPlayWithSixMod });
+          });
+        }, function (err, mods) {
+          res.send(mods);
+        });
       });
     }
   });

@@ -1,9 +1,13 @@
 <td style="width: 100%;">
   <a href='#mods/<%-name%>'><%-name%></a>
+
+  <% if (playWithSix) { %>
+    <img src="/images/playwithsix.png" height="20px" width="20px" />
+  <% } %>
 </td>
 <td>
   <% if (outdated) { %>
-    <a class="btn btn-primary btn-xs update pull-right ladda-button" data-style="expand-left">
+    <a class="btn btn-primary btn-xs update ladda-button" data-style="expand-left">
       <span class="glyphicon glyphicon-save"></span>
       Update
     </a>
