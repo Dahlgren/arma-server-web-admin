@@ -169,6 +169,10 @@ Manager.prototype._addServer = (function (id, title, port, mods) {
   this.serversArr.push(server);
   this.serversHash[id] = server;
 
+  this.serversArr.sort(function(a, b) {
+    return a.title.localeCompare(b.title);
+  });
+
   var self = this;
   var statusChanged = function () {
     self.emit('servers');
