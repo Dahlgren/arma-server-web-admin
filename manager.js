@@ -1,46 +1,33 @@
 var events = require('events');
 var fs = require('fs');
 var gamedig = require('gamedig');
+var slug = require('slug');
 var spawn = require('child_process').spawn;
+
+var ArmaServer = require('arma-server');
 
 var config = require('./config');
 var filePath = "servers.json";
 var queryInterval = 10000;
 
-var Server = function (id, title, port, mods) {
-  this.id = id;
-  this.title = title;
-  this.port = port;
-  this.mods = mods;
+var Server = function (options) {
+  this.update(options);
 };
 
 Server.prototype = new events.EventEmitter();
 
-Server.prototype.armaServerPath = function() {
-  if (config.type === "linux") {
-    return config.path + '/arma3server';
-  }
+Server.prototype.update = function (options) {
+  this.admin_password = options.admin_password;
+  this.battle_eye = options.battle_eye;
+  this.max_players = options.max_players;
+  this.mods = options.mods;
+  this.password = options.password;
+  this.persistent = options.persistent;
+  this.title = options.title;
+  this.von = options.von;
 
-  return config.path + '/arma3server.exe';
-};
-
-Server.prototype.makeModsParameter = function() {
-  var mods = this.mods;
-
-  ["@a3mp", "@a3mp_ap", "@agm"].forEach(function (modToMoveLast) {
-    if (mods.indexOf(modToMoveLast) > -1) {
-      mods = mods.filter(function (mod) {
-        return mod != modToMoveLast;
-      });
-      mods.push(modToMoveLast);
-    }
-  });
-
-  return '-mod=' + mods.join(';');
-};
-
-Server.prototype.makePortParameter = function() {
-  return '-port=' + this.port;
+  this.id = slug(this.title).replace('.', '-');
+  this.port = 2302;
 };
 
 Server.prototype.queryStatus = function() {
@@ -64,35 +51,22 @@ Server.prototype.queryStatus = function() {
 };
 
 Server.prototype.start = function() {
-  var startParams = [];
-  var gamePath = this.armaServerPath();
-  var options = null;
-
-  if (config.type === "linux") {
-    options = {
-      cwd: config.path,
-      env: process.env,
-    };
-  }
-
-  if (config.type === "wine") {
-    gamePath = "wine";
-    startParams.push(this.armaServerPath());
-  }
-
-  startParams.push(this.makePortParameter());
-  startParams.push('-config=server.cfg');
-  startParams.push('-noSound');
-  startParams.push('-world=empty');
-
-  if (this.mods.length) {
-    startParams.push(this.makeModsParameter());
-  }
-
-  console.log(gamePath);
-  console.log(startParams);
-
-  var instance = spawn(gamePath, startParams, options);
+  var server = new ArmaServer({
+    battleEye: this.battle_eye ? 1 : 0,
+    config: this.id,
+    disableVON: this.von ? 0 : 1,
+    hostname: this.title,
+    mods: this.mods,
+    password: this.password,
+    passwordAdmin: this.admin_password,
+    path: config.path,
+    persistent: this.persistent ? 1 : 0,
+    platform: config.type,
+    players: this.max_players,
+    port: this.port,
+  });
+  server.writeServerConfig();
+  var instance = server.start();
   var self = this;
 
   instance.stdout.on('data', function (data) {
@@ -155,12 +129,18 @@ Server.prototype.stop = function(cb) {
 
 Server.prototype.toJSON = function () {
   return {
+    admin_password: this.admin_password,
+    battle_eye: this.battle_eye,
     id: this.id,
-    title: this.title,
-    port: this.port,
+    max_players: this.max_players,
     mods: this.mods,
+    password: this.password,
+    persistent: this.persistent,
     pid: this.pid,
+    port: this.port,
     state: this.state,
+    title: this.title,
+    von: this.von,
   };
 };
 
@@ -171,10 +151,8 @@ var Manager = function () {
 
 Manager.prototype = new events.EventEmitter();
 
-Manager.prototype.addServer = (function (id, title) {
-  mods = [];
-  port = 2302;
-  var server = this._addServer(id, title, port, mods);
+Manager.prototype.addServer = (function (options) {
+  var server = this._addServer(options);
   this.save();
   return server;
 });
@@ -190,7 +168,6 @@ Manager.prototype.removeServer = (function (id) {
   if (index > -1) {
     this.serversArr.splice(index, 1);
   }
-  delete this.serversHash[id];
   this.save();
 
   if (server.pid) {
@@ -200,14 +177,13 @@ Manager.prototype.removeServer = (function (id) {
   return server;
 });
 
-Manager.prototype._addServer = (function (id, title, port, mods) {
-  var server = new Server(id, title, port, mods);
+Manager.prototype._addServer = (function (data) {
+  var server = new Server(data);
   this.serversArr.push(server);
-  this.serversHash[id] = server;
-
   this.serversArr.sort(function(a, b) {
     return a.title.localeCompare(b.title);
   });
+  this.serversHash[server.id] = server;
 
   var self = this;
   var statusChanged = function () {
@@ -237,7 +213,7 @@ Manager.prototype.load = (function () {
 
     try {
       JSON.parse(data).forEach(function (server) {
-        self._addServer(server.id, server.title, server.port, server.mods);
+        self._addServer(server);
       });
     } catch(e) {
         console.error("Manager load error: " + e);
@@ -247,17 +223,24 @@ Manager.prototype.load = (function () {
 
 Manager.prototype.save = (function () {
   var data = [];
+  var self = this;
 
+  this.serversHash = {};
   this.serversArr.forEach(function (server) {
     data.push({
-      id: server.id,
-      title: server.title,
-      port: server.port,
+      admin_password: server.admin_password,
+      battle_eye: server.battle_eye,
+      max_players: server.max_players,
       mods: server.mods,
+      password: server.password,
+      persistent: server.persistent,
+      port: server.port,
+      title: server.title,
+      von: server.von,
     });
-  });
 
-  var self = this;
+    self.serversHash[server.id] = server;
+  });
 
   fs.writeFile(filePath, JSON.stringify(data), function(err) {
     if (err) {

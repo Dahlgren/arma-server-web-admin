@@ -7,22 +7,32 @@ define(function (require) {
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
       FormView            = require('marionette-formview'),
-      Server              = require('app/models/server'),
-      tpl                 = require('text!tpl/servers/add.html');
+      tpl                 = require('text!tpl/servers/form.html');
 
   return Marionette.ItemView.extend({
     template: _.template(tpl),
 
     initialize: function (options) {
       this.servers = options.servers;
-      this.model = new Server();
       this.bind("ok", this.submit);
+    },
+
+    serialize : function() {
+      return {
+        admin_password: this.$("form .admin-password").val(),
+        battle_eye: this.$("form .battle-eye").prop("checked"),
+        max_players: this.$("form .max-players").val(),
+        password: this.$("form .password").val(),
+        persistent: this.$("form .persistent").prop("checked"),
+        title: this.$("form .title").val(),
+        von: this.$("form .von").prop("checked"),
+      };
     },
 
     submit: function (modal) {
       modal.preventClose();
 
-      this.model.set('title', $("form #title").val());
+      this.model.set(this.serialize());
 
       var self = this;
 

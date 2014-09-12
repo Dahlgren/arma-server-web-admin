@@ -8,8 +8,15 @@ define(function (require) {
 
   return Backbone.Model.extend({
     defaults: {
-      title: '',
+      admin_password: '',
+      battle_eye: false,
+      max_players: null,
+      mods: [],
+      password: '',
+      persistent: false,
       state: null,
+      title: '',
+      von: false,
     },
     urlRoot: '/api/servers/',
   });

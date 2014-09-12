@@ -6,7 +6,8 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      AddServerView       = require('app/views/servers/add'),
+      Server              = require('app/models/server'),
+      AddServerView       = require('app/views/servers/form'),
       EmptyView           = require('app/views/servers/empty'),
       ListItemView        = require('app/views/servers/list_item'),
       tpl                 = require('text!tpl/servers/list.html'),
@@ -39,7 +40,7 @@ define(function (require) {
     },
 
     addServer: function () {
-      var view = new AddServerView({servers: this.collection});
+      var view = new AddServerView({model: new Server(), servers: this.collection});
       new Backbone.BootstrapModal({ content: view, servers: this.collection }).open()
     },
   });

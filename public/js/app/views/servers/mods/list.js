@@ -15,24 +15,18 @@ define(function (require) {
     itemView: ListItemView,
     template: _.template(tpl),
 
-    events: {
-      "submit": "save",
-    },
-
     buildItemView: function(item, ItemViewType, itemViewOptions){
       var options = _.extend({model: item, server: this.options.server}, itemViewOptions);
       var view = new ItemViewType(options);
       return view;
     },
 
-    save: function (event) {
-      event.preventDefault();
-      var enabledMods = $('input:checkbox:checked').map(function (idx, el) {
-        return $(el).val();
-      }).get();
-
-      this.options.server.set('mods', enabledMods);
-      this.options.server.save();
+    serialize: function() {
+      return {
+        mods: this.$('input:checkbox:checked').map(function (idx, el) {
+            return $(el).val();
+          }).get(),
+      }
     },
   });
 

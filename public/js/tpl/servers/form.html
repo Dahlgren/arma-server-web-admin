@@ -1,0 +1,59 @@
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+    <label for="title" class="col-sm-2 control-label">Title</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control title" data-field="title" placeholder="Title" value="<%- title %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="max-players" class="col-sm-2 control-label">Max Players</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control max-players" data-field="max-players" placeholder="Max Players" value="<%- max_players %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password" class="col-sm-2 control-label">Password</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control password" data-field="password" placeholder="Password" value="<%- password %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="admin-password" class="col-sm-2 control-label">Admin Password</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control admin-password" data-field="admin-password" placeholder="Admin Password" value="<%- admin_password %>">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="battle-eye" <% if (battle_eye) { %>checked="checked"<% } %>> BattleEye
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="persistent" <% if (persistent) { %>checked="checked"<% } %>> Persistent
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="von" <% if (von) { %>checked="checked"<% } %>> Voice over Net
+        </label>
+      </div>
+    </div>
+  </div>
+</form>

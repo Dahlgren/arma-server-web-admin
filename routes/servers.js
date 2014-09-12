@@ -1,5 +1,4 @@
 var playwithsix = require('playwithsix');
-var slug = require('slug');
 
 var manager = require('./../manager');
 
@@ -13,6 +12,21 @@ function removeDuplicates(mods) {
     if (a.indexOf(b) < 0 ) a.push(b);
     return a;
   },[]);
+}
+
+function resolveMods(server, cb) {
+  var modsToResolve = server.mods.filter(function(mod) {
+    return !isPlayWithSixIgnoredMod(mod);
+  });
+
+  playwithsix.resolveDependencies(modsToResolve, function (err, mods) {
+    if (!err && mods) {
+      server.mods = removeDuplicates(server.mods.concat(mods));
+      manager.save();
+    }
+
+    cb(err);
+  });
 }
 
 exports.index = function (req, res){
@@ -32,9 +46,14 @@ exports.index = function (req, res){
 };
 
 exports.create = function (req, res){
-  var title = req.body.title;
-  var id = slug(title);
-  res.send(manager.addServer(id, title));
+  var server = manager.addServer(req.body);
+  if (server.mods.length > 0) {
+    resolveMods(server, function(err) {
+      res.send(server);
+    });
+  } else {
+    res.send(server);
+  }
 };
 
 exports.show = function (req, res){
@@ -44,21 +63,11 @@ exports.show = function (req, res){
 
 exports.update = function(req, res){
   var server = manager.getServer(req.params.server);
+  server.update(req.body);
+  manager.save();
 
-  if (req.body.mods) {
-    server.mods = req.body.mods;
-    manager.save();
-
-    var modsToResolve = server.mods.filter(function(mod) {
-      return !isPlayWithSixIgnoredMod(mod);
-    });
-
-    playwithsix.resolveDependencies(modsToResolve, function (err, mods) {
-      if (!err && mods) {
-        server.mods = removeDuplicates(server.mods.concat(mods));
-        manager.save();
-      }
-
+  if (server.mods.length > 0) {
+    resolveMods(server, function(err) {
       res.send(server);
     });
   } else {

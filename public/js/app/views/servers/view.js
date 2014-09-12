@@ -7,6 +7,7 @@ define(function (require) {
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
       Mods                = require('app/collections/mods'),
+      FormView            = require('app/views/servers/form'),
       InfoView            = require('app/views/servers/info'),
       ModsListView        = require('app/views/servers/mods/list'),
       PlayersView         = require('app/views/servers/players'),
@@ -19,11 +20,12 @@ define(function (require) {
       infoView: "#tab-info",
       modsView: "#tab-mods",
       playersView: "#tab-players",
-      settings: "#tab-settings",
+      settingsView: "#tab-settings",
     },
 
     events: {
       "click .nav-tabs a" : "tabs",
+      "submit": "save",
     },
 
     modelEvents: {
@@ -38,17 +40,40 @@ define(function (require) {
       this.infoView.show(new InfoView({model: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
       this.playersView.show(new PlayersView({model: this.model}));
+      this.settingsView.show(new FormView({model: this.model}));
     },
 
     serverUpdated: function() {
       this.infoView.currentView.render();
       this.modsView.currentView.render();
       this.playersView.currentView.render();
+      this.settingsView.currentView.render();
+    },
+
+    save: function (e) {
+      e.preventDefault();
+      var self = this;
+      var oldId = this.model.get('id');
+      var data = this.settingsView.currentView.serialize();
+      _.extend(data, this.modsView.currentView.serialize());
+      this.model.save(data, {
+        success: function() {
+          var newId = self.model.get('id');
+          if (oldId != newId) {
+            Backbone.history.navigate('#servers/' + newId, true);
+          } else {
+            self.serverUpdated();
+          }
+        },
+        error: function() {
+          alert("Error :(");
+        }
+      });
     },
 
     tabs: function(e) {
-      e.preventDefault()
-      $($(e.target).attr('href')).tab('show')
+      e.preventDefault();
+      $($(e.target).attr('href')).tab('show');
     },
   });
 
