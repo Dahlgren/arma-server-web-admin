@@ -16,6 +16,7 @@ app.use(express.static(__dirname + '/public'));
 
 var servers = require('./routes/servers');
 
+app.resource('api/logs', require('./routes/logs'));
 app.resource('api/missions', require('./routes/missions'));
 app.resource('api/mods', require('./routes/mods'));
 var serversResource = app.resource('api/servers', servers);
