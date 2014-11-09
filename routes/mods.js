@@ -49,7 +49,7 @@ function walk (directory) {
 };
 
 function isPlayWithSixMod(modPath, cb) {
-  var pwsFile = path.join(modPath, '.repository.yml');
+  var pwsFile = path.join(modPath, '.synq.json');
   fs.exists(pwsFile, function (exists) {
     if (cb) {
       cb(exists);
