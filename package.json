@@ -10,7 +10,7 @@
     "async": "^0.9.0",
     "express": "3.x",
     "express-resource": "~1.0.0",
-    "playwithsix": "0.0.5",
+    "playwithsix": "0.0.6",
     "slug": "~0.4.0",
     "socket.io": "^1.0.4",
     "userhome": "^1.0.0",
