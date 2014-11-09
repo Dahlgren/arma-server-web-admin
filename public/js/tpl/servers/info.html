@@ -4,7 +4,12 @@
     <div class="col-sm-11">
       <p class="form-control-static">
         <% if (typeof(pid) != "undefined" && pid) { %>
-          <span class="label label-success">Online</span>
+          <% if (state) { %>
+            <span class="label label-success">Online</span>
+          <% } else { %>
+            <span class="label label-info">Launching</span>
+          <% } %>
+
           <a class="btn btn-primary btn-xs" href="#" id="stop">
             <span class="glyphicon glyphicon-stop"></span>
             Stop
@@ -33,4 +38,38 @@
       <p class="form-control-static"><%- mods %></p>
     </div>
   </div>
+
+<% if (state) { %>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Name</label>
+    <div class="col-sm-11">
+      <p class="form-control-static"><%= state.name %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Map</label>
+    <div class="col-sm-11">
+      <p class="form-control-static"><%= state.map %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Mission</label>
+    <div class="col-sm-11">
+      <p class="form-control-static"><%= state.raw.game %></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Players</label>
+    <div class="col-sm-11">
+      <p class="form-control-static">
+        <%= state.players.length %> / <%= state.maxplayers %>
+      </p>
+    </div>
+  </div>
+
+<% } %>
+
 </form>

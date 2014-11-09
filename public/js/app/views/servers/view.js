@@ -9,6 +9,7 @@ define(function (require) {
       Mods                = require('app/collections/mods'),
       InfoView            = require('app/views/servers/info'),
       ModsListView        = require('app/views/servers/mods/list'),
+      PlayersView         = require('app/views/servers/players'),
       tpl                 = require('text!tpl/servers/view.html');
 
   return Marionette.Layout.extend({
@@ -17,7 +18,8 @@ define(function (require) {
     regions: {
       infoView: "#tab-info",
       modsView: "#tab-mods",
-      settings: "#tab-settings"
+      playersView: "#tab-players",
+      settings: "#tab-settings",
     },
 
     events: {
@@ -35,11 +37,13 @@ define(function (require) {
     onRender: function() {
       this.infoView.show(new InfoView({model: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
+      this.playersView.show(new PlayersView({model: this.model}));
     },
 
     serverUpdated: function() {
       this.infoView.currentView.render();
       this.modsView.currentView.render();
+      this.playersView.currentView.render();
     },
 
     tabs: function(e) {

@@ -8,7 +8,8 @@ define(function (require) {
 
   return Backbone.Model.extend({
     defaults: {
-      title: ''
+      title: '',
+      state: null,
     },
     urlRoot: '/api/servers/',
   });

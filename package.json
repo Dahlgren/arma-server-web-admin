@@ -10,6 +10,8 @@
     "async": "^0.9.0",
     "express": "3.x",
     "express-resource": "~1.0.0",
+    "gamedig": "^0.2.11",
+    "ip": "^0.3.2",
     "playwithsix": "0.0.6",
     "slug": "~0.4.0",
     "socket.io": "^1.0.4",

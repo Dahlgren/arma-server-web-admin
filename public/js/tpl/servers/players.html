@@ -1,0 +1,23 @@
+<% if (state) { %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% _.each(players(), function(player) { %>
+      <tr>
+        <td><%= player.name %></td>
+        <td><%= player.score %></td>
+      </tr>
+    <% }); %>
+    </tbody>
+  </table>
+<% } else { %>
+  <tr>
+    <td>Server not online</td>
+    <td>&nbsp;</td>
+  </tr>
+<% } %>
