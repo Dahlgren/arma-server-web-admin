@@ -1,6 +1,10 @@
 <td>
   <% if (typeof(pid) != "undefined" && pid) { %>
-    <span class="label label-success">Online</span>
+    <% if (state) { %>
+      <span class="label label-success">Online</span>
+    <% } else { %>
+      <span class="label label-info">Launching</span>
+    <% } %>
   <% } else { %>
     <span class="label label-default">Offline</span>
   <% } %>
