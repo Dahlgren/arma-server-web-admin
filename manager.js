@@ -66,6 +66,14 @@ Server.prototype.queryStatus = function() {
 Server.prototype.start = function() {
   var startParams = [];
   var gamePath = this.armaServerPath();
+  var options = null;
+
+  if (config.type === "linux") {
+    options = {
+      cwd: config.path,
+      env: process.env,
+    };
+  }
 
   if (config.type === "wine") {
     gamePath = "wine";
@@ -84,29 +92,29 @@ Server.prototype.start = function() {
   console.log(gamePath);
   console.log(startParams);
 
-  var process = spawn(gamePath, startParams);
+  var instance = spawn(gamePath, startParams, options);
   var self = this;
 
-  process.stdout.on('data', function (data) {
+  instance.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
 
-  process.stderr.on('data', function (data) {
+  instance.stderr.on('data', function (data) {
     console.log('stderr: ' + data);
   });
 
-  process.on('close', function (code) {
+  instance.on('close', function (code) {
     console.log('child process exited with code ' + code);
     clearInterval(self.queryStatusInterval);
     self.state = null;
     self.pid = null;
-    self.process = null;
+    self.instance = null;
 
     self.emit('state');
   });
 
-  this.pid = process.pid;
-  this.process = process;
+  this.pid = instance.pid;
+  this.instance = instance;
   this.queryStatusInterval = setInterval(function () {
     self.queryStatus();
   }, queryInterval);
@@ -120,7 +128,7 @@ Server.prototype.stop = function(cb) {
   var handled = false;
   var self = this;
 
-  this.process.on('close', function (code) {
+  this.instance.on('close', function (code) {
     if (!handled) {
       handled = true;
 
@@ -130,7 +138,7 @@ Server.prototype.stop = function(cb) {
     }
   });
 
-  this.process.kill();
+  this.instance.kill();
 
   setTimeout(function() {
     if (!handled) {
