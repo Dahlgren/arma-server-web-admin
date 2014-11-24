@@ -1,7 +1,6 @@
 var events = require('events');
 var fs = require('fs');
 var gamedig = require('gamedig');
-var ip = require('ip');
 var spawn = require('child_process').spawn;
 
 var config = require('./config');
@@ -49,7 +48,7 @@ Server.prototype.queryStatus = function() {
   Gamedig.query(
     {
       type: 'arma3',
-      host: ip.address(),
+      host: '127.0.0.1',
       port: self.port,
     },
     function(state) {
