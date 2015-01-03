@@ -8,7 +8,7 @@ var ArmaServer = require('arma-server');
 
 var config = require('./config');
 var filePath = "servers.json";
-var queryInterval = 10000;
+var queryInterval = 5000;
 
 var Server = function (options) {
   this.update(options);
