@@ -2,11 +2,6 @@ var playwithsix = require('playwithsix');
 
 var manager = require('./../manager');
 
-function isPlayWithSixIgnoredMod(mod) {
-  var ignoredMods = ["@acre"];
-  return ignoredMods.indexOf(mod.toLowerCase()) != -1;
-}
-
 function removeDuplicates(mods) {
   return mods.reduce(function(a,b){
     if (a.indexOf(b) < 0 ) a.push(b);
@@ -15,11 +10,7 @@ function removeDuplicates(mods) {
 }
 
 function resolveMods(server, cb) {
-  var modsToResolve = server.mods.filter(function(mod) {
-    return !isPlayWithSixIgnoredMod(mod);
-  });
-
-  playwithsix.resolveDependencies(modsToResolve, function (err, mods) {
+  playwithsix.resolveDependencies(server.mods, function (err, mods) {
     if (!err && mods) {
       server.mods = removeDuplicates(server.mods.concat(mods));
       manager.save();
