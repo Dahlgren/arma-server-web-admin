@@ -70,7 +70,7 @@ exports.index = function(req, res){
         async.map(mods, function (mod, cb) {
           var modPath = path.join(config.path, mod);
           isPlayWithSixMod(modPath, function (isPlayWithSixMod) {
-            cb(null, { name: mod, outdated: outdatedMods.indexOf(mod) >= 0, playWithSix: isPlayWithSixMod });
+            cb(null, { name: mod, outdated: outdatedMods && outdatedMods.indexOf(mod) >= 0, playWithSix: isPlayWithSixMod });
           });
         }, function (err, mods) {
           res.send(mods);
