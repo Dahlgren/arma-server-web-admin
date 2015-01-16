@@ -24,6 +24,7 @@ define(function (require) {
         max_players: this.$("form .max-players").val(),
         password: this.$("form .password").val(),
         persistent: this.$("form .persistent").prop("checked"),
+        port: this.$("form .port").val(),
         title: this.$("form .title").val(),
         von: this.$("form .von").prop("checked"),
       };

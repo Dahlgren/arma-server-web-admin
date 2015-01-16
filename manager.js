@@ -20,14 +20,14 @@ Server.prototype.update = function (options) {
   this.admin_password = options.admin_password;
   this.battle_eye = options.battle_eye;
   this.max_players = options.max_players;
-  this.mods = options.mods;
+  this.mods = options.mods || [];
   this.password = options.password;
   this.persistent = options.persistent;
+  this.port = options.port || 2302;
   this.title = options.title;
   this.von = options.von;
 
   this.id = slug(this.title).replace('.', '-');
-  this.port = 2302;
 };
 
 Server.prototype.queryStatus = function() {

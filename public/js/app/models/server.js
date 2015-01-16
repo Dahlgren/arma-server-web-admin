@@ -14,6 +14,7 @@ define(function (require) {
       mods: [],
       password: '',
       persistent: false,
+      port: 2302,
       state: null,
       title: '',
       von: false,
