@@ -37,4 +37,4 @@ manager.on('servers', function() {
   io.emit('servers', manager.getServers());
 });
 
-server.listen(3000);
+server.listen(config.port);
