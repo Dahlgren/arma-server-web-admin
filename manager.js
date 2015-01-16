@@ -54,7 +54,7 @@ Server.prototype.start = function() {
   var server = new ArmaServer({
     battleEye: this.battle_eye ? 1 : 0,
     config: this.id,
-    disableVON: this.von ? 0 : 1,
+    disableVoN: this.von ? 0 : 1,
     hostname: this.title,
     mods: this.mods,
     password: this.password,
