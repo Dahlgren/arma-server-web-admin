@@ -12,7 +12,7 @@
     "express": "3.x",
     "express-resource": "~1.0.0",
     "gamedig": "^0.2.11",
-    "playwithsix": "0.0.7",
+    "playwithsix": "0.0.8",
     "slug": "~0.4.0",
     "socket.io": "^1.0.4",
     "userhome": "^1.0.0",
