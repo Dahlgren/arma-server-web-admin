@@ -18,8 +18,16 @@ define(function (require) {
       "click .delete": "delete"
     },
 
+    modelEvents: {
+      "change": "serverUpdated",
+    },
+
     delete: function (event) {
       this.model.destroy({wait: true});
+    },
+
+    serverUpdated: function (event) {
+      this.render();
     },
   });
 });
