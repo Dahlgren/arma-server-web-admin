@@ -28,6 +28,7 @@ Server.prototype.update = function (options) {
   this.von = options.von;
 
   this.id = slug(this.title).replace('.', '-');
+  this.port = parseInt(this.port, 10); // If port is a string then gamedig fails
 };
 
 Server.prototype.queryStatus = function() {
