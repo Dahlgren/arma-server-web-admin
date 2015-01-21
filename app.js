@@ -2,7 +2,7 @@ var express = require('express');
 var Resource = require('express-resource');
 
 var config = require('./config');
-var manager = require('./manager');
+var Manager = require('./lib/manager');
 
 var app = express();
 var server = require('http').Server(app);
@@ -14,7 +14,9 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.static(__dirname + '/public'));
 
-var servers = require('./routes/servers');
+var manager = new Manager(config);
+manager.load();
+var servers = require('./routes/servers')(manager);
 
 app.resource('api/logs', require('./routes/logs'));
 app.resource('api/missions', require('./routes/missions'));
