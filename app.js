@@ -19,7 +19,7 @@ var manager = new Manager(config);
 manager.load();
 var mods = new Mods(config);
 
-var servers = require('./routes/servers')(manager);
+var servers = require('./routes/servers')(manager, mods);
 
 app.resource('api/logs', require('./routes/logs'));
 app.resource('api/missions', require('./routes/missions'));

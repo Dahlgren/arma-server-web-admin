@@ -1,24 +1,14 @@
-var playwithsix = require('playwithsix');
+module.exports = function (manager, mods) {
+  var resolveMods = function(server, cb) {
+    mods.resolveMods(server.mods, function(err, resolvedMods) {
+      if (!err) {
+        server.mods = resolvedMods;
+        manager.save();
+      }
+      cb();
+    });
+  };
 
-function removeDuplicates(mods) {
-  return mods.reduce(function(a,b){
-    if (a.indexOf(b) < 0 ) a.push(b);
-    return a;
-  },[]);
-}
-
-function resolveMods(server, cb) {
-  playwithsix.resolveDependencies(server.mods, function (err, mods) {
-    if (!err && mods) {
-      server.mods = removeDuplicates(server.mods.concat(mods));
-      manager.save();
-    }
-
-    cb(err);
-  });
-}
-
-module.exports = function (manager) {
   return {
     index: function (req, res){
       res.send(manager.getServers());
@@ -27,7 +17,7 @@ module.exports = function (manager) {
     create: function (req, res) {
       var server = manager.addServer(req.body);
       if (server.mods.length > 0) {
-        resolveMods(server, function(err) {
+        resolveMods(server, function() {
           res.send(server);
         });
       } else {
@@ -46,7 +36,7 @@ module.exports = function (manager) {
       manager.save();
 
       if (server.mods.length > 0) {
-        resolveMods(server, function(err) {
+        resolveMods(server, function() {
           res.send(server);
         });
       } else {
