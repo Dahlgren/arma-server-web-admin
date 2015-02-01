@@ -39,9 +39,11 @@ define(function (require) {
     initialize: function () {
       layoutView.navigation.show(navigationView);
       missions.fetch();
-      mods.fetch();
 
       var socket = io.connect();
+      socket.on('mods', function (_mods) {
+        mods.set(_mods);
+      });
       socket.on('servers', function (_servers) {
         servers.set(_servers);
       });

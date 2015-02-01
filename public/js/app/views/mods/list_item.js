@@ -33,7 +33,6 @@ define(function (require) {
         success: function (resp) {
           self.laddaBtn.stop();
           self.$el.find('.ladda-button').removeClass('disabled');
-          self.trigger("mods:update", mods);
         },
         error: function (resp) {
           self.laddaBtn.stop();

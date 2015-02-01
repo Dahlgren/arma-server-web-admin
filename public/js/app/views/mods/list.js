@@ -21,14 +21,6 @@ define(function (require) {
       "click #download": "download"
     },
 
-    initialize: function (options) {
-      this.on("itemview:mods:update", this.update, this);
-    },
-
-    update: function() {
-      this.collection.fetch();
-    },
-
     download: function (event) {
       event.preventDefault();
       var view = new FormView({mods: this.collection});

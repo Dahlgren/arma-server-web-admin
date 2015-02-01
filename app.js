@@ -37,7 +37,12 @@ app.get('/', function (req, res){
 });
 
 io.on('connection', function (socket) {
+  socket.emit('mods', mods.mods);
   socket.emit('servers', manager.getServers());
+});
+
+mods.on('mods', function(mods) {
+  io.emit('mods', mods);
 });
 
 manager.on('servers', function() {

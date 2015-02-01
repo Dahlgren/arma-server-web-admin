@@ -1,13 +1,7 @@
 module.exports = function (modsManager) {
   return {
     index: function(req, res){
-      modsManager.getMods(function (err, mods) {
-        if (err) {
-          res.send(500, err);
-        } else {
-          res.send(mods);
-        }
-      });
+      res.send(modsManager.mods);
     },
 
     create: function(req, res){

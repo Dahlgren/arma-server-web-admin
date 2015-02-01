@@ -56,12 +56,8 @@ define(function (require) {
 
       this.model.save({ name: $form.find('.mod').val() }, {
         success: function () {
-          self.mods.fetch({
-            success : function () {
-              self.laddaBtn.stop();
-              self.modal.close();
-            }
-          });
+          self.laddaBtn.stop();
+          self.modal.close();
         },
         error: function () {
           self.laddaBtn.stop();
