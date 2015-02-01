@@ -19,16 +19,18 @@ var manager = new Manager(config);
 manager.load();
 var mods = new Mods(config);
 
-var servers = require('./routes/servers')(manager, mods);
+var serversRoutes = require('./routes/servers')(manager, mods);
+var modsRoutes = require('./routes/mods')(mods);
 
 app.resource('api/logs', require('./routes/logs'));
 app.resource('api/missions', require('./routes/missions'));
-app.resource('api/mods', require('./routes/mods')(mods));
-var serversResource = app.resource('api/servers', servers);
+app.resource('api/mods', modsRoutes);
+var serversResource = app.resource('api/servers', serversRoutes);
 app.resource('api/settings', require('./routes/settings'));
 
-app.get('/api/servers/:server/start', servers.start);
-app.get('/api/servers/:server/stop', servers.stop);
+app.post('/api/mods/search', modsRoutes.search);
+app.get('/api/servers/:server/start', serversRoutes.start);
+app.get('/api/servers/:server/stop', serversRoutes.stop);
 
 app.get('/', function (req, res){
   res.sendfile(__dirname + '/public/index.html');
