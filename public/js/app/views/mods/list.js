@@ -24,7 +24,12 @@ define(function (require) {
     download: function (event) {
       event.preventDefault();
       var view = new FormView({mods: this.collection});
-      var modal = new Backbone.BootstrapModal({ content: view, animate: true });
+      var modal = new Backbone.BootstrapModal({
+        content: view,
+        animate: true,
+        cancelText: 'Close',
+        okText: 'Search',
+      });
       view.modal = modal;
       modal.open();
     },

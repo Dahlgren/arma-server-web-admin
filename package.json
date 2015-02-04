@@ -11,6 +11,7 @@
     "async": "^0.9.0",
     "express": "3.x",
     "express-resource": "~1.0.0",
+    "filesize": "^3.1.0",
     "gamedig": "^0.2.11",
     "playwithsix": "0.0.9",
     "slug": "~0.4.0",

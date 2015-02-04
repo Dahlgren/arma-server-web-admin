@@ -1,12 +1,23 @@
 <p>
-  Use foldername from <a href='http://play.withsix.com/' target=_blank>play withSIX</a>
-  such as @A3MP
+  Install mods from <a href='http://play.withsix.com/' target=_blank>Play withSIX</a>
 </p>
 
 <form class="form" role="form" action="/api/mods" method="POST">
   <div class="form-group">
-    <label for="mod" class="control-label">Mod</label>
-    <input type="text" class="form-control mod" name="name" id="mod" data-field="mod">
+    <label for="query" class="control-label">Search</label>
+    <input type="text" class="form-control query" name="query" id="query" data-field="query">
     <span class="help-block"></span>
   </div>
 </form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Mod</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <!-- want to insert collection items, here -->
+  <tbody></tbody>
+</table>

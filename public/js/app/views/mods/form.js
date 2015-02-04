@@ -7,21 +7,24 @@ define(function (require) {
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
       FormView            = require('marionette-formview'),
+      ListItemView        = require('app/views/mods/search/list_item'),
       Ladda               = require('ladda'),
-      Mod                 = require('app/models/mod'),
+      Mods                = require('app/collections/mods'),
       tpl                 = require('text!tpl/mods/form.html');
 
-  return Marionette.ItemView.extend({
+  return Marionette.CompositeView.extend({
 
     events: {
       'submit': 'beforeSubmit',
     },
 
+    itemView: ListItemView,
+    itemViewContainer: "tbody",
     template: _.template(tpl),
 
     initialize: function (options) {
       this.mods = options.mods;
-      this.model = new Mod();
+      this.collection = new Mods();
       this.bind('ok', this.submit);
       this.bind('shown', this.shown);
     },
@@ -54,15 +57,22 @@ define(function (require) {
       this.laddaBtn.start();
       self.modal.$el.find('.btn.cancel').addClass('disabled');
 
-      this.model.save({ name: $form.find('.mod').val() }, {
-        success: function () {
+      $.ajax({
+        url: '/api/mods/search',
+        type: 'POST',
+        data: {
+          query: $form.find('.query').val()
+        },
+        dataType: 'json',
+        success: function (data) {
           self.laddaBtn.stop();
-          self.modal.close();
+          self.modal.$el.find('.btn.cancel').removeClass('disabled');
+          self.collection.set(data);
         },
         error: function () {
           self.laddaBtn.stop();
           $form.find('.form-group').addClass('has-error');
-          $form.find('.help-block').text('Problem downloading mod');
+          $form.find('.help-block').text('Problem searching, try again');
           self.modal.$el.find('.btn.cancel').removeClass('disabled');
         }
       });
