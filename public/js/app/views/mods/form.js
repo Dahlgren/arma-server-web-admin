@@ -45,7 +45,7 @@ define(function (require) {
 
     submit: function (modal) {
       var self = this;
-      var $form = $('form');
+      var $form = this.$el.find('form');
 
       if (modal) {
         self.modal.preventClose();
