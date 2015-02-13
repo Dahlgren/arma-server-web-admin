@@ -10,6 +10,7 @@ define(function (require) {
     defaults: {
       admin_password: '',
       battle_eye: false,
+      headless: false,
       max_players: null,
       mods: [],
       password: '',
