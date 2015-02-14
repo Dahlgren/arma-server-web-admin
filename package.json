@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node node_modules/mocha/bin/mocha --recursive"
   },
   "dependencies": {
     "arma-server": "git+https://github.com/Dahlgren/node-arma-server.git",
@@ -18,5 +19,9 @@
     "socket.io": "^1.0.4",
     "userhome": "^1.0.0",
     "when": "~3.1.0"
+  },
+  "devDependencies": {
+    "mocha": "~2.1.0",
+    "should": "~5.0.0"
   }
 }

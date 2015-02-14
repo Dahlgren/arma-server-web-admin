@@ -18,6 +18,7 @@ app.use(express.static(__dirname + '/public'));
 var manager = new Manager(config);
 manager.load();
 var mods = new Mods(config);
+mods.updateMods();
 
 var serversRoutes = require('./routes/servers')(manager, mods);
 var modsRoutes = require('./routes/mods')(mods);
