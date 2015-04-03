@@ -31,7 +31,7 @@ define(function (require) {
     settings: function (event) {
       event.preventDefault();
       var view = new SettingsView();
-      new Backbone.BootstrapModal({ content: view, animate: true }).open()
+      new Backbone.BootstrapModal({ content: view, animate: true, cancelText: false }).open();
     }
   });
 
