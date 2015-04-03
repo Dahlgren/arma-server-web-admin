@@ -5,3 +5,4 @@ node_js:
   - "0.8"
 before_install:
   - npm update -g npm
+  - cp config.js.example config.js
