@@ -6,7 +6,13 @@
   <% } %>
 </td>
 <td>
-  <% if (outdated) { %>
+  <% if (typeof progress !== 'undefined') { %>
+    <div class="progress" style="margin-bottom: 0;">
+      <div class="progress-bar" role="progressbar" aria-valuenow="<%-progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%-progress%>%; min-width: 2em;">
+        <%-progress%>%
+      </div>
+    </div>
+  <% } else if (outdated) { %>
     <a class="btn btn-primary btn-xs update ladda-button pull-right" data-style="expand-left">
       <span class="glyphicon glyphicon-save"></span>
       Update

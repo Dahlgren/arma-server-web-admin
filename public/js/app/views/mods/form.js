@@ -27,6 +27,15 @@ define(function (require) {
       this.collection = new Mods();
       this.bind('ok', this.submit);
       this.bind('shown', this.shown);
+
+      var self = this;
+      this.listenTo(this.mods, "change reset add remove", function () {
+        self.collection.trigger('reset');
+      });
+    },
+
+    itemViewOptions: function(options) {
+      options.set('mods', this.mods);
     },
 
     beforeSubmit: function(e) {

@@ -10,6 +10,7 @@ define(function (require) {
     defaults: {
       name: ''
     },
+    idAttribute: 'name',
     urlRoot: '/api/mods/',
   });
 

@@ -19,6 +19,16 @@ define(function (require) {
       "click .install": "install"
     },
 
+    templateHelpers: {
+      progress: function() {
+        if (this.mods.get(this.name)) {
+          return this.mods.get(this.name).get('progress');
+        }
+
+        return null;
+      }
+    },
+
     install: function (event) {
       var self = this;
       event.preventDefault();

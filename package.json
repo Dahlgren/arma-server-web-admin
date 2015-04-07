@@ -14,6 +14,7 @@
     "express-resource": "~1.0.0",
     "filesize": "^3.1.0",
     "gamedig": "^0.2.11",
+    "lodash": "^3.6.0",
     "playwithsix": "0.0.10",
     "slug": "~0.4.0",
     "socket.io": "^1.0.4",
