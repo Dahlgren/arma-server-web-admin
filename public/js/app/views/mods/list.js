@@ -21,6 +21,10 @@ define(function (require) {
       "click #download": "download"
     },
 
+    initialize: function (options) {
+      this.listenTo(this.collection, "change reset", this.render);
+    },
+
     download: function (event) {
       event.preventDefault();
       var view = new FormView({mods: this.collection});

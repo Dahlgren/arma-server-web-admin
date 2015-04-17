@@ -15,5 +15,9 @@ define(function (require) {
     itemView: ListItemView,
     itemViewContainer: "tbody",
     template: template,
+
+    initialize: function (options) {
+      this.listenTo(this.collection, "change reset", this.render);
+    },
   });
 });

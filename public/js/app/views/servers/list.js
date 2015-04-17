@@ -25,6 +25,10 @@ define(function (require) {
       "click #add-server": "addServer"
     },
 
+    initialize: function (options) {
+      this.listenTo(this.collection, "change reset", this.render);
+    },
+
     buildItemView: function(item, ItemViewType, itemViewOptions){
       // build the final list of options for the item view type
       var options = _.extend({model: item}, itemViewOptions);

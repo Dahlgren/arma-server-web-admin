@@ -20,11 +20,7 @@ define(function (require) {
       missions = new Missions(),
       mods = new Mods(),
       servers = new Servers(),
-      layoutView = new LayoutView({el: $body}).render(),
-      navigationView = new NavigationView({servers: servers}),
-      serversView = new ServersView({collection: servers}),
-      missionsView = new MissionsView({missions: missions}),
-      modsListView = new ModsListView({collection: mods});
+      layoutView = new LayoutView({el: $body}).render();
 
   return Backbone.Router.extend({
 
@@ -37,7 +33,7 @@ define(function (require) {
     },
 
     initialize: function () {
-      layoutView.navigation.show(navigationView);
+      layoutView.navigation.show(new NavigationView({servers: servers}));
       missions.fetch();
 
       var socket = io.connect();
@@ -50,8 +46,7 @@ define(function (require) {
     },
 
     home: function () {
-      layoutView.content.show(serversView);
-      serversView.delegateEvents();
+      layoutView.content.show(new ServersView({collection: servers}));
     },
 
     logs: function () {
@@ -61,13 +56,11 @@ define(function (require) {
     },
 
     missions: function () {
-      layoutView.content.show(missionsView);
-      missionsView.delegateEvents();
+      layoutView.content.show(new MissionsView({missions: missions}));
     },
 
     mods: function () {
-      layoutView.content.show(modsListView);
-      modsListView.delegateEvents();
+      layoutView.content.show(new ModsListView({collection: mods}));
     },
 
     server: function (id) {
@@ -75,7 +68,7 @@ define(function (require) {
       if (server) {
         layoutView.content.show(new ServerView({model: server, mods: mods}));
       } else {
-        this.navigate("#", true)
+        this.navigate("#", true);
       }
     }
 
