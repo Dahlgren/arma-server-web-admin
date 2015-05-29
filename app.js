@@ -50,4 +50,4 @@ manager.on('servers', function() {
   io.emit('servers', manager.getServers());
 });
 
-server.listen(config.port);
+server.listen(config.port,config.host);
