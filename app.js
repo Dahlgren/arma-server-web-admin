@@ -29,6 +29,7 @@ app.resource('api/mods', modsRoutes);
 var serversResource = app.resource('api/servers', serversRoutes);
 app.resource('api/settings', require('./routes/settings'));
 
+app.post('/api/mods/refresh', modsRoutes.refresh);
 app.post('/api/mods/search', modsRoutes.search);
 app.get('/api/servers/:server/start', serversRoutes.start);
 app.get('/api/servers/:server/stop', serversRoutes.stop);

@@ -39,6 +39,11 @@ module.exports = function (modsManager) {
       res.send('destroy mod ' + req.params.mod);
     },
 
+    refresh: function(req, res){
+      modsManager.updateMods();
+      res.send(200, {});
+    },
+
     search: function(req, res){
       var query = req.body.query || "";
       modsManager.search(query, function (err, mods) {

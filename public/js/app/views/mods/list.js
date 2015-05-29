@@ -18,7 +18,8 @@ define(function (require) {
     template: template,
 
     events: {
-      "click #download": "download"
+      "click #download": "download",
+      "click #refresh": "refresh",
     },
 
     initialize: function (options) {
@@ -36,6 +37,20 @@ define(function (require) {
       });
       view.modal = modal;
       modal.open();
+    },
+
+    refresh: function (event) {
+      event.preventDefault();
+      $.ajax({
+        url: "/api/mods/refresh",
+        type: 'POST',
+        success: function (resp) {
+
+        },
+        error: function (resp) {
+
+        },
+      });
     },
   });
 });
