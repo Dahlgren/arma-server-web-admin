@@ -9,6 +9,10 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+if (config.auth && config.auth.username && config.auth.password) {
+  app.use(express.basicAuth(config.auth.username, config.auth.password));
+}
+
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());

@@ -24,6 +24,7 @@ path | Folder path to game server
 port | Web port to use
 host | IP or Hostname to listen on
 type | Which kind of server to use, can be 'linux', 'windows' or 'wine'
+auth | If both username and password is set, HTTP Basic Auth will be used
 
 ## How to Use
 
