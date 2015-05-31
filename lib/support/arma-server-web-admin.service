@@ -1,0 +1,13 @@
+[Service]
+ExecStart=/usr/bin/node [PATH_TO arma-server-web-admin/app.js]
+WorkingDirectory=[PATH_TO arma-server-web-admin]
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=arma-server-web-admin
+User=[USER]
+Group=[GROUP]
+Environment=NODE_ENV=production
+
+[Install]
+WandedBy=multi-user.target
