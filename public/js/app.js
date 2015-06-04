@@ -28,6 +28,9 @@ require.config({
     'marionette-formview': {
       deps: ['marionette']
     },
+    'sweet-alert': {
+      deps: ['bootstrap']
+    },
     'underscore': {
       exports: '_'
     }

@@ -6,6 +6,7 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
+      swal                = require('sweet-alert'),
       tpl                 = require('text!tpl/servers/info.html');
 
   return Marionette.Layout.extend({
@@ -33,16 +34,25 @@ define(function (require) {
     stop: function (event) {
       var self = this;
       event.preventDefault();
-      $.ajax({
-        url: "/api/servers/" + this.model.get('id') + "/stop",
-        type: 'GET',
-        success: function (resp) {
-          self.model.set("pid", resp.pid);
-          self.render();
-        },
-        error: $.noop
+      sweetAlert({
+        title: "Are you sure?",
+        text: "The server will stopped.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-warning",
+        confirmButtonText: "Yes, stop it!",
+      },
+      function(){
+        $.ajax({
+          url: "/api/servers/" + self.model.get('id') + "/stop",
+          type: 'GET',
+          success: function (resp) {
+            self.model.set("pid", resp.pid);
+            self.render();
+          },
+          error: $.noop
+        });
       });
     },
   });
-
 });

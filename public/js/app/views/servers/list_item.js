@@ -6,6 +6,7 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
+      swal                = require('sweet-alert'),
       tpl                 = require('text!tpl/servers/list_item.html'),
 
       template = _.template(tpl);
@@ -23,7 +24,18 @@ define(function (require) {
     },
 
     delete: function (event) {
-      this.model.destroy({wait: true});
+      var self = this;
+      sweetAlert({
+        title: "Are you sure?",
+        text: "Your server configuration will be deleted!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+      },
+      function(){
+        self.model.destroy();
+      });
     },
 
     serverUpdated: function (event) {

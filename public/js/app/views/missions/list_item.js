@@ -6,6 +6,7 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
+      swal                = require('sweet-alert'),
       tpl                 = require('text!tpl/missions/list_item.html'),
 
       template = _.template(tpl);
@@ -20,14 +21,16 @@ define(function (require) {
 
     delete: function (event) {
       var self = this;
-      event.preventDefault();
-      $.ajax({
-        url: "/api/missions/" + this.model.get('name'),
-        type: 'DELETE',
-        success: function (resp) {
-          self.model.destroy();
-        },
-        error: $.noop
+      sweetAlert({
+        title: "Are you sure?",
+        text: "The mission will be deleted from the server!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+      },
+      function(){
+        self.model.destroy();
       });
     },
   });
