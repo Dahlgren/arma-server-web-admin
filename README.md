@@ -1,5 +1,7 @@
 # Arma Server Admin
 
+[![Build Status](https://travis-ci.org/Dahlgren/arma-server-web-admin.svg?branch=master)](https://travis-ci.org/Dahlgren/arma-server-web-admin)
+
 ## Requirements
 
 - Node.js, https://nodejs.org/
