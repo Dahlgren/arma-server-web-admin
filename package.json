@@ -13,6 +13,7 @@
     "express": "3.x",
     "express-resource": "~1.0.0",
     "filesize": "^3.1.0",
+    "fs.extra": "~1.3.2",
     "gamedig": "^0.2.11",
     "lodash": "^3.6.0",
     "playwithsix": "0.0.10",

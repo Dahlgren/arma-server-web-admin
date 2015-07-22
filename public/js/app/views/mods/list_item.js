@@ -7,6 +7,7 @@ define(function (require) {
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
       Ladda               = require('ladda'),
+      swal                = require('sweet-alert'),
       tpl                 = require('text!tpl/mods/list_item.html'),
 
       template = _.template(tpl);
@@ -16,7 +17,23 @@ define(function (require) {
     template: template,
 
     events: {
-      "click .update": "update"
+      "click .destroy": "destroy",
+      "click .update": "update",
+    },
+
+    destroy: function (event) {
+      var self = this;
+      sweetAlert({
+        title: "Are you sure?",
+        text: "The mod will be deleted from the server!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonClass: "btn-danger",
+        confirmButtonText: "Yes, delete it!",
+      },
+      function(){
+        self.model.destroy();
+      });
     },
 
     update: function (event) {

@@ -1,4 +1,4 @@
-<td style="width: 100%;">
+<td>
   <a href='#mods/<%-name%>'><%-name%></a>
 
   <% if (playWithSix) { %>
@@ -12,11 +12,19 @@
         <%-progress%>%
       </div>
     </div>
-  <% } else if (outdated) { %>
-    <a class="btn btn-primary btn-xs update ladda-button pull-right" data-style="expand-left">
-      <span class="glyphicon glyphicon-save"></span>
-      Update
+  <% } else { %>
+    <a class="btn btn-primary btn-xs destroy ladda-button pull-right" data-style="expand-left">
+      <span class="glyphicon glyphicon-trash"></span>
+      Delete
     </a>
+
+    <% if (outdated) { %>
+      <a class="btn btn-primary btn-xs update ladda-button pull-right" data-style="expand-left" style="margin-right: 8px">
+        <span class="glyphicon glyphicon-save"></span>
+        Update
+      </a>
+    <% } %>
+
     <div class="clearfix"></div>
   <% } %>
 </td>
