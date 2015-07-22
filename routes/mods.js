@@ -36,7 +36,13 @@ module.exports = function (modsManager) {
     },
 
     destroy: function(req, res){
-      res.send('destroy mod ' + req.params.mod);
+      modsManager.delete(req.params.mod, function (err) {
+        if (err) {
+          res.send(500, err);
+        } else {
+         res.send(204, {});
+        }
+      });
     },
 
     refresh: function(req, res){
