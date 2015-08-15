@@ -6,7 +6,8 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      FormView            = require('app/views/missions/form'),
+      UploadView          = require('app/views/missions/upload'),
+      WorkshopView        = require('app/views/missions/workshop'),
       ListView            = require('app/views/missions/list'),
       tpl                 = require('text!tpl/missions/index.html');
 
@@ -14,12 +15,14 @@ define(function (require) {
     template: _.template(tpl),
 
     regions: {
-      formView: "#form",
+      uploadView: "#upload",
+      workshopView: "#workshop",
       listView: "#list",
     },
 
     onRender: function() {
-      this.formView.show(new FormView({missions: this.options.missions}));
+      this.uploadView.show(new UploadView({missions: this.options.missions}));
+      this.workshopView.show(new WorkshopView({missions: this.options.missions}));
       this.listView.show(new ListView({collection: this.options.missions}));
     },
   });

@@ -33,6 +33,7 @@ app.resource('api/mods', modsRoutes);
 var serversResource = app.resource('api/servers', serversRoutes);
 app.resource('api/settings', require('./routes/settings'));
 
+app.post('/api/missions/workshop', require('./routes/workshop').mission);
 app.post('/api/mods/refresh', modsRoutes.refresh);
 app.post('/api/mods/search', modsRoutes.search);
 app.get('/api/servers/:server/start', serversRoutes.start);

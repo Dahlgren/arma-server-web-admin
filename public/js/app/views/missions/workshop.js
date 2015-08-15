@@ -10,7 +10,7 @@ define(function (require) {
       Ladda               = require('ladda'),
       IframeTransport     = require('jquery.iframe-transport'),
       Mission             = require('app/models/mission'),
-      tpl                 = require('text!tpl/missions/form.html');
+      tpl                 = require('text!tpl/missions/workshop.html');
 
   return Marionette.ItemView.extend({
     template: _.template(tpl),
@@ -21,7 +21,6 @@ define(function (require) {
 
     initialize: function (options) {
       this.missions = options.missions;
-      this.model = new Mission();
     },
 
     onShow: function () {
@@ -33,20 +32,26 @@ define(function (require) {
 
     submit: function () {
       var self = this;
-      var $form = $('form');
+      var $form = this.$el.find('form');
 
       this.laddaBtn.start();
 
-      $.ajax("/api/missions", {
-        files: $form.find(":file"),
-        iframe: true
-      }).complete(function(data) {
-        self.missions.fetch({success : function () {
+      $.ajax({
+        url: '/api/missions/workshop',
+        type: 'POST',
+        data: {
+          id: $form.find("input.workshop").val(),
+        },
+        dataType: 'json',
+        success: function (data) {
+          self.missions.fetch({success : function () {
+            self.laddaBtn.stop();
+            self.render();
+          }});
+        },
+        error: function () {
           self.laddaBtn.stop();
-          self.render();
-        }});
-      }).error(function() {
-        self.laddaBtn.stop();
+        },
       });
     },
   });
