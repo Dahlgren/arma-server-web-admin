@@ -40,20 +40,18 @@ define(function (require) {
       var self = this;
       event.preventDefault();
 
-      this.laddaBtn = Ladda.create(this.$el.find(".ladda-button").get(0));
-      this.laddaBtn.start();
-      this.$el.find('.ladda-button').addClass('disabled');
+      var $updateBtn = this.$el.find(".update");
+      var laddaBtn = Ladda.create($updateBtn.get(0));
+      laddaBtn.start();
 
       $.ajax({
         url: "/api/mods/" + this.model.get('name'),
         type: 'PUT',
         success: function (resp) {
-          self.laddaBtn.stop();
-          self.$el.find('.ladda-button').removeClass('disabled');
+          laddaBtn.stop();
         },
         error: function (resp) {
-          self.laddaBtn.stop();
-          self.$el.find('.ladda-button').removeClass('disabled');
+          laddaBtn.stop();
         },
       });
     },
