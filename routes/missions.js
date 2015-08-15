@@ -9,7 +9,9 @@ exports.index = function(req, res){
       res.send(err);
     } else {
       var missions = files.map(function (filename) {
-        return { name: filename }
+        return {
+          name: filename,
+        };
       });
       res.send(missions);
     }
