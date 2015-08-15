@@ -23,18 +23,13 @@ define(function (require) {
       this.missions = options.missions;
     },
 
-    onShow: function () {
-      var $okBtn = this.$el.find('form button[type=submit]');
-      $okBtn.addClass('ladda-button').attr('data-style', 'expand-left');
-
-      this.laddaBtn = Ladda.create($okBtn.get(0));
-    },
-
     submit: function () {
       var self = this;
       var $form = this.$el.find('form');
 
-      this.laddaBtn.start();
+      var $downloadBtn = $form.find('button[type=submit]');
+      var laddaBtn = Ladda.create($downloadBtn.get(0));
+      laddaBtn.start();
 
       $.ajax({
         url: '/api/missions/workshop',
@@ -45,12 +40,12 @@ define(function (require) {
         dataType: 'json',
         success: function (data) {
           self.missions.fetch({success : function () {
-            self.laddaBtn.stop();
+            laddaBtn.stop();
             self.render();
           }});
         },
         error: function () {
-          self.laddaBtn.stop();
+          laddaBtn.stop();
         },
       });
     },

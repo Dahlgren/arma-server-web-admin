@@ -24,29 +24,24 @@ define(function (require) {
       this.model = new Mission();
     },
 
-    onShow: function () {
-      var $okBtn = this.$el.find('form button[type=submit]');
-      $okBtn.addClass('ladda-button').attr('data-style', 'expand-left');
-
-      this.laddaBtn = Ladda.create($okBtn.get(0));
-    },
-
     submit: function () {
       var self = this;
       var $form = this.$el.find('form');
 
-      this.laddaBtn.start();
+      var $uploadBtn = $form.find('button[type=submit]');
+      var laddaBtn = Ladda.create($uploadBtn.get(0));
+      laddaBtn.start();
 
       $.ajax("/api/missions", {
         files: $form.find(":file"),
         iframe: true
       }).complete(function(data) {
         self.missions.fetch({success : function () {
-          self.laddaBtn.stop();
+          laddaBtn.stop();
           self.render();
         }});
       }).error(function() {
-        self.laddaBtn.stop();
+        laddaBtn.stop();
       });
     },
   });
