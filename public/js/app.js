@@ -39,5 +39,4 @@ require.config({
 
 require(['jquery', 'bootstrap', 'backbone', 'app/router'], function ($, Bootstrap, Backbone, Router) {
   var router = new Router();
-  Backbone.history.start();
 });
