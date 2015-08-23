@@ -74,7 +74,11 @@ define(function (require) {
     server: function (id) {
       var server = servers.get(id);
       if (server) {
-        layoutView.content.show(new ServerView({model: server, mods: mods}));
+        layoutView.content.show(new ServerView({
+          model: server,
+          missions: missions,
+          mods: mods,
+        }));
       } else {
         this.navigate("#", true);
       }
