@@ -49,7 +49,6 @@ define(function (require) {
 
     serverUpdated: function() {
       this.infoView.currentView.render();
-      this.missionsView.currentView.render();
       this.modsView.currentView.render();
       this.playersView.currentView.render();
       this.settingsView.currentView.render();

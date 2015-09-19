@@ -19,26 +19,34 @@ define(function (require) {
       rotationView: "#rotation",
     },
 
-    initialize: function (options) {
-      this.missions = options.missions;
-      this.server = options.server;
-
-      this.rotationCollection = new MissionRotations(this.server.get('missions'));
+    modelEvents: {
+      "change": "serverUpdated",
     },
 
-    onRender: function() {
+    initialize: function (options) {
+      this.missions = options.missions;
+      this.model = options.server;
+
+      this.rotationCollection = new MissionRotations(this.model.get('missions'));
+
       var self = this;
 
-      var availableListView = new AvailableListView({collection: this.missions});
-      availableListView.on('add', function (model) {
+      this.availableListView = new AvailableListView({collection: this.missions});
+      this.availableListView.on('add', function (model) {
         self.rotationCollection.add([{
           name: model.get('name').replace('.pbo', ''),
         }]);
       });
-      var rotationListView = new RotationListView({collection: this.rotationCollection});
+      this.rotationListView = new RotationListView({collection: this.rotationCollection});
+    },
 
-      this.availableView.show(availableListView);
-      this.rotationView.show(rotationListView);
+    onRender: function() {
+      this.availableView.show(this.availableListView);
+      this.rotationView.show(this.rotationListView);
+    },
+
+    serverUpdated: function() {
+      this.rotationCollection.set(this.model.get('missions'));
     },
 
     serialize : function() {
