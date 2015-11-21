@@ -15,7 +15,7 @@ module.exports = function (logsManager) {
         requestedFilename += "." + req.format;
       }
 
-      logs.getLogFile(requestedFilename, function (err, file) {
+      logsManager.getLogFile(requestedFilename, function (err, file) {
         if (err) {
           res.send(err);
         } else {
