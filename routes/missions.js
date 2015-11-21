@@ -1,10 +1,14 @@
 var fs = require('fs');
+var path = require('path');
 
 var config = require('./../config');
 
+function missionsPath() {
+  return path.join(config.path, 'mpmissions');
+}
+
 exports.index = function(req, res){
-  var path = config.path + '/mpmissions';
-  fs.readdir(path, function (err, files) {
+  fs.readdir(missionsPath(), function (err, files) {
     if (err) {
       res.send(err);
     } else {
@@ -22,31 +26,29 @@ exports.create = function(req, res){
   var missionFile = req.files.mission;
 
   fs.readFile(missionFile.path, function (err, data) {
-    var newPath = config.path + '/mpmissions/' + missionFile.name.toLowerCase();
-    fs.writeFile(newPath, data, function (err) {
+    var filename = decodeURI(missionFile.name.toLowerCase());
+    fs.writeFile(path.join(missionsPath(), filename), data, function (err) {
       res.json(missionFile);
     });
   });
 };
 
 exports.show = function(req, res){
-  var path = config.path + '/mpmissions/' + req.params.mission;
-
+  var filename = req.params.mission;
   if (req.params.format) {
-    path += '.' + req.params.format;
+    filename += '.' + req.params.format;
   }
 
-  res.download(path);
+  res.download(path.join(missionsPath(), encodeURI(filename)), decodeURI(filename));
 };
 
 exports.destroy = function(req, res){
-  var path = config.path + '/mpmissions/' + req.params.mission;
-
+  var filename = req.params.mission;
   if (req.params.format) {
-    path += '.' + req.params.format;
+    filename += '.' + req.params.format;
   }
 
-  fs.unlink(path, function (err) {
+  fs.unlink(path.join(missionsPath(), filename), function (err) {
     if (err) {
       res.json(500, {success: false});
     } else {
