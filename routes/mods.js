@@ -5,13 +5,8 @@ module.exports = function (modsManager) {
     },
 
     create: function(req, res){
-      modsManager.download(req.body.name, function (err, mods) {
-        if (err || !mods) {
-          res.send(500, err);
-        } else {
-          res.send(mods);
-        }
-      });
+      modsManager.download(req.body.name);
+      res.send(204, {});
     },
 
     show: function(req, res){
@@ -26,13 +21,8 @@ module.exports = function (modsManager) {
     },
 
     update: function(req, res){
-      modsManager.download(req.params.mod, function (err, mods) {
-        if (err || !mods) {
-          res.send(500, err);
-        } else {
-          res.send(mods);
-        }
-      });
+      modsManager.download(req.params.mod);
+      res.send(204, {});
     },
 
     destroy: function(req, res){
