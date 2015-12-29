@@ -41,10 +41,10 @@ define(function (require) {
 
       var socket = io.connect();
       socket.on('mods', function (_mods) {
-        mods.set(_mods);
+        mods.set(_mods).sort();
       });
       socket.on('servers', function (_servers) {
-        servers.set(_servers);
+        servers.set(_servers).sort();
 
         if (!initialized) {
           initialized = true;
