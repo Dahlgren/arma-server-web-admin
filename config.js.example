@@ -4,6 +4,10 @@ module.exports = {
   port: 3000,
   host: '0.0.0.0', // Can be either an IP or a Hostname
   type: 'linux', // Can be either linux, windows or wine
+  serverMods: [ // Mods used exclusively by server and not shared with clients
+    '@mod1',
+    '@mod2',
+  ],
   auth: { // If both username and password is set, HTTP Basic Auth will be used
     username: '', // Username for HTTP Basic Auth
     password: '', // Password for HTTP Basic Auth
