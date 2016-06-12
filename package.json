@@ -8,7 +8,7 @@
     "test": "node node_modules/mocha/bin/mocha --recursive"
   },
   "dependencies": {
-    "arma-server": "0.0.3",
+    "arma-server": "0.0.4",
     "async": "^0.9.0",
     "express": "3.x",
     "express-resource": "~1.0.0",
