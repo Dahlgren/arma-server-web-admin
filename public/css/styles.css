@@ -20,3 +20,7 @@ body {
 #footer .container .text-muted {
   margin: 20px 0;
 }
+
+.text-nowrap {
+  white-space: nowrap;
+}

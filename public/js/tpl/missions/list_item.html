@@ -1,6 +1,8 @@
 <td style="width: 100%;">
   <a href='/api/missions/<%-encodeURI(name)%>'><%-name%></a>
 </td>
+<td class="text-nowrap"><%-sizeFormatted%></td>
+<td class="text-nowrap"><%-dateModified.substring(0, 10)%></td>
 <td>
   <button type="button" class="btn btn-danger btn-xs delete">
     <span class="glyphicon glyphicon-trash"></span> Delete
