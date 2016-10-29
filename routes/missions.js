@@ -1,58 +1,41 @@
-var fs = require('fs');
-var path = require('path');
-
-var config = require('./../config');
-
-function missionsPath() {
-  return path.join(config.path, 'mpmissions');
-}
-
-exports.index = function(req, res){
-  fs.readdir(missionsPath(), function (err, files) {
-    if (err) {
-      res.send(err);
-    } else {
-      var missions = files.map(function (filename) {
-        return {
-          name: filename,
-        };
+module.exports = function (missionsManager) {
+  return {
+    index: function (req, res) {
+      missionsManager.list(function (err, missions) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(missions);
+        }
       });
-      res.send(missions);
-    }
-  });
-};
+    },
+    create: function (req, res) {
+      var missionFile = req.files.mission;
+      missionsManager.handleUpload(missionFile, function (err) {
+        res.send(err);
+      });
+    },
+    show: function(req, res){
+      var filename = req.params.mission;
+      if (req.params.format) {
+        filename += '.' + req.params.format;
+      }
 
-exports.create = function(req, res){
-  var missionFile = req.files.mission;
+      res.download(missionsManager.missionPath(encodeURI(filename)), decodeURI(filename));
+    },
+    destroy: function(req, res){
+      var filename = req.params.mission;
+      if (req.params.format) {
+        filename += '.' + req.params.format;
+      }
 
-  fs.readFile(missionFile.path, function (err, data) {
-    var filename = decodeURI(missionFile.name.toLowerCase());
-    fs.writeFile(path.join(missionsPath(), filename), data, function (err) {
-      res.json(missionFile);
-    });
-  });
-};
-
-exports.show = function(req, res){
-  var filename = req.params.mission;
-  if (req.params.format) {
-    filename += '.' + req.params.format;
-  }
-
-  res.download(path.join(missionsPath(), encodeURI(filename)), decodeURI(filename));
-};
-
-exports.destroy = function(req, res){
-  var filename = req.params.mission;
-  if (req.params.format) {
-    filename += '.' + req.params.format;
-  }
-
-  fs.unlink(path.join(missionsPath(), filename), function (err) {
-    if (err) {
-      res.json(500, {success: false});
-    } else {
-      res.json({success: true});
-    }
-  });
+      missionsManager.delete(filename, function (err) {
+        if (err) {
+          res.json(500, {success: false});
+        } else {
+          res.json({success: true});
+        }
+      });
+    },
+  };
 };
