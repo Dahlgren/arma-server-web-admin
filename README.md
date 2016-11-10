@@ -2,10 +2,28 @@
 
 [![Build Status](https://travis-ci.org/Dahlgren/arma-server-web-admin.svg?branch=master)](https://travis-ci.org/Dahlgren/arma-server-web-admin)
 
+A simple to use web admin panel for Arma servers.
+
+[Screenshots](http://imgur.com/a/Xod6U)
+
+## Features
+
+- Create multiple instances of game servers in the same admin panel
+- See server status queryed from the instances with current mission and players
+- Download game logs
+- Upload missions from your local computer and from Steam Workshop to the server
+- Download and update mods from withSIX
+
 ## Requirements
 
 - Node.js, https://nodejs.org/
 - Pre-installed Arma Server
+
+## Supported Platforms
+
+- Windows
+- Linux
+- Linx with Windows binary using Wine
 
 ## Supported Games
 
