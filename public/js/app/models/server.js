@@ -13,6 +13,7 @@ define(function (require) {
       headless: false,
       max_players: null,
       mods: [],
+      parameters: [],
       password: '',
       persistent: false,
       port: 2302,
