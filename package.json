@@ -1,9 +1,11 @@
 {
-  "name": "arma3-server-management",
+  "name": "arma-server-web-admin",
   "description": "ArmA3 Server Management Backbone.js App",
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "install-windows-service": "winser -i -a -c",
+    "uninstall-windows-service": "winser -r -x -c",
     "start": "node app.js",
     "test": "node node_modules/mocha/bin/mocha --recursive"
   },
@@ -21,7 +23,8 @@
     "socket.io": "^1.0.4",
     "steam-workshop": "0.0.1",
     "userhome": "^1.0.0",
-    "when": "~3.1.0"
+    "when": "~3.1.0",
+    "winser": "^1.0.2"
   },
   "devDependencies": {
     "mocha": "~2.1.0",

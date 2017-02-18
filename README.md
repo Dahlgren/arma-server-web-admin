@@ -54,13 +54,17 @@ auth | If both username and password is set, HTTP Basic Auth will be used
 
 3. Install all dependencies with `npm install`
 
-4. Launch the web UI with `npm start`
+4. Launch the web UI with `npm start` or install as a Windows Service with `npm run install-windows-service`
 
 ## System Configuration
 
 ### Windows
 
 Make sure to disable Windows Error Reporting or server control will be stuck on a server crash.
+
+Install as a Windows Service with `npm run install-windows-service`.
+
+Remove previously installed Windows Service with `npm run uninstall-windows-service`.
 
 ### Wine
 
