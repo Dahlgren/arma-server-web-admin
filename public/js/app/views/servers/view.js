@@ -11,6 +11,7 @@ define(function (require) {
       InfoView            = require('app/views/servers/info'),
       MissionsView        = require('app/views/servers/missions/index'),
       ModsListView        = require('app/views/servers/mods/list'),
+      ParametersListView  = require('app/views/servers/parameters/list'),
       PlayersView         = require('app/views/servers/players'),
       tpl                 = require('text!tpl/servers/view.html');
 
@@ -21,8 +22,9 @@ define(function (require) {
       infoView: "#tab-info",
       missionsView: "#tab-missions",
       modsView: "#tab-mods",
+      parametersView: "#parameters",
       playersView: "#tab-players",
-      settingsView: "#tab-settings",
+      settingsView: "#settings",
     },
 
     events: {
@@ -43,6 +45,7 @@ define(function (require) {
       this.infoView.show(new InfoView({model: this.model}));
       this.missionsView.show(new MissionsView({missions: this.missions, server: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
+      this.parametersView.show(new ParametersListView({server: this.model}));
       this.playersView.show(new PlayersView({model: this.model}));
       this.settingsView.show(new FormView({model: this.model}));
     },
@@ -50,6 +53,7 @@ define(function (require) {
     serverUpdated: function() {
       this.infoView.currentView.render();
       this.modsView.currentView.render();
+      this.parametersView.currentView.render();
       this.playersView.currentView.render();
       this.settingsView.currentView.render();
     },
@@ -61,6 +65,7 @@ define(function (require) {
       var data = this.settingsView.currentView.serialize();
       _.extend(data, this.missionsView.currentView.serialize());
       _.extend(data, this.modsView.currentView.serialize());
+      _.extend(data, this.parametersView.currentView.serialize());
       this.model.save(data, {
         success: function() {
           var newId = self.model.get('id');

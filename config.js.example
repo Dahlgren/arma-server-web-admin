@@ -4,6 +4,10 @@ module.exports = {
   port: 3000,
   host: '0.0.0.0', // Can be either an IP or a Hostname
   type: 'linux', // Can be either linux, windows or wine
+  parameters: [ // Additional startup parameters used by all servers
+    '-noSound',
+    '-world=empty'
+  ],
   serverMods: [ // Mods used exclusively by server and not shared with clients
     '@mod1',
     '@mod2',
