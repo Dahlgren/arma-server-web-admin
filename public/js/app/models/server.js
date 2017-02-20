@@ -9,6 +9,7 @@ define(function (require) {
   return Backbone.Model.extend({
     defaults: {
       admin_password: '',
+      auto_start: false,
       battle_eye: false,
       headless: false,
       max_players: null,
