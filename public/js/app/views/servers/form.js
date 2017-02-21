@@ -20,6 +20,7 @@ define(function (require) {
     serialize : function() {
       return {
         admin_password: this.$("form .admin-password").val(),
+        auto_start: this.$("form .auto-start").prop("checked"),
         battle_eye: this.$("form .battle-eye").prop("checked"),
         headless: this.$("form .headless").prop("checked"),
         max_players: this.$("form .max-players").val(),
