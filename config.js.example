@@ -12,6 +12,9 @@ module.exports = {
     '@mod1',
     '@mod2',
   ],
+  steam: {
+    path: 'path-to-main-steam-folder',
+  },
   auth: { // If both username and password is set, HTTP Basic Auth will be used
     username: '', // Username for HTTP Basic Auth
     password: '', // Password for HTTP Basic Auth

@@ -42,7 +42,7 @@ define(function (require) {
     },
 
     onRender: function() {
-      this.infoView.show(new InfoView({model: this.model}));
+      this.infoView.show(new InfoView({model: this.model, mods: this.mods}));
       this.missionsView.show(new MissionsView({missions: this.missions, server: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
       this.parametersView.show(new ParametersListView({server: this.model}));

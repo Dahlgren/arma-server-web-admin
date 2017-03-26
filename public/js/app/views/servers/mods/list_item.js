@@ -17,7 +17,7 @@ define(function (require) {
 
     templateHelpers: function(){
       return {
-        enabled: this.options.server.get('mods').indexOf(this.model.get('name')) > -1
+        enabled: this.options.server.get('mods').indexOf(this.model.get('id')) > -1
       }
     },
   });
