@@ -2,10 +2,16 @@
   <a href='#mods/<%-name%>'><%-name%></a>
 </td>
 <td>
-  <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">
-    <span class="glyphicon glyphicon-trash"></span>
-    Delete
-  </a>
+  <% if (downloading) { %>
+    <div class="progress" style="margin-bottom: 0;">
+      <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+    </div>
+  <% } else { %>
+    <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">
+      <span class="glyphicon glyphicon-trash"></span>
+      Delete
+    </a>
 
-  <div class="clearfix"></div>
+    <div class="clearfix"></div>
+  <% } %>
 </td>
