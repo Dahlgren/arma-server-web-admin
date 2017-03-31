@@ -27,7 +27,7 @@
     "winser": "^1.0.2"
   },
   "devDependencies": {
-    "mocha": "~2.1.0",
+    "mocha": "~3.2.0",
     "should": "~5.0.0",
     "timekeeper": "0.0.5"
   }
