@@ -19,7 +19,7 @@
     "gamedig": "0.2.25",
     "lodash": "^3.6.0",
     "playwithsix": "0.0.11",
-    "slug": "~0.4.0",
+    "slugify": "^1.1.0",
     "socket.io": "^1.0.4",
     "steam-workshop": "0.0.1",
     "userhome": "^1.0.0",
