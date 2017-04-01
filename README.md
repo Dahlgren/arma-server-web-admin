@@ -39,7 +39,7 @@ A simple to use web admin panel for Arma servers.
 ## Config
 
 Key | Description
---- | --- | ---
+--- | ---
 game | Which game server to launch, see above
 path | Folder path to game server
 port | Web port to use
