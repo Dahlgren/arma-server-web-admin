@@ -1,31 +1,33 @@
-module.exports = function (logsManager) {
-  return {
-    index: function(req, res){
-      logsManager.logFiles(function (err, files) {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send(files);
-        }
-      });
-    },
-    show: function(req, res){
-      var requestedFilename = req.params.log;
-      if (req.format) {
-        requestedFilename += "." + req.format;
-      }
+var express = require('express');
 
-      logsManager.getLogFile(requestedFilename, function (err, file) {
-        if (err) {
-          res.send(err);
+module.exports = function (logsManager) {
+  var router = express.Router();
+
+  router.get('/', function (req, res) {
+    logsManager.logFiles(function (err, files) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(files);
+      }
+    });
+  });
+
+  router.get('/:log', function(req, res) {
+    var requestedFilename = req.params.log;
+
+    logsManager.getLogFile(requestedFilename, function (err, file) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        if (file) {
+          res.download(file.path);
         } else {
-          if (file) {
-            res.download(file.path);
-          } else {
-            res.send(404, new Error("File not found"));
-          }
+          res.status(404).send(new Error("File not found"));
         }
-      });
-    },
-  };
+      }
+    });
+  });
+
+  return router;
 };

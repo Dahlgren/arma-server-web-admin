@@ -1,5 +1,9 @@
 var express = require('express');
-var Resource = require('express-resource');
+var basicAuth = require('express-basic-auth')
+var bodyParser = require('body-parser');
+var morgan = require('morgan');
+var path = require('path');
+var serveStatic = require('serve-static')
 
 var config = require('./config');
 var Manager = require('./lib/manager');
@@ -12,14 +16,18 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 if (config.auth && config.auth.username && config.auth.password) {
-  app.use(express.basicAuth(config.auth.username, config.auth.password));
+  var basicAuthUsers = {}
+  basicAuthUsers[config.auth.username] = config.auth.password;
+  app.use(basicAuth({
+    challenge: true,
+    users: basicAuthUsers
+  }));
 }
 
-app.use(express.logger('dev'));
-app.use(express.cookieParser());
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(morgan('dev'));
+app.use(serveStatic(path.join(__dirname, 'public')));
 
 var logs = new Logs(config);
 
@@ -30,26 +38,11 @@ var missions = new Missions(config);
 var mods = new Mods(config);
 mods.updateMods();
 
-var logsRoutes = require('./routes/logs')(logs);
-var serversRoutes = require('./routes/servers')(manager, mods);
-var missionsRoutes = require('./routes/missions')(missions);
-var modsRoutes = require('./routes/mods')(mods);
-
-app.resource('api/logs', logsRoutes);
-app.resource('api/missions', missionsRoutes);
-app.resource('api/mods', modsRoutes);
-var serversResource = app.resource('api/servers', serversRoutes);
-app.resource('api/settings', require('./routes/settings'));
-
-app.post('/api/missions/workshop', require('./routes/workshop').mission);
-app.post('/api/mods/refresh', modsRoutes.refresh);
-app.post('/api/mods/search', modsRoutes.search);
-app.get('/api/servers/:server/start', serversRoutes.start);
-app.get('/api/servers/:server/stop', serversRoutes.stop);
-
-app.get('/', function (req, res){
-  res.sendfile(__dirname + '/public/index.html');
-});
+app.use('/api/logs', require('./routes/logs')(logs));
+app.use('/api/missions', require('./routes/missions')(missions));
+app.use('/api/mods', require('./routes/mods')(mods));
+app.use('/api/servers', require('./routes/servers')(manager, mods));
+app.use('/api/settings', require('./routes/settings')(config));
 
 io.on('connection', function (socket) {
   socket.emit('mods', mods.mods);

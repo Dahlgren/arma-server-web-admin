@@ -22,7 +22,7 @@ define(function (require) {
       event.preventDefault();
       $.ajax({
         url: "/api/servers/" + this.model.get('id') + "/start",
-        type: 'GET',
+        type: 'POST',
         success: function (resp) {
           self.model.set("pid", resp.pid);
           self.render();
@@ -45,7 +45,7 @@ define(function (require) {
       function(){
         $.ajax({
           url: "/api/servers/" + self.model.get('id') + "/stop",
-          type: 'GET',
+          type: 'POST',
           success: function (resp) {
             self.model.set("pid", resp.pid);
             self.render();
