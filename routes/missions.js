@@ -1,41 +1,58 @@
+var express = require('express');
+
 module.exports = function (missionsManager) {
-  return {
-    index: function (req, res) {
-      missionsManager.list(function (err, missions) {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send(missions);
-        }
-      });
-    },
-    create: function (req, res) {
-      var missionFile = req.files.mission;
-      missionsManager.handleUpload(missionFile, function (err) {
-        res.send(err);
-      });
-    },
-    show: function(req, res){
-      var filename = req.params.mission;
-      if (req.params.format) {
-        filename += '.' + req.params.format;
-      }
+  var router = express.Router();
 
-      res.download(missionsManager.missionPath(encodeURI(filename)), decodeURI(filename));
-    },
-    destroy: function(req, res){
-      var filename = req.params.mission;
-      if (req.params.format) {
-        filename += '.' + req.params.format;
+  router.get('/', function (req, res) {
+    missionsManager.list(function (err, missions) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json(missions);
       }
+    });
+  });
 
-      missionsManager.delete(filename, function (err) {
-        if (err) {
-          res.json(500, {success: false});
-        } else {
-          res.json({success: true});
-        }
-      });
-    },
-  };
+  router.post('/', function (req, res) {
+    var missionFile = req.files.mission;
+    missionsManager.handleUpload(missionFile, function (err) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.status(204);
+      }
+    });
+  });
+
+  router.get('/:mission', function (req, res) {
+    var filename = req.params.mission;
+
+    res.download(missionsManager.missionPath(filename), decodeURI(filename));
+  });
+
+  router.delete('/:mission', function (req, res) {
+    var filename = req.params.mission;
+
+    missionsManager.delete(filename, function (err) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json({success: true});
+      }
+    });
+  });
+
+  router.post('/workshop', function (req, res) {
+    var id = req.body.id;
+
+    missionsManager.downloadSteamWorkshop(id, function (err, files) {
+      if (err) {
+        res.status(500).send(err);
+      } else {
+        res.json({success: true});
+      }
+    });
+  });
+
+  return router;
 };
