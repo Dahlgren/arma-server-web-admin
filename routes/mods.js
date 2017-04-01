@@ -9,17 +9,6 @@ module.exports = function (modsManager) {
       res.send(204, {});
     },
 
-    show: function(req, res){
-      modsManager.traverse(req.params.mod, function (err, files) {
-        if (err || !files) {
-          console.error(err.stack || err);
-          res.send(500, err);
-        } else {
-          res.json(files);
-        }
-      });
-    },
-
     update: function(req, res){
       modsManager.download(req.params.mod);
       res.send(204, {});
