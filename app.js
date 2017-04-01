@@ -25,7 +25,7 @@ if (config.auth && config.auth.username && config.auth.password) {
 }
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
 app.use(serveStatic(path.join(__dirname, 'public')));
 
