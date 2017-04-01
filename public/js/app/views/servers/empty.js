@@ -9,6 +9,7 @@ define(function (require) {
       tpl                 = require('text!tpl/servers/empty.html');
 
   return Marionette.ItemView.extend({
+    tagName: "tr",
     template: _.template(tpl),
 
     initialize: function (options) {
