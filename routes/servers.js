@@ -1,14 +1,4 @@
 module.exports = function (manager, mods) {
-  var resolveMods = function(server, cb) {
-    mods.resolveMods(server.mods, function(err, resolvedMods) {
-      if (!err) {
-        server.mods = resolvedMods;
-        manager.save();
-      }
-      cb();
-    });
-  };
-
   return {
     index: function (req, res){
       res.send(manager.getServers());
@@ -16,13 +6,7 @@ module.exports = function (manager, mods) {
 
     create: function (req, res) {
       var server = manager.addServer(req.body);
-      if (server.mods.length > 0) {
-        resolveMods(server, function() {
-          res.send(server);
-        });
-      } else {
-        res.send(server);
-      }
+      res.send(server);
     },
 
     show: function (req, res){
@@ -34,14 +18,7 @@ module.exports = function (manager, mods) {
       var server = manager.getServer(req.params.server);
       server.update(req.body);
       manager.save();
-
-      if (server.mods.length > 0) {
-        resolveMods(server, function() {
-          res.send(server);
-        });
-      } else {
-        res.send(server);
-      }
+      res.send(server);
     },
 
     destroy: function(req, res){
