@@ -23,7 +23,6 @@
     "socket.io": "^1.0.4",
     "steam-workshop": "0.0.1",
     "userhome": "^1.0.0",
-    "when": "~3.1.0",
     "winser": "^1.0.2"
   },
   "devDependencies": {
