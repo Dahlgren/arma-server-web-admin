@@ -1,4 +1,6 @@
 var express = require('express');
+var multer  = require('multer');
+var upload = multer({ storage: multer.diskStorage({}) });
 
 module.exports = function (missionsManager) {
   var router = express.Router();
@@ -13,13 +15,18 @@ module.exports = function (missionsManager) {
     });
   });
 
-  router.post('/', function (req, res) {
-    var missionFile = req.files.mission;
+  router.post('/', upload.single('mission'), function (req, res) {
+    var missionFile = req.file;
+
+    if (!missionFile) {
+      return res.status(400).send('No mission file uploaded');;
+    }
+
     missionsManager.handleUpload(missionFile, function (err) {
       if (err) {
         res.status(500).send(err);
       } else {
-        res.status(204);
+        res.status(200).json({success: true});
       }
     });
   });
