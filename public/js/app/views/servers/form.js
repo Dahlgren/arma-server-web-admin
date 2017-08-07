@@ -29,6 +29,7 @@ define(function (require) {
         port: this.$("form .port").val(),
         title: this.$("form .title").val(),
         von: this.$("form .von").prop("checked"),
+        verify_signatures: this.$("form .verify_signatures").prop("checked"),
       };
     },
 

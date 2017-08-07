@@ -21,6 +21,7 @@ define(function (require) {
       state: null,
       title: '',
       von: false,
+      verify_signatures: false,
     },
     urlRoot: '/api/servers/',
   });
