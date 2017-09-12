@@ -1,47 +1,47 @@
-var express = require('express');
+var express = require('express')
 
 module.exports = function (modsManager) {
-  var router = express.Router();
+  var router = express.Router()
 
   router.get('/', function (req, res) {
-    res.send(modsManager.mods);
-  });
+    res.send(modsManager.mods)
+  })
 
   router.post('/', function (req, res) {
-    modsManager.download(req.body.name);
-    res.status(204);
-  });
+    modsManager.download(req.body.name)
+    res.status(204)
+  })
 
   router.put('/:mod', function (req, res) {
-    modsManager.download(req.params.mod);
-    res.status(204);
-  });
+    modsManager.download(req.params.mod)
+    res.status(204)
+  })
 
   router.delete('/:mod', function (req, res) {
     modsManager.delete(req.params.mod, function (err) {
       if (err) {
-        res.status(500).send(err);
+        res.status(500).send(err)
       } else {
-       res.status(204);
+        res.status(204)
       }
-    });
-  });
+    })
+  })
 
   router.post('/refresh', function (req, res) {
-    modsManager.updateMods();
-    res.status(204);
-  });
+    modsManager.updateMods()
+    res.status(204)
+  })
 
   router.post('/search', function (req, res) {
-    var query = req.body.query || "";
+    var query = req.body.query || ''
     modsManager.search(query, function (err, mods) {
       if (err || !mods) {
-        res.status(500).send(err);
+        res.status(500).send(err)
       } else {
-        res.send(mods);
+        res.send(mods)
       }
-    });
-  });
+    })
+  })
 
-  return router;
-};
+  return router
+}
