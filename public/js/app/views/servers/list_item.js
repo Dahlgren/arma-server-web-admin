@@ -16,11 +16,19 @@ define(function (require) {
     template: template,
 
     events: {
-      "click .delete": "delete"
+      "click .clone": "clone",
+      "click .delete": "delete",
     },
 
     modelEvents: {
       "change": "serverUpdated",
+    },
+
+    clone: function (e) {
+      var title = this.model.get('title') + ' Clone';
+      var clone = this.model.clone();
+      clone.set({id: null, title: title});
+      clone.save();
     },
 
     delete: function (event) {
