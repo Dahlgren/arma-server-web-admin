@@ -19,7 +19,7 @@ setupBasicAuth(config, app)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(morgan('dev'))
+app.use(morgan(config.logFormat || 'dev'))
 app.use(serveStatic(path.join(__dirname, 'public')))
 
 var logs = new Logs(config)
