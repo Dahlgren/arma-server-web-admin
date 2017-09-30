@@ -12,7 +12,7 @@ module.exports = {
     '@mod1',
     '@mod2',
   ],
-  auth: { // If both username and password is set, HTTP Basic Auth will be used
+  auth: { // If both username and password is set, HTTP Basic Auth will be used. You may use an array to specify more than one user.
     username: '', // Username for HTTP Basic Auth
     password: '', // Password for HTTP Basic Auth
   },
