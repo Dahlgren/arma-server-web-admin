@@ -1,11 +1,11 @@
 var express = require('express')
-var basicAuth = require('express-basic-auth')
 var bodyParser = require('body-parser')
 var morgan = require('morgan')
 var path = require('path')
 var serveStatic = require('serve-static')
 
 var config = require('./config')
+var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
 var Mods = require('./lib/mods')
@@ -15,18 +15,14 @@ var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 
-if (config.auth && config.auth.username && config.auth.password) {
-  var basicAuthUsers = {}
-  basicAuthUsers[config.auth.username] = config.auth.password
-  app.use(basicAuth({
-    challenge: true,
-    users: basicAuthUsers
-  }))
-}
+setupBasicAuth(config, app)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(morgan('dev'))
+
+morgan.token('user', function (req) { return req.auth ? req.auth.user : 'anon' })
+app.use(morgan(config.logFormat || 'dev'))
+
 app.use(serveStatic(path.join(__dirname, 'public')))
 
 var logs = new Logs(config)
