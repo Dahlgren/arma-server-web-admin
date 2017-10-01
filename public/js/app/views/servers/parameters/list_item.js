@@ -17,6 +17,7 @@ define(function (require) {
     events: {
       "click button.delete": "delete",
       "change input#parameter": "changed",
+      "click button.clone": "clone",
     },
 
     changed: function (e) {
