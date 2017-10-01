@@ -1,10 +1,11 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var morgan = require('morgan')
+var bunyanMiddleware = require('bunyan-middleware')
 var path = require('path')
 var serveStatic = require('serve-static')
 
 var config = require('./config')
+var log = require('./lib/logger')
 var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
@@ -20,8 +21,19 @@ setupBasicAuth(config, app)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-morgan.token('user', function (req) { return req.auth ? req.auth.user : 'anon' })
-app.use(morgan(config.logFormat || 'dev'))
+app.use(bunyanMiddleware({
+  logger: log.getLogger('http'),
+  filter: function (req) {
+    return req.path.indexOf('/api/') !== 0
+  },
+  additionalRequestFinishData: function (req, res) {
+    return {user: req.auth ? req.auth.user : 'anon'}
+  },
+  excludeHeaders: [
+    'accept', 'accept-language', 'accept-encoding', 'cookie', 'connection',
+    'host', 'if-none-match', 'referer', 'user-agent', 'x-requested-with'
+  ]
+}))
 
 app.use(serveStatic(path.join(__dirname, 'public')))
 
