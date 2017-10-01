@@ -40,6 +40,7 @@ A simple to use web admin panel for Arma servers.
 
 Key | Description
 --- | ---
+bunyanConfig | (optional) add config for named bunyan loggers
 game | Which game server to launch, see above
 path | Folder path to game server
 port | Web port to use
@@ -60,6 +61,8 @@ suffix | Text appended to all game servers name
 3. Install all dependencies with `npm install`
 
 4. Launch the web UI with `npm start` or install as a Windows Service with `npm run install-windows-service`
+
+**NOTE:** Log output defaults to a stream of JSON lines. For pretty output, use `npm start | node_modules/.bin/bunyan` 
 
 ## System Configuration
 
