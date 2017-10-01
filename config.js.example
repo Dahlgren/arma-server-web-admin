@@ -1,7 +1,10 @@
 module.exports = {
-  bunyanConfig: { // bunyan config objects for named loggers
-    'server': { level: 'info' },
-    'default': { level: 'debug' },
+  bunyanConfig: { // bunyan logger config objects for named loggers
+    'http': { streams: [{path: './access.log', level: 'info'}] },
+    'default': {
+      level: 'debug',
+      streams: [{stream: process.stdout}, {path: './stdout.log'}],
+    }
   },
   game: 'arma3', // arma3, arma2oa, arma2, arma1, cwa, ofpresistance, ofp
   path: 'path-to-arma3-directory',
