@@ -9,8 +9,10 @@ define(function (require) {
   return Backbone.Model.extend({
     defaults: {
       admin_password: '',
+      allowed_file_patching: 1,
       auto_start: false,
       battle_eye: false,
+      file_patching: false,
       forcedDifficulty: '',
       max_players: null,
       mods: [],

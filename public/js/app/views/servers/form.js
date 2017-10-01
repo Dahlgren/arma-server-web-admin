@@ -20,8 +20,10 @@ define(function (require) {
     serialize : function() {
       return {
         admin_password: this.$("form .admin-password").val(),
+        allowed_file_patching: this.$("form .allowed-file-patching").prop("checked") ? 2 : 1,
         auto_start: this.$("form .auto-start").prop("checked"),
         battle_eye: this.$("form .battle-eye").prop("checked"),
+        file_patching: this.$("form .file-patching").prop("checked"),
         forcedDifficulty: this.$("form .forcedDifficulty").val(),
         max_players: this.$("form .max-players").val(),
         motd: this.$("form .motd").val(),
