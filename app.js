@@ -9,7 +9,7 @@ var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
 var Mods = require('./lib/mods')
-var Logs = require('./lib/logs')
+var Logs = require('./lib/server-log-paths')
 
 var app = express()
 var server = require('http').Server(app)
