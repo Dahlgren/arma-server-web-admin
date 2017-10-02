@@ -1,6 +1,7 @@
 var express = require('express')
 var multer = require('multer')
 var upload = multer({ storage: multer.diskStorage({}) })
+var async = require('async')
 
 module.exports = function (missionsManager) {
   var router = express.Router()
@@ -15,20 +16,22 @@ module.exports = function (missionsManager) {
     })
   })
 
-  router.post('/', upload.single('mission'), function (req, res) {
-    var missionFile = req.file
-
-    if (!missionFile) {
-      return res.status(400).send('No mission file uploaded')
-    }
-
-    missionsManager.handleUpload(missionFile, function (err) {
-      if (err) {
-        res.status(500).send(err)
-      } else {
-        res.status(200).json({success: true})
+  router.post('/', upload.array('missions', 64), function (req, res) {
+    async.parallelLimit(
+      req.files.map(function (missionFile) {
+        return function (next) {
+          missionsManager.handleUpload(missionFile, next)
+        }
+      }),
+      8,
+      function (err) {
+        if (err) {
+          res.status(500).send(err)
+        } else {
+          res.status(200).json({success: true})
+        }
       }
-    })
+    )
   })
 
   router.get('/:mission', function (req, res) {
