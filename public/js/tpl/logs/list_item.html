@@ -1,3 +1,17 @@
-<td style="width: 100%;">
-  <a href='/api/logs/<%-name%>'><%-name%></a>
+<td>
+  <% if (size < 100 * 1024 * 1024) { %>
+    <!-- Only show files under 100 MB -->
+    <a href='/api/logs/<%-name%>/view' target=_blank><%-name%></a>
+  <% } else { %>
+    <%-name%>
+  <% } %>
+</td>
+<td style="text-align: right; white-space: nowrap;">
+  <%-formattedSize%>
+</td>
+<td>
+  <a class="btn btn-primary btn-xs" href="/api/logs/<%-name%>/download">
+    <span class="glyphicon glyphicon-download"></span>
+    Download
+  </a>
 </td>

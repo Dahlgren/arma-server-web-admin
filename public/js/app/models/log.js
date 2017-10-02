@@ -8,7 +8,9 @@ define(function (require) {
   
   return Backbone.Model.extend({
     defaults: {
-      name: ''
+      name: '',
+      formattedSize: '0 B',
+      size: 0,
     }
   });
   
