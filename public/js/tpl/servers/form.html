@@ -60,6 +60,25 @@
   </div>
 
   <div class="form-group">
+    <label class="col-sm-2 control-label">File Patching</label>
+    <div class="col-sm-10">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="allowed-file-patching" <% if (allowed_file_patching === 2) { %>checked="checked"<% } %>> Allow file patching for clients
+          <p class="help-block">Required for client userconfigs</p>
+        </label>
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class="file-patching" <% if (file_patching) { %>checked="checked"<% } %>> Use file patching on server
+          <p class="help-block">Required for server userconfigs</p>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
     <label for="headless-clients" class="col-sm-2 control-label">Headless Clients</label>
     <div class="col-sm-10">
       <input type="number" class="form-control headless-clients" data-field="headless-clients" placeholder="Headless Clients" value="<%- number_of_headless_clients %>">
