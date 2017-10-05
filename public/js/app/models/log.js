@@ -11,7 +11,8 @@ define(function (require) {
       name: '',
       formattedSize: '0 B',
       size: 0,
-    }
+    },
+    idAttribute: 'name',
   });
   
 });
