@@ -8,7 +8,7 @@ define(function (require) {
       Marionette          = require('marionette'),
       tpl                 = require('text!tpl/servers/players.html');
 
-  return Marionette.Layout.extend({
+  return Marionette.LayoutView.extend({
     template: _.template(tpl),
     templateHelpers: {
       players: function(){

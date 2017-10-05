@@ -12,22 +12,21 @@ define(function (require) {
       tpl                 = require('text!tpl/servers/parameters/list.html');
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: _.template(tpl),
 
     events: {
       "click .add-parameter": "addParameter",
     },
 
-    initialize: function (options) {
-      this.model = options.server;
+    modelEvents: {
+      "change": "serverUpdated",
+    },
 
-      this.collection = new Parameters(this.model.get('parameters').map(function (parameter) {
-        return new Parameter({
-          parameter: parameter,
-        });
-      }));
+    initialize: function (options) {
+      this.collection = new Parameters();
+      this.serverUpdated();
     },
 
     addParameter: function (e) {
@@ -41,6 +40,14 @@ define(function (require) {
           return parameter.get('parameter');
         }),
       };
+    },
+
+    serverUpdated: function () {
+      this.collection.reset(this.model.get('parameters').map(function (parameter) {
+        return new Parameter({
+          parameter: parameter,
+        });
+      }));
     },
   });
 

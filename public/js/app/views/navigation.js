@@ -19,6 +19,7 @@ define(function (require) {
     },
 
     initialize: function (options) {
+      this.settings = options.settings;
       this.servers = options.servers;
       this.serversListView = new ServersListView({ collection: this.servers })
     },
@@ -30,7 +31,7 @@ define(function (require) {
 
     settings: function (event) {
       event.preventDefault();
-      var view = new SettingsView();
+      var view = new SettingsView({ model: this.settings });
       new Backbone.BootstrapModal({ content: view, animate: true, cancelText: false }).open();
     }
   });

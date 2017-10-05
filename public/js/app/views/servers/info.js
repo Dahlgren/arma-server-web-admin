@@ -9,7 +9,7 @@ define(function (require) {
       swal                = require('sweet-alert'),
       tpl                 = require('text!tpl/servers/info.html');
 
-  return Marionette.Layout.extend({
+  return Marionette.LayoutView.extend({
     template: _.template(tpl),
 
     events: {

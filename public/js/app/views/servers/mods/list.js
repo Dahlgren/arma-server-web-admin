@@ -12,7 +12,7 @@ define(function (require) {
       tpl                 = require('text!tpl/servers/mods/list.html');
 
   return ModsListView.extend({
-    itemView: ListItemView,
+    childView: ListItemView,
     template: _.template(tpl),
 
     events: {
@@ -20,9 +20,9 @@ define(function (require) {
       "click .uncheck-all": "uncheckAll",
     },
 
-    buildItemView: function(item, ItemViewType, itemViewOptions){
-      var options = _.extend({model: item, server: this.options.server}, itemViewOptions);
-      var view = new ItemViewType(options);
+    buildChildView: function(item, ChildViewType, childViewOptions){
+      var options = _.extend({model: item, server: this.options.server}, childViewOptions);
+      var view = new ChildViewType(options);
       return view;
     },
 

@@ -15,8 +15,8 @@ define(function (require) {
       template = _.template(tpl);
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: template,
 
     emptyView: EmptyView,
@@ -25,20 +25,16 @@ define(function (require) {
       "click #add-server": "addServer"
     },
 
-    initialize: function (options) {
-      this.listenTo(this.collection, "change reset", this.render);
-    },
-
-    buildItemView: function(item, ItemViewType, itemViewOptions){
+    buildChildView: function(item, ChildViewType, childViewOptions){
       // build the final list of options for the item view type
-      var options = _.extend({model: item}, itemViewOptions);
+      var options = _.extend({model: item}, childViewOptions);
 
-      if (ItemViewType == EmptyView) {
+      if (ChildViewType == EmptyView) {
         options = _.extend({servers: this.collection}, options);
       }
 
       // create the item view instance
-      var view = new ItemViewType(options);
+      var view = new ChildViewType(options);
       // return it
       return view;
     },
