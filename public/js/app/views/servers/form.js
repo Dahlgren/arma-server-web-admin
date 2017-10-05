@@ -6,7 +6,6 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      FormView            = require('marionette-formview'),
       tpl                 = require('text!tpl/servers/form.html');
 
   return Marionette.ItemView.extend({

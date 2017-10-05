@@ -6,7 +6,6 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      FormView            = require('marionette-formview'),
       Ladda               = require('ladda'),
       IframeTransport     = require('jquery.iframe-transport'),
       Mission             = require('app/models/mission'),

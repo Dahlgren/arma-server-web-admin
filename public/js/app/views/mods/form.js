@@ -6,7 +6,6 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      FormView            = require('marionette-formview'),
       ListItemView        = require('app/views/mods/search/list_item'),
       Ladda               = require('ladda'),
       Mods                = require('app/collections/mods'),
