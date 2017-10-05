@@ -8,7 +8,7 @@ define(function (require) {
       Marionette          = require('marionette'),
       BootstrapModal      = require('backbone.bootstrap-modal'),
       ServersListView     = require('app/views/navigation/servers/list'),
-      SettingsView        = require('app/forms/settings'),
+      SettingsView        = require('app/views/settings'),
       tpl                 = require('text!tpl/navigation.html');
 
   return Marionette.ItemView.extend({

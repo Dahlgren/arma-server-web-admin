@@ -2,14 +2,14 @@
   <div class="form-group">
     <label for="title" class="col-sm-2 control-label">Title</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control title" data-field="title" placeholder="Title" value="<%- title %>">
+      <input type="text" class="form-control title" placeholder="Title" value="<%- title %>">
     </div>
   </div>
 
   <div class="form-group">
     <label for="port" class="col-sm-2 control-label">Port</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control port" data-field="port" placeholder="Port" value="<%- port %>">
+      <input type="number" class="form-control port" placeholder="Port" value="<%- port %>">
       <p class="help-block">Server will use the designated port and the three following ports</p>
     </div>
   </div>
@@ -17,21 +17,21 @@
   <div class="form-group">
     <label for="max-players" class="col-sm-2 control-label">Max Players</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control max-players" data-field="max-players" placeholder="Max Players" value="<%- max_players %>">
+      <input type="number" class="form-control max-players" placeholder="Max Players" value="<%- max_players %>">
     </div>
   </div>
 
   <div class="form-group">
     <label for="password" class="col-sm-2 control-label">Password</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control password" data-field="password" placeholder="Password" value="<%- password %>">
+      <input type="text" class="form-control password" placeholder="Password" value="<%- password %>">
     </div>
   </div>
 
   <div class="form-group">
     <label for="admin-password" class="col-sm-2 control-label">Admin Password</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control admin-password" data-field="admin-password" placeholder="Admin Password" value="<%- admin_password %>">
+      <input type="text" class="form-control admin-password" placeholder="Admin Password" value="<%- admin_password %>">
     </div>
   </div>
 
@@ -40,7 +40,6 @@
     <div class="col-sm-10">
       <textarea rows="3"
                 class="form-control motd"
-                data-field="motd"
                 placeholder="No MOTD will be shown"><%-motd %></textarea>
       <p class="help-block">Message of the day. Shown to players when connected</p>
     </div>
@@ -49,7 +48,7 @@
   <div class="form-group">
     <label for="forcedDifficulty" class="col-sm-2 control-label">Difficulty</label>
     <div class="col-sm-10">
-      <select class="form-control forcedDifficulty" data-field="forcedDifficulty" value="<%- (forcedDifficulty || '') %>">
+      <select class="form-control forcedDifficulty" value="<%- (forcedDifficulty || '') %>">
         <%= ["", "Recruit", "Regular", "Veteran", "Custom"].map(function (difficulty) {
           var selected = difficulty == forcedDifficulty ? 'selected' : '';
           return '<option value="' + difficulty + '" ' + selected + '>' + (difficulty || 'Not set') + '</option>';
@@ -81,7 +80,7 @@
   <div class="form-group">
     <label for="headless-clients" class="col-sm-2 control-label">Headless Clients</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control headless-clients" data-field="headless-clients" placeholder="Headless Clients" value="<%- number_of_headless_clients %>">
+      <input type="number" class="form-control headless-clients" placeholder="Headless Clients" value="<%- number_of_headless_clients %>">
       <p class="help-block">Number of headless clients that will be launched</p>
     </div>
   </div>

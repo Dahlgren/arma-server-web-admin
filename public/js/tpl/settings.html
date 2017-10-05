@@ -2,7 +2,7 @@
   <div class="form-group">
     <label for="path" class="col-sm-2 control-label">Path</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control path" id="path" data-field="path" placeholder="Path to ArmA3" disabled>
+      <input type="text" class="form-control" placeholder="Path to ArmA" disabled value="<%- path %>">
     </div>
   </div>
 
@@ -11,19 +11,19 @@
     <div class="col-sm-10">
       <div class="radio">
         <label>
-          <input type="radio" name="type" data-field="type" id="type-linux" value="linux" disabled>
+          <input type="radio" name="type" value="linux" disabled <%- isTypeChecked('linux') %>>
           Linux
         </label>
       </div>
       <div class="radio">
         <label>
-          <input type="radio" name="type" data-field="type" id="type-windows" value="windows" disabled>
+          <input type="radio" name="type" value="windows" disabled <%- isTypeChecked('windows') %>>
           Windows
         </label>
       </div>
       <div class="radio">
         <label>
-          <input type="radio" name="type" data-field="type" id="type-wine" value="wine" disabled>
+          <input type="radio" name="type" value="wine" disabled <%- isTypeChecked('wine') %>>
           Wine
         </label>
       </div>

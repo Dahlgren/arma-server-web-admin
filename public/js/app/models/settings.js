@@ -9,7 +9,7 @@ define(function (require) {
   return Backbone.Model.extend({
     defaults: {
       path: '',
-      type: 'windows',
+      type: '',
     },
     urlRoot : '/api/settings'
   });
