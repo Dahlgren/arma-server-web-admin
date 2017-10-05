@@ -1,7 +1,13 @@
 <td style="width: 100%;">
   <p>
     <strong><%-name%></strong>
-    <small><%-type%></small
+    <small>
+      <% if (typeof(type) != "undefined" && type) { %>
+        <%-type%>
+      <% } else { %>
+        Unknown
+      <% } %>
+      </small>
   </p>
   <p><%-title%></p>
 </td>
