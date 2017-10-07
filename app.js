@@ -6,7 +6,7 @@ var path = require('path')
 var serveStatic = require('serve-static')
 
 var config = require('./config')
-var log = require('./lib/logger')
+var logger = require('./lib/logger').getLogger('app')
 var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
@@ -60,4 +60,6 @@ manager.on('servers', function () {
   io.emit('servers', manager.getServers())
 })
 
-server.listen(config.port, config.host)
+server.listen(config.port, config.host, function () {
+  logger.info('listening on ' + config.host + ':' + config.port)
+})
