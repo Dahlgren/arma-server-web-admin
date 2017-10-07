@@ -1,4 +1,5 @@
 var express = require('express')
+var streams = require('stream')
 var bodyParser = require('body-parser')
 var expressRequestLogger = require('./lib/express-request-logger')
 var path = require('path')
@@ -17,6 +18,13 @@ var server = require('http').Server(app)
 var io = require('socket.io')(server)
 
 setupBasicAuth(config, app)
+
+app.set('json replacer', function (key, value) {
+  if (value && value instanceof streams.Stream) {
+    return 'STREAM'
+  }
+  return value
+})
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
