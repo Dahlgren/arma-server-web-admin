@@ -1,6 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var bunyanMiddleware = require('bunyan-middleware')
+var expressRequestLogger = require('./lib/express-request-logger')
 var path = require('path')
 var serveStatic = require('serve-static')
 
@@ -20,20 +20,7 @@ setupBasicAuth(config, app)
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
-app.use(bunyanMiddleware({
-  logger: log.getLogger('http'),
-  filter: function (req) {
-    return req.path.indexOf('/api/') !== 0
-  },
-  additionalRequestFinishData: function (req, res) {
-    return {user: req.auth ? req.auth.user : 'anon'}
-  },
-  excludeHeaders: [
-    'accept', 'accept-language', 'accept-encoding', 'cookie', 'connection',
-    'host', 'if-none-match', 'referer', 'user-agent', 'x-requested-with'
-  ]
-}))
+app.use(expressRequestLogger)
 
 app.use(serveStatic(path.join(__dirname, 'public')))
 
