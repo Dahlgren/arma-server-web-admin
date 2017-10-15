@@ -1,13 +1,28 @@
 <td>
   <% if (typeof(pid) != "undefined" && pid) { %>
     <% if (state) { %>
-      <span class="label label-success">Online</span>
+      <span class="label label-success">Online
+      (<%- (state.players) ? state.players.length : '?' %>/<%- state.maxplayers %>)
+      </span>
     <% } else { %>
       <span class="label label-info">Launching</span>
     <% } %>
   <% } else { %>
     <span class="label label-default">Offline</span>
   <% } %>
+</td>
+<td>
+  <% if (typeof(pid) != "undefined" && pid) { %>
+  <button type="button" class="btn btn-info btn-xs stop pull-right">
+    <span class="glyphicon glyphicon-stop"></span> Stop
+  </button>
+  <% } else { %>
+  <button type="button" class="btn btn-info btn-xs start pull-right">
+    <span class="glyphicon glyphicon-play"></span> Start
+  </button>
+  <% } %>
+
+
 </td>
 <td><%-port%></td>
 <td style="width: 100%;">

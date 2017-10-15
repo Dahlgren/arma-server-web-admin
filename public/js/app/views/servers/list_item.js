@@ -18,6 +18,8 @@ define(function (require) {
     events: {
       "click .clone": "clone",
       "click .delete": "delete",
+      "click .stop": "stop",
+      "click .start": "start",
     },
 
     modelEvents: {
@@ -44,6 +46,45 @@ define(function (require) {
       function(){
         self.model.destroy();
       });
+    },
+
+
+    start: function (event) {
+      var self = this;
+      event.preventDefault();
+      $.ajax({
+        url: "/api/servers/" + this.model.get('id') + "/start",
+        type: 'POST',
+        success: function (resp) {
+          self.model.set("pid", resp.pid);
+          self.render();
+        },
+        error: $.noop
+      });
+    },
+
+    stop: function (event) {
+      var self = this;
+      event.preventDefault();
+      sweetAlert({
+          title: "Are you sure?",
+          text: "The server will stopped.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonClass: "btn-warning",
+          confirmButtonText: "Yes, stop it!",
+        },
+        function(){
+          $.ajax({
+            url: "/api/servers/" + self.model.get('id') + "/stop",
+            type: 'POST',
+            success: function (resp) {
+              self.model.set("pid", resp.pid);
+              self.render();
+            },
+            error: $.noop
+          });
+        });
     },
 
     serverUpdated: function (event) {
