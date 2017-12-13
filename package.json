@@ -7,6 +7,7 @@
     "install-windows-service": "winser -i -a -c",
     "uninstall-windows-service": "winser -r -x -c",
     "lint": "standard --verbose lib/**/*.js routes/**/*.js test/**/*.js app.js",
+    "nexe": "nexe app.js",
     "start": "node app.js",
     "test": "node node_modules/mocha/bin/mocha --recursive"
   },
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "mocha": "~3.2.0",
+    "nexe": "^2.0.0-rc.22",
     "should": "~13.0.1",
     "standard": "^10.0.3",
     "timekeeper": "0.0.5"
