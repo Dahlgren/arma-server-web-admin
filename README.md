@@ -23,7 +23,7 @@ A simple to use web admin panel for Arma servers.
 
 - Windows
 - Linux
-- Linx with Windows binary using Wine
+- Linux with Windows binary using Wine
 
 ## Supported Games
 
