@@ -30,9 +30,8 @@ module.exports = function (manager, mods) {
   })
 
   router.post('/:server/start', function (req, res) {
-    var server = manager.getServer(req.params.server)
-    server.start()
-    res.json({status: 'ok', pid: server.pid})
+    var result = manager.start(manager.getServer(req.params.server))
+    res.status(result.statusCode).json(result)
   })
 
   router.post('/:server/stop', function (req, res) {

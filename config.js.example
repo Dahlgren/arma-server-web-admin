@@ -20,4 +20,5 @@ module.exports = {
   prefix: "", // Prefix to all server names
   suffix: "", // Suffix to all server names
   logFormat: "dev", // expressjs/morgan log format
+  maxInstances: 16, // maximum number of game instances
 };

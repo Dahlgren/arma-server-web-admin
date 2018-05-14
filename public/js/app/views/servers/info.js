@@ -27,7 +27,19 @@ define(function (require) {
           self.model.set("pid", resp.pid);
           self.render();
         },
-        error: $.noop
+        error: function (resp) {
+          if (resp.responseJSON) {
+              sweetAlert({
+                  title: resp.responseJSON.status,
+                  text: resp.responseJSON.message,
+                  type: "error",
+                  showCancelButton: false,
+                  allowOutsideClick: true,
+              })
+          } else {
+            alert(resp.status + " " + resp.responseText)
+          }
+        }
       });
     },
 
