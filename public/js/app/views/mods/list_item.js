@@ -18,7 +18,6 @@ define(function (require) {
 
     events: {
       "click .destroy": "destroy",
-      "click .update": "update",
     },
 
     destroy: function (event) {
@@ -33,26 +32,6 @@ define(function (require) {
       },
       function(){
         self.model.destroy();
-      });
-    },
-
-    update: function (event) {
-      var self = this;
-      event.preventDefault();
-
-      var $updateBtn = this.$el.find(".update");
-      var laddaBtn = Ladda.create($updateBtn.get(0));
-      laddaBtn.start();
-
-      $.ajax({
-        url: "/api/mods/" + this.model.get('name'),
-        type: 'PUT',
-        success: function (resp) {
-          laddaBtn.stop();
-        },
-        error: function (resp) {
-          laddaBtn.stop();
-        },
       });
     },
   });
