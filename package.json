@@ -55,7 +55,7 @@
     "winser": "^1.0.2"
   },
   "devDependencies": {
-    "mocha": "~3.2.0",
+    "mocha": "^6.2.0",
     "should": "~13.0.1",
     "standard": "^14.3.1",
     "supertest": "^2.0.1",
