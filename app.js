@@ -13,6 +13,7 @@ var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
 var Mods = require('./lib/mods')
 var Logs = require('./lib/logs')
+var Settings = require('./lib/settings')
 
 var app = express()
 var server = require('http').Server(app)
@@ -43,15 +44,18 @@ var missions = new Missions(config)
 var mods = new Mods(config)
 mods.updateMods()
 
+var settings = new Settings(config)
+
 app.use('/api/logs', require('./routes/logs')(logs))
 app.use('/api/missions', require('./routes/missions')(missions))
 app.use('/api/mods', require('./routes/mods')(mods))
 app.use('/api/servers', require('./routes/servers')(manager, mods))
-app.use('/api/settings', require('./routes/settings')(config))
+app.use('/api/settings', require('./routes/settings')(settings))
 
 io.on('connection', function (socket) {
   socket.emit('mods', mods.mods)
   socket.emit('servers', manager.getServers())
+  socket.emit('settings', settings.getPublicSettings())
 })
 
 mods.on('mods', function (mods) {
