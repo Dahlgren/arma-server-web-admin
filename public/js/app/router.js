@@ -36,11 +36,13 @@ define(function (require) {
 
     initialize: function () {
       layoutView.navigation.show(new NavigationView({settings: settings, servers: servers}));
-      missions.fetch();
 
       var initialized = false;
 
       var socket = io.connect();
+      socket.on('missions', function (_missions) {
+        missions.set(_missions);
+      });
       socket.on('mods', function (_mods) {
         mods.set(_mods);
       });

@@ -53,9 +53,14 @@ app.use('/api/servers', require('./routes/servers')(manager, mods))
 app.use('/api/settings', require('./routes/settings')(settings))
 
 io.on('connection', function (socket) {
+  socket.emit('missions', missions.missions)
   socket.emit('mods', mods.mods)
   socket.emit('servers', manager.getServers())
   socket.emit('settings', settings.getPublicSettings())
+})
+
+missions.on('missions', function (missions) {
+  io.emit('missions', missions)
 })
 
 mods.on('mods', function (mods) {

@@ -18,10 +18,6 @@ define(function (require) {
       'click form button': 'submit',
     },
 
-    initialize: function (options) {
-      this.missions = options.missions;
-    },
-
     submit: function () {
       var self = this;
       var $form = this.$el.find('form');
@@ -32,12 +28,8 @@ define(function (require) {
 
       $.ajax("/api/missions", {
         success: function(data) {
-          self.missions.fetch({
-            success : function () {
-              laddaBtn.stop();
-              self.render();
-            }
-          });
+          laddaBtn.stop();
+          self.render();
         },
         error: function () {
           laddaBtn.stop();

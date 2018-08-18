@@ -38,10 +38,8 @@ define(function (require) {
         },
         dataType: 'json',
         success: function (data) {
-          self.missions.fetch({success : function () {
-            laddaBtn.stop();
-            self.render();
-          }});
+          laddaBtn.stop();
+          self.render();
         },
         error: function () {
           laddaBtn.stop();
