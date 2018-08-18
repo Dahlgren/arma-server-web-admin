@@ -37,7 +37,6 @@ define(function (require) {
     initialize: function () {
       layoutView.navigation.show(new NavigationView({settings: settings, servers: servers}));
       missions.fetch();
-      settings.fetch();
 
       var initialized = false;
 
@@ -52,6 +51,9 @@ define(function (require) {
           initialized = true;
           Backbone.history.start();
         }
+      });
+      socket.on('settings', function (_settings) {
+        settings.set(_settings);
       });
     },
 
