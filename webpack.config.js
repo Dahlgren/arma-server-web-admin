@@ -21,8 +21,7 @@ module.exports = {
       app: path.join(__dirname, 'public', 'js', 'app'),
       marionette: 'backbone.marionette',
       'sweet-alert': 'sweetalert',
-      tpl: path.join(__dirname, 'public', 'js', 'tpl'),
-      'underscore': 'lodash'
+      tpl: path.join(__dirname, 'public', 'js', 'tpl')
     }
   },
 
