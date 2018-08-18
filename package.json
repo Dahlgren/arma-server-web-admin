@@ -6,7 +6,7 @@
   "scripts": {
     "install-windows-service": "winser -i -a -c",
     "uninstall-windows-service": "winser -r -x -c",
-    "lint": "standard --verbose lib/**/*.js routes/**/*.js test/**/*.js app.js",
+    "lint": "standard --verbose *.js lib/**/*.js routes/**/*.js test/**/*.js",
     "start": "node app.js",
     "test": "node node_modules/mocha/bin/mocha --recursive"
   },
