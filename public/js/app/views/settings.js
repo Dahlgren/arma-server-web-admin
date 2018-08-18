@@ -6,7 +6,6 @@ define(function (require) {
       _                   = require('underscore'),
       Backbone            = require('backbone'),
       Marionette          = require('marionette'),
-      Settings            = require('app/models/settings'),
       tpl                 = require('text!tpl/settings.html');
 
   return Marionette.ItemView.extend({
@@ -14,11 +13,6 @@ define(function (require) {
 
     modelEvents: {
       'change': 'render',
-    },
-
-    initialize: function () {
-      this.model = new Settings()
-      this.model.fetch();
     },
 
     templateHelpers: {

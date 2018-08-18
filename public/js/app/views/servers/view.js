@@ -15,7 +15,7 @@ define(function (require) {
       PlayersView         = require('app/views/servers/players'),
       tpl                 = require('text!tpl/servers/view.html');
 
-  return Marionette.Layout.extend({
+  return Marionette.LayoutView.extend({
     template: _.template(tpl),
 
     regions: {
@@ -43,9 +43,9 @@ define(function (require) {
 
     onRender: function() {
       this.infoView.show(new InfoView({model: this.model}));
-      this.missionsView.show(new MissionsView({missions: this.missions, server: this.model}));
+      this.missionsView.show(new MissionsView({missions: this.missions, model: this.model}));
       this.modsView.show(new ModsListView({collection: this.mods, server: this.model}));
-      this.parametersView.show(new ParametersListView({server: this.model}));
+      this.parametersView.show(new ParametersListView({model: this.model}));
       this.playersView.show(new PlayersView({model: this.model}));
       this.settingsView.show(new FormView({model: this.model}));
     },

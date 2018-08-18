@@ -11,8 +11,8 @@ define(function (require) {
       tpl                 = require('text!tpl/servers/missions/rotation/list.html');
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: _.template(tpl),
 
     events: {

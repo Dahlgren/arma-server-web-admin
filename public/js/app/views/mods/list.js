@@ -12,16 +12,12 @@ define(function (require) {
       template = _.template(tpl);
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: template,
 
     events: {
       "click #refresh": "refresh",
-    },
-
-    initialize: function (options) {
-      this.listenTo(this.collection, "change reset", this.render);
     },
 
     refresh: function (event) {

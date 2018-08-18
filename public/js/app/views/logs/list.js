@@ -12,8 +12,8 @@ define(function (require) {
       template = _.template(tpl);
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: template,
   });
 });

@@ -11,7 +11,7 @@ define(function (require) {
       RotationListView    = require('app/views/servers/missions/rotation/list'),
       tpl                 = require('text!tpl/servers/missions/index.html');
 
-  return Marionette.Layout.extend({
+  return Marionette.LayoutView.extend({
     template: _.template(tpl),
 
     regions: {
@@ -25,7 +25,6 @@ define(function (require) {
 
     initialize: function (options) {
       this.missions = options.missions;
-      this.model = options.server;
 
       this.rotationCollection = new MissionRotations(this.model.get('missions'));
 

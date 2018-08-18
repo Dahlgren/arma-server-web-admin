@@ -10,14 +10,14 @@ define(function (require) {
       tpl                 = require('text!tpl/servers/missions/available/list.html');
 
   return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
+    childView: ListItemView,
+    childViewContainer: "tbody",
     template: _.template(tpl),
 
-    buildItemView: function(item, ItemViewType, itemViewOptions){
+    buildChildView: function(item, ChildViewType, childViewOptions){
       var self = this;
-      var options = _.extend({model: item}, itemViewOptions);
-      var view = new ItemViewType(options);
+      var options = _.extend({model: item}, childViewOptions);
+      var view = new ChildViewType(options);
       view.on('add', function (model) {
         self.trigger('add', model);
       });

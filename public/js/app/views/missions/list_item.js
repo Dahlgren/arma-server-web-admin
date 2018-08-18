@@ -16,10 +16,10 @@ define(function (require) {
     template: template,
 
     events: {
-      "click .delete": "delete"
+      "click .delete": "deleteMission"
     },
 
-    delete: function (event) {
+    deleteMission: function (event) {
       var self = this;
       sweetAlert({
         title: "Are you sure?",

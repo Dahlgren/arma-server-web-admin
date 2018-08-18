@@ -10,6 +10,6 @@ define(function (require) {
 
   return Marionette.CollectionView.extend({
     tagName: 'ul',
-    itemView: ListItemView,
+    childView: ListItemView,
   });
 });

@@ -20,7 +20,6 @@ define(function (require) {
 
     initialize: function (options) {
       this.missions = options.missions;
-      this.model = new Mission();
     },
 
     submit: function () {

@@ -11,7 +11,7 @@ define(function (require) {
       ListView            = require('app/views/missions/list'),
       tpl                 = require('text!tpl/missions/index.html');
 
-  return Marionette.Layout.extend({
+  return Marionette.LayoutView.extend({
     template: _.template(tpl),
 
     regions: {
