@@ -3,8 +3,11 @@ var bodyParser = require('body-parser')
 var morgan = require('morgan')
 var path = require('path')
 var serveStatic = require('serve-static')
+var webpack = require('webpack')
+var webpackMiddleware = require('webpack-dev-middleware')
 
 var config = require('./config')
+var webpackConfig = require('./webpack.config')
 var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
 var Missions = require('./lib/missions')
@@ -14,6 +17,12 @@ var Logs = require('./lib/logs')
 var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
+
+var webpackCompiler = webpack(webpackConfig)
+
+app.use(webpackMiddleware(webpackCompiler, {
+  publicPath: webpackConfig.output.publicPath
+}))
 
 setupBasicAuth(config, app)
 

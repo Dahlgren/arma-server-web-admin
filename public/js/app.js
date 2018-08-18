@@ -1,3 +1,9 @@
+require('bootstrap/dist/css/bootstrap.css')
+require('ladda/dist/ladda-themeless.min.css')
+require('sweetalert/dist/sweetalert.css')
+require('sweetalert/dist/sweetalert.css')
+require('../css/styles.css')
+
 require.config({
 
   baseUrl: 'js/lib',
@@ -12,6 +18,9 @@ require.config({
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
     },
+    'backbone.babysitter': {
+      deps: ['backbone'],
+    },
     'backbone.bootstrap-modal': {
       deps: ['backbone', 'bootstrap']
     },
@@ -22,13 +31,13 @@ require.config({
       deps: ['bootstrap']
     },
     'marionette': {
-      deps: ['backbone'],
+      deps: ['backbone', 'backbone.babysitter'],
       exports: 'Marionette'
     },
     'marionette-formview': {
       deps: ['marionette']
     },
-    'sweet-alert': {
+    'sweetalert': {
       deps: ['bootstrap']
     },
     'underscore': {

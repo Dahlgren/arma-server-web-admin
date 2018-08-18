@@ -31,15 +31,19 @@ define(function (require) {
       laddaBtn.start();
 
       $.ajax("/api/missions", {
+        success: function(data) {
+          self.missions.fetch({
+            success : function () {
+              laddaBtn.stop();
+              self.render();
+            }
+          });
+        },
+        error: function () {
+          laddaBtn.stop();
+        },
         files: $form.find(":file"),
         iframe: true
-      }).complete(function(data) {
-        self.missions.fetch({success : function () {
-          laddaBtn.stop();
-          self.render();
-        }});
-      }).error(function() {
-        laddaBtn.stop();
       });
     },
   });
