@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "arma-server": "0.0.7",
-    "arma-steam-workshop": "https://github.com/Dahlgren/node-arma-steam-workshop/tarball/0396b9941eb43f714bd11df2bc5a99f0b283313e",
+    "arma-steam-workshop": "https://github.com/Dahlgren/node-arma-steam-workshop/tarball/57f11ee85ccac0a18a74c5acb5645c9af78ec5c0",
     "async": "^0.9.0",
     "backbone": "1.3.3",
     "backbone.bootstrap-modal": "https://github.com/powmedia/backbone.bootstrap-modal/archive/632210077c2424be2ee6ea2aafe0d3fe016ae524.tar.gz",

@@ -11,11 +11,38 @@ module.exports = Marionette.ItemView.extend({
   template: template,
 
   events: {
+    'click .install': 'installMod',
     'click .destroy': 'deleteMod'
   },
 
   modelEvents: {
     change: 'render'
+  },
+
+  installMod: function (event) {
+    var self = this
+    event.preventDefault()
+
+    this.laddaBtn = Ladda.create(this.$el.find('.ladda-button').get(0))
+    this.laddaBtn.start()
+    this.$el.find('.ladda-button').addClass('disabled')
+
+    $.ajax({
+      url: '/api/mods/',
+      type: 'POST',
+      data: {
+        id: this.model.get('id')
+      },
+      dataType: 'json',
+      success: function (resp) {
+        self.laddaBtn.stop()
+        self.$el.find('.ladda-button').removeClass('disabled')
+      },
+      error: function (resp) {
+        self.laddaBtn.stop()
+        self.$el.find('.ladda-button').removeClass('disabled')
+      }
+    })
   },
 
   deleteMod: function (event) {
