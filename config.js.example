@@ -1,6 +1,7 @@
 module.exports = {
   game: 'arma3', // arma3, arma2oa, arma2, arma1, cwa, ofpresistance, ofp
   path: 'path-to-arma3-directory',
+  modPath: '', // relative (sub directory) path to mod directories, if mods not in arma directory
   port: 3000,
   host: '0.0.0.0', // Can be either an IP or a Hostname
   type: 'linux', // Can be either linux, windows or wine
