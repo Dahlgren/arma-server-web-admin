@@ -3,7 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   // Entry point for static analyzer
-  entry: './public/js/app.js',
+  entry: path.join(__dirname, 'public', 'js', 'app.js'),
 
   output: {
     // Where to build results
