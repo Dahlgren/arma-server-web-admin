@@ -1,7 +1,9 @@
+var async = require('async')
 var express = require('express')
 var multer = require('multer')
+var path = require('path')
+
 var upload = multer({ storage: multer.diskStorage({}) })
-var async = require('async')
 
 module.exports = function (missionsManager) {
   var router = express.Router()
@@ -11,8 +13,12 @@ module.exports = function (missionsManager) {
   })
 
   router.post('/', upload.array('missions', 64), function (req, res) {
+    var missions = req.files.filter(function (file) {
+      return path.extname(file.originalname) === '.pbo'
+    })
+
     async.parallelLimit(
-      req.files.map(function (missionFile) {
+      missions.map(function (missionFile) {
         return function (next) {
           missionsManager.handleUpload(missionFile, next)
         }
