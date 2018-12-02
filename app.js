@@ -19,12 +19,6 @@ var app = express()
 var server = require('http').Server(app)
 var io = require('socket.io')(server)
 
-var webpackCompiler = webpack(webpackConfig)
-
-app.use(webpackMiddleware(webpackCompiler, {
-  publicPath: webpackConfig.output.publicPath
-}))
-
 setupBasicAuth(config, app)
 
 app.use(bodyParser.json())
@@ -71,4 +65,14 @@ manager.on('servers', function () {
   io.emit('servers', manager.getServers())
 })
 
-server.listen(config.port, config.host)
+if (require.main === module) {
+  var webpackCompiler = webpack(webpackConfig)
+
+  app.use(webpackMiddleware(webpackCompiler, {
+    publicPath: webpackConfig.output.publicPath
+  }))
+
+  server.listen(config.port, config.host)
+}
+
+module.exports = app

@@ -17,3 +17,4 @@ before_install:
 script:
   - npm run lint
   - npm test
+  - ./node_modules/.bin/webpack
