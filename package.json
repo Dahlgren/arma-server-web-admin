@@ -2,6 +2,7 @@
   "name": "arma-server-web-admin",
   "description": "ArmA3 Server Management Backbone.js App",
   "version": "0.0.1",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "install-windows-service": "winser -i -a -c",
