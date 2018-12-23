@@ -32,16 +32,16 @@ module.exports = function (manager, mods) {
   router.post('/:server/start', function (req, res) {
     var server = manager.getServer(req.params.server)
     server.start()
-    res.json({status: 'ok', pid: server.pid})
+    res.json({ status: 'ok', pid: server.pid })
   })
 
   router.post('/:server/stop', function (req, res) {
     var server = manager.getServer(req.params.server)
     server.stop(function () {
       if (!server.pid) {
-        res.json({status: true, pid: server.pid})
+        res.json({ status: true, pid: server.pid })
       } else {
-        res.json({status: false, pid: server.pid})
+        res.json({ status: false, pid: server.pid })
       }
     })
   })

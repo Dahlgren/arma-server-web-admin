@@ -28,7 +28,7 @@ module.exports = function (missionsManager) {
         if (err) {
           res.status(500).send(err)
         } else {
-          res.status(200).json({success: true})
+          res.status(200).json({ success: true })
         }
       }
     )
@@ -47,7 +47,7 @@ module.exports = function (missionsManager) {
       if (err) {
         res.status(500).send(err)
       } else {
-        res.json({success: true})
+        res.json({ success: true })
       }
     })
   })
@@ -64,7 +64,7 @@ module.exports = function (missionsManager) {
       if (err) {
         res.status(500).send(err)
       } else {
-        res.json({success: true})
+        res.json({ success: true })
       }
     })
   })
