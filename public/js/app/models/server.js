@@ -8,6 +8,7 @@ define(function (require) {
 
   return Backbone.Model.extend({
     defaults: {
+      additionalConfigurationOptions: '',
       admin_password: '',
       allowed_file_patching: 1,
       auto_start: false,
