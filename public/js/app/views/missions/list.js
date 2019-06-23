@@ -15,5 +15,13 @@ define(function (require) {
     childView: ListItemView,
     childViewContainer: "tbody",
     template: template,
+
+    initialize: function (options) {
+      this.filterValue = options.filterValue;
+    },
+
+    filter: function (child, index, collection) {
+      return child.get('name').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0;
+    },
   });
 });
