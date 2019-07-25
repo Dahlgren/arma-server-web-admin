@@ -14,6 +14,14 @@ define(function (require) {
     childViewContainer: "tbody",
     template: _.template(tpl),
 
+    initialize: function (options) {
+      this.filterValue = options.filterValue;
+    },
+
+    filter: function (child, index, collection) {
+      return child.get('name').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0;
+    },
+
     buildChildView: function(item, ChildViewType, childViewOptions){
       var self = this;
       var options = _.extend({model: item}, childViewOptions);
