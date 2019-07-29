@@ -11,6 +11,9 @@ define(function (require) {
       template = _.template(tpl);
 
   return Marionette.ItemView.extend({
+    className: function () {
+      return Backbone.history.fragment === 'servers/' + this.model.get('id') ? 'active' : ''
+    },
     tagName: "li",
     template: template
   });
