@@ -1,3 +1,5 @@
+require('jquery.iframe-transport')
+
 require('bootstrap/dist/css/bootstrap.css')
 require('ladda/dist/ladda-themeless.min.css')
 require('sweetalert/dist/sweetalert.css')
@@ -14,38 +16,38 @@ require.config({
   },
 
   shim: {
-    'backbone': {
+    backbone: {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
     },
     'backbone.babysitter': {
-      deps: ['backbone'],
+      deps: ['backbone']
     },
     'backbone.bootstrap-modal': {
       deps: ['backbone', 'bootstrap']
     },
-    'bootstrap': {
+    bootstrap: {
       deps: ['jquery']
     },
-    'ladda': {
+    ladda: {
       deps: ['bootstrap']
     },
-    'marionette': {
+    marionette: {
       deps: ['backbone', 'backbone.babysitter'],
       exports: 'Marionette'
     },
     'marionette-formview': {
       deps: ['marionette']
     },
-    'sweetalert': {
+    sweetalert: {
       deps: ['bootstrap']
     },
-    'underscore': {
+    underscore: {
       exports: '_'
     }
   }
-});
+})
 
 require(['jquery', 'bootstrap', 'backbone', 'app/router'], function ($, Bootstrap, Backbone, Router) {
-  var router = new Router();
-});
+  return new Router()
+})

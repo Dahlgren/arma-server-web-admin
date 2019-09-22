@@ -1,14 +1,7 @@
-define(function (require) {
+var Backbone = require('backbone')
 
-  "use strict";
+var Parameter = require('app/models/parameter')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Parameter           = require('app/models/parameter');
-
-  return Backbone.Collection.extend({
-    model: Parameter,
-  });
-
-});
+module.exports = Backbone.Collection.extend({
+  model: Parameter
+})

@@ -1,16 +1,9 @@
-define(function (require) {
+var Backbone = require('backbone')
 
-  "use strict";
+var Log = require('app/models/log')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Log                 = require('app/models/log');
-
-  return Backbone.Collection.extend({
-    comparator: 'name',
-    model: Log,
-    url: '/api/logs/'
-  });
-
-});
+module.exports = Backbone.Collection.extend({
+  comparator: 'name',
+  model: Log,
+  url: '/api/logs/'
+})

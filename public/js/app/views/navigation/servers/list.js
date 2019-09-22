@@ -1,15 +1,8 @@
-define(function (require) {
+var Marionette = require('marionette')
 
-  "use strict";
+var ListItemView = require('app/views/navigation/servers/list_item')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      ListItemView        = require('app/views/navigation/servers/list_item');
-
-  return Marionette.CollectionView.extend({
-    tagName: 'ul',
-    childView: ListItemView,
-  });
-});
+module.exports = Marionette.CollectionView.extend({
+  tagName: 'ul',
+  childView: ListItemView
+})

@@ -1,22 +1,15 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var tpl = require('tpl/servers/players.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      tpl                 = require('text!tpl/servers/players.html');
-
-  return Marionette.LayoutView.extend({
-    template: _.template(tpl),
-    templateHelpers: {
-      players: function(){
-        return _.sortBy(this.state.players, function (player) {
-          return player.name;
-        });
-      }
-    },
-  });
-
-});
+module.exports = Marionette.LayoutView.extend({
+  template: _.template(tpl),
+  templateHelpers: {
+    players: function () {
+      return _.sortBy(this.state.players, function (player) {
+        return player.name
+      })
+    }
+  }
+})

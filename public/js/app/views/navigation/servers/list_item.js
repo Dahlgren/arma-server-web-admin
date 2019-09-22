@@ -1,20 +1,15 @@
-define(function (require) {
+var _ = require('underscore')
+var Backbone = require('backbone')
+var Marionette = require('marionette')
 
-  "use strict";
+var tpl = require('tpl/navigation/servers/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      tpl                 = require('text!tpl/navigation/servers/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
-
-  return Marionette.ItemView.extend({
-    className: function () {
-      return Backbone.history.fragment === 'servers/' + this.model.get('id') ? 'active' : ''
-    },
-    tagName: "li",
-    template: template
-  });
-});
+module.exports = Marionette.ItemView.extend({
+  className: function () {
+    return Backbone.history.fragment === 'servers/' + this.model.get('id') ? 'active' : ''
+  },
+  tagName: 'li',
+  template: template
+})

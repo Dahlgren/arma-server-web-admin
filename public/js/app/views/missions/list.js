@@ -1,27 +1,21 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var ListItemView = require('app/views/missions/list_item')
+var tpl = require('tpl/missions/list.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      ListItemView        = require('app/views/missions/list_item'),
-      tpl                 = require('text!tpl/missions/list.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.CompositeView.extend({
+  childView: ListItemView,
+  childViewContainer: 'tbody',
+  template: template,
 
-  return Marionette.CompositeView.extend({
-    childView: ListItemView,
-    childViewContainer: "tbody",
-    template: template,
+  initialize: function (options) {
+    this.filterValue = options.filterValue
+  },
 
-    initialize: function (options) {
-      this.filterValue = options.filterValue;
-    },
-
-    filter: function (child, index, collection) {
-      return child.get('name').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0;
-    },
-  });
-});
+  filter: function (child, index, collection) {
+    return child.get('name').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0
+  }
+})
