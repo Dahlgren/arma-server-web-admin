@@ -11,10 +11,10 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" id="dashboard">Dashboard</a></li>
-        <li><a href="#logs" id="logs">Logs</a></li>
-        <li><a href="#missions" id="missions">Missions</a></li>
-        <li><a href="#mods" id="mods">Mods</a></li>
+        <li class="<%= isActiveRoute('') %>"><a href="#" id="dashboard">Dashboard</a></li>
+        <li class="<%= isActiveRoute('logs') %>"><a href="#logs" id="logs">Logs</a></li>
+        <li class="<%= isActiveRoute('missions') %>"><a href="#missions" id="missions">Missions</a></li>
+        <li class="<%= isActiveRoute('mods') %>"><a href="#mods" id="mods">Mods</a></li>
         <li><a href="#" id="settings">Settings</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servers <b class="caret"></b></a>

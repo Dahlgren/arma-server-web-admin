@@ -14,6 +14,14 @@ define(function (require) {
   return Marionette.ItemView.extend({
     template: _.template(tpl),
 
+    templateHelpers: function() {
+      return {
+        isActiveRoute: function (route) {
+          return Backbone.history.fragment === route ? 'active' : ''
+        }
+      }
+    },
+
     events: {
       "click #settings": "settings"
     },
@@ -22,6 +30,7 @@ define(function (require) {
       this.settings = options.settings;
       this.servers = options.servers;
       this.serversListView = new ServersListView({ collection: this.servers })
+      Backbone.history.on('route', this.render);
     },
 
     onDomRefresh: function () {
