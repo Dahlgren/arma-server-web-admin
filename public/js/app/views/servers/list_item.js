@@ -27,7 +27,7 @@ define(function (require) {
     clone: function (e) {
       var title = this.model.get('title') + ' Clone';
       var clone = this.model.clone();
-      clone.set({id: null, title: title});
+      clone.set({id: null, title: title, auto_start: false});
       clone.save();
     },
 
