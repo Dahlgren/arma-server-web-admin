@@ -31,12 +31,13 @@ app.use(serveStatic(path.join(__dirname, 'public')))
 
 var logs = new Logs(config)
 
-var manager = new Manager(config, logs)
-manager.load()
-
 var missions = new Missions(config)
 var mods = new Mods(config)
 mods.updateMods()
+
+var manager = new Manager(config, logs, mods)
+manager.load()
+
 
 var settings = new Settings(config)
 
