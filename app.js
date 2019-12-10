@@ -38,7 +38,6 @@ mods.updateMods()
 var manager = new Manager(config, logs, mods)
 manager.load()
 
-
 var settings = new Settings(config)
 
 app.use('/api/logs', require('./routes/logs')(logs))
