@@ -1,4 +1,3 @@
-var $ = require('jquery')
 var _ = require('underscore')
 var Marionette = require('marionette')
 var sweetAlert = require('sweet-alert')
@@ -16,14 +15,18 @@ module.exports = Marionette.LayoutView.extend({
   start: function (event) {
     var self = this
     event.preventDefault()
-    $.ajax({
-      url: '/api/servers/' + this.model.get('id') + '/start',
-      type: 'POST',
-      success: function (resp) {
-        self.model.set('pid', resp.pid)
-        self.render()
-      },
-      error: $.noop
+
+    this.model.start(function (err) {
+      if (err) {
+        sweetAlert({
+          title: 'Error',
+          text: err.responseText,
+          type: 'error'
+        })
+        return
+      }
+
+      self.render()
     })
   },
 
@@ -39,14 +42,19 @@ module.exports = Marionette.LayoutView.extend({
       confirmButtonText: 'Yes, stop it!'
     },
     function () {
-      $.ajax({
-        url: '/api/servers/' + self.model.get('id') + '/stop',
-        type: 'POST',
-        success: function (resp) {
-          self.model.set('pid', resp.pid)
-          self.render()
-        },
-        error: $.noop
+      event.preventDefault()
+
+      self.model.stop(function (err) {
+        if (err) {
+          sweetAlert({
+            title: 'Error',
+            text: err.responseText,
+            type: 'error'
+          })
+          return
+        }
+
+        self.render()
       })
     })
   }
