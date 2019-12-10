@@ -1,37 +1,31 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
+var sweetAlert = require('sweet-alert')
 
-  "use strict";
+var tpl = require('tpl/missions/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      swal                = require('sweet-alert'),
-      tpl                 = require('text!tpl/missions/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.ItemView.extend({
+  tagName: 'tr',
+  template: template,
 
-  return Marionette.ItemView.extend({
-    tagName: "tr",
-    template: template,
+  events: {
+    'click .delete': 'deleteMission'
+  },
 
-    events: {
-      "click .delete": "deleteMission"
+  deleteMission: function (event) {
+    var self = this
+    sweetAlert({
+      title: 'Are you sure?',
+      text: 'The mission will be deleted from the server!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn-danger',
+      confirmButtonText: 'Yes, delete it!'
     },
-
-    deleteMission: function (event) {
-      var self = this;
-      sweetAlert({
-        title: "Are you sure?",
-        text: "The mission will be deleted from the server!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
-      },
-      function(){
-        self.model.destroy();
-      });
-    },
-  });
-});
+    function () {
+      self.model.destroy()
+    })
+  }
+})

@@ -1,20 +1,13 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var tpl = require('tpl/servers/empty.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      tpl                 = require('text!tpl/servers/empty.html');
+module.exports = Marionette.ItemView.extend({
+  tagName: 'tr',
+  template: _.template(tpl),
 
-  return Marionette.ItemView.extend({
-    tagName: "tr",
-    template: _.template(tpl),
-
-    initialize: function (options) {
-      this.servers = options.servers;
-    },
-  });
-
-});
+  initialize: function (options) {
+    this.servers = options.servers
+  }
+})

@@ -1,33 +1,28 @@
-define(function (require) {
+var $ = require('jquery')
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var tpl = require('tpl/servers/parameters/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      tpl                 = require('text!tpl/servers/parameters/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.ItemView.extend({
+  tagName: 'tr',
+  template: template,
 
-  return Marionette.ItemView.extend({
-    tagName: "tr",
-    template: template,
+  events: {
+    'click button.delete': 'delete',
+    'change input#parameter': 'changed',
+    'click button.clone': 'clone'
+  },
 
-    events: {
-      "click button.delete": "delete",
-      "change input#parameter": "changed",
-      "click button.clone": "clone",
-    },
+  changed: function (e) {
+    var val = $(e.target).val()
+    this.model.set(e.target.id, val)
+  },
 
-    changed: function (e) {
-      var val = $(e.target).val();
-      this.model.set(e.target.id, val);
-    },
-
-    delete: function (e) {
-      e.preventDefault();
-      this.model.destroy();
-    },
-  });
-});
+  delete: function (e) {
+    e.preventDefault()
+    this.model.destroy()
+  }
+})
