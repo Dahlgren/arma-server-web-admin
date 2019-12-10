@@ -12,7 +12,9 @@ module.exports = Marionette.ItemView.extend({
 
   events: {
     'click .clone': 'clone',
-    'click .delete': 'delete'
+    'click .delete': 'delete',
+    'click .start': 'start',
+    'click .stop': 'stop'
   },
 
   modelEvents: {
@@ -38,6 +40,50 @@ module.exports = Marionette.ItemView.extend({
     },
     function () {
       self.model.destroy()
+    })
+  },
+
+  start: function (event) {
+    var self = this
+    event.preventDefault()
+    this.model.start(function (err) {
+      if (err) {
+        sweetAlert({
+          title: 'Error',
+          text: err.responseText,
+          type: 'error'
+        })
+        return
+      }
+
+      self.render()
+    })
+  },
+
+  stop: function (event) {
+    var self = this
+    event.preventDefault()
+    sweetAlert({
+      title: 'Are you sure?',
+      text: 'The server will stopped.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn-warning',
+      confirmButtonText: 'Yes, stop it!'
+    },
+    function () {
+      self.model.stop(function (err) {
+        if (err) {
+          sweetAlert({
+            title: 'Error',
+            text: err.responseText,
+            type: 'error'
+          })
+          return
+        }
+
+        self.render()
+      })
     })
   },
 
