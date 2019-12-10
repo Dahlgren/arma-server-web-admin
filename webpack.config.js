@@ -25,12 +25,6 @@ module.exports = {
     }
   },
 
-  resolveLoader: {
-    alias: {
-      text: 'raw-loader'
-    }
-  },
-
   plugins: [
     new webpack.ProvidePlugin({
       _: 'underscore',
@@ -43,6 +37,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
+      { test: /\.html$/, loaders: ['raw-loader'] },
       { test: /\.json$/, loaders: ['json-loader'] },
       { test: /\.png$/, loader: 'url-loader?limit=8192&mimetype=image/png' },
       { test: /\.jpe?g$/, loader: 'url-loader?limit=8192&mimetype=image/jpg' },

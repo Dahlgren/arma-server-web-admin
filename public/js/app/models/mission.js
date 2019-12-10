@@ -1,17 +1,9 @@
-define(function (require) {
+var Backbone = require('backbone')
 
-  "use strict";
-
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone');
-
-  return Backbone.Model.extend({
-    defaults: {
-      name: ''
-    },
-    idAttribute: 'name',
-    urlRoot: '/api/missions/',
-  });
-
-});
+module.exports = Backbone.Model.extend({
+  defaults: {
+    name: ''
+  },
+  idAttribute: 'name',
+  urlRoot: '/api/missions/'
+})

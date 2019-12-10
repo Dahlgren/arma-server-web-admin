@@ -1,14 +1,7 @@
-define(function (require) {
+var Backbone = require('backbone')
 
-  "use strict";
+var MissionRotation = require('app/models/mission_rotation')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      MissionRotation     = require('app/models/mission_rotation');
-  
-  return Backbone.Collection.extend({
-    model: MissionRotation,
-  });
-
-});
+module.exports = Backbone.Collection.extend({
+  model: MissionRotation
+})
