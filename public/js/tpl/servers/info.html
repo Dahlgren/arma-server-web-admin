@@ -39,6 +39,36 @@
     </div>
   </div>
 
+<% if (processes) { %>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Processes</label>
+    <div class="col-sm-11">
+      <% processes.map(function (process) { %>
+        <div class="form-group">
+          <label class="col-sm-1 control-label">Name</label>
+          <div class="col-sm-11">
+            <p class="form-control-static"><%= process.name %></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label">CPU</label>
+          <div class="col-sm-11">
+            <p class="form-control-static"><%= process.cpuFormatted %></p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-1 control-label">RAM</label>
+          <div class="col-sm-11">
+            <p class="form-control-static"><%= process.memoryFormatted %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+<% } %>
+
 <% if (state) { %>
   <div class="form-group">
     <label class="col-sm-1 control-label">Name</label>
