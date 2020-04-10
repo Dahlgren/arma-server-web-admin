@@ -1,0 +1,32 @@
+<td>
+  <form role="form">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-5">
+          <label for="parameter-name-<%- index %>" class="control-label">Name</label>
+        </div>
+
+        <div class="col-xs-3">
+          <label for="parameter-value-<%- index %>" class="control-label">Value</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-5">
+          <input type="text" class="form-control" id="parameter-name-<%- index %>" placeholder="Name" value="<%- name %>" data-attr="name" />
+        </div>
+
+        <div class="col-xs-3">
+          <input type="number" class="form-control" id="parameter-value-<%- index %>" placeholder="Value" value="<%- value %>" data-attr="value" />
+        </div>
+
+        <div class="col-xs-4">
+          <button class="btn btn-xs btn-danger parameter-delete">
+            <span class="glyphicon glyphicon-minus"></span>
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</td>
