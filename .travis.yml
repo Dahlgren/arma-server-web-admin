@@ -3,15 +3,11 @@ branches:
   only:
     - master
 node_js:
+  - "12"
   - "10"
-  - "9"
   - "8"
-  - "7"
   - "6"
-  - "5"
   - "4"
-  - "0.12"
-  - "0.10"
 before_install:
   - cp config.js.example config.js
 script:
