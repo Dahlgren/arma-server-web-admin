@@ -1,8 +1,8 @@
+var $ = require('jquery')
 var _ = require('underscore')
 var Marionette = require('marionette')
-var sweetAlert = require('sweet-alert')
-
-var tpl = require('tpl/mods/list_item.html')
+var Ladda = require('ladda')
+var tpl = require('tpl/mods/search/list_item.html')
 
 var template = _.template(tpl)
 
@@ -11,15 +11,20 @@ module.exports = Marionette.ItemView.extend({
   template: template,
 
   events: {
-    'click .install': 'installMod',
-    'click .destroy': 'deleteMod'
+    'click .install': 'install'
   },
 
-  modelEvents: {
-    change: 'render'
+  templateHelpers: {
+    downloading: function () {
+      if (this.mods.get(this.id)) {
+        return this.mods.get(this.id).get('downloading')
+      }
+
+      return false
+    }
   },
 
-  installMod: function (event) {
+  install: function (event) {
     var self = this
     event.preventDefault()
 
@@ -42,21 +47,6 @@ module.exports = Marionette.ItemView.extend({
         self.laddaBtn.stop()
         self.$el.find('.ladda-button').removeClass('disabled')
       }
-    })
-  },
-
-  deleteMod: function (event) {
-    var self = this
-    sweetAlert({
-      title: 'Are you sure?',
-      text: 'The mod will be deleted from the server!',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonClass: 'btn-danger',
-      confirmButtonText: 'Yes, delete it!'
-    },
-    function () {
-      self.model.destroy()
     })
   }
 })

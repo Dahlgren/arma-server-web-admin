@@ -1,0 +1,27 @@
+<td style="width: 100%;">
+  <p>
+    <strong><a href="<%-link%>" target=_blank><%-title%></a></strong>
+  </p>
+  <p>
+    <small><%-description%></strong>
+  </p>
+</td>
+<td>
+  <p>
+    <% if (downloading()) { %>
+      <div class="progress" style="margin-bottom: 0;">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
+      </div>
+    <% } else { %>
+      <a class="btn btn-primary btn-xs install ladda-button pull-right" data-style="expand-left">
+        <span class="glyphicon glyphicon-save"></span>
+        Install
+      </a>
+    <% } %>
+    <div class="clearfix"></div>
+  </p>
+  <p>
+    <small class="pull-right"><%-fileSizeFormatted%></small>
+    <div class="clearfix"></div>
+  </p>
+</td>
