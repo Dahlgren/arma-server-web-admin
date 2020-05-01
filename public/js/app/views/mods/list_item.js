@@ -1,4 +1,6 @@
+var $ = require('jquery')
 var _ = require('underscore')
+var Ladda = require('ladda')
 var Marionette = require('marionette')
 var sweetAlert = require('sweet-alert')
 
