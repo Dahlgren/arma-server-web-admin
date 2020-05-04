@@ -18,6 +18,7 @@ module.exports = {
     path: 'path-to-main-steam-folder',
     username: 'steam_username',
     password: 'steam_password',
+    steamGuardCode: 'ABCD3'
   },
   admins: [], // add steam IDs here to enable #login without password
   auth: { // If both username and password is set, HTTP Basic Auth will be used. You may use an array to specify more than one user.
