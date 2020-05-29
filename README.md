@@ -31,7 +31,7 @@ A simple to use web admin panel for Arma servers.
 - arma2
 - arma2oa
 - arma3
-- arma3_x64 (does not support linux)
+- arma3_x64
 - cwa (does not support linux)
 - ofp
 - ofpresistance
