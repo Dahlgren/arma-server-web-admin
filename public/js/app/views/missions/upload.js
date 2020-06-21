@@ -12,7 +12,8 @@ module.exports = Marionette.ItemView.extend({
     'click form button': 'submit'
   },
 
-  submit: function () {
+  submit: function (event) {
+    event.preventDefault()
     var self = this
     var $form = this.$el.find('form')
 
