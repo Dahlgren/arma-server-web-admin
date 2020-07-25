@@ -38,9 +38,9 @@ module.exports = function (manager, mods) {
     var server = manager.getServer(req.params.server)
     server.stop(function () {
       if (!server.pid) {
-        res.json({status: true, pid: server.pid})
+        res.json({ status: true, pid: server.pid })
       } else {
-        res.json({status: false, pid: server.pid})
+        res.json({ status: false, pid: server.pid })
       }
     })
   })

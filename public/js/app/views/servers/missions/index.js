@@ -1,58 +1,67 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var MissionRotations = require('app/collections/mission_rotations')
+var AvailableListView = require('app/views/servers/missions/available/list')
+var RotationListView = require('app/views/servers/missions/rotation/list')
+var tpl = require('tpl/servers/missions/index.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      MissionRotations    = require('app/collections/mission_rotations'),
-      AvailableListView   = require('app/views/servers/missions/available/list'),
-      RotationListView    = require('app/views/servers/missions/rotation/list'),
-      tpl                 = require('text!tpl/servers/missions/index.html');
+module.exports = Marionette.LayoutView.extend({
+  template: _.template(tpl),
+  templateHelpers: function () {
+    return {
+      filterValue: this.filterValue
+    }
+  },
 
-  return Marionette.Layout.extend({
-    template: _.template(tpl),
+  regions: {
+    availableView: '#available',
+    rotationView: '#rotation'
+  },
 
-    regions: {
-      availableView: "#available",
-      rotationView: "#rotation",
-    },
+  events: {
+    'keyup #filterMissions': 'updateFilter'
+  },
 
-    modelEvents: {
-      "change": "serverUpdated",
-    },
+  modelEvents: {
+    change: 'serverUpdated'
+  },
 
-    initialize: function (options) {
-      this.missions = options.missions;
-      this.model = options.server;
+  initialize: function (options) {
+    this.missions = options.missions
+    this.filterValue = ''
 
-      this.rotationCollection = new MissionRotations(this.model.get('missions'));
+    this.rotationCollection = new MissionRotations(this.model.get('missions'))
 
-      var self = this;
+    var self = this
 
-      this.availableListView = new AvailableListView({collection: this.missions});
-      this.availableListView.on('add', function (model) {
-        self.rotationCollection.add([{
-          name: model.get('name').replace('.pbo', ''),
-        }]);
-      });
-      this.rotationListView = new RotationListView({collection: this.rotationCollection});
-    },
+    this.availableListView = new AvailableListView({ collection: this.missions, filterValue: this.filterValue })
+    this.availableListView.on('add', function (model) {
+      self.rotationCollection.add([{
+        name: model.get('name').replace('.pbo', '')
+      }])
+    })
+    this.rotationListView = new RotationListView({ collection: this.rotationCollection })
+  },
 
-    onRender: function() {
-      this.availableView.show(this.availableListView);
-      this.rotationView.show(this.rotationListView);
-    },
+  onRender: function () {
+    this.availableView.show(this.availableListView)
+    this.rotationView.show(this.rotationListView)
+  },
 
-    serverUpdated: function() {
-      this.rotationCollection.set(this.model.get('missions'));
-    },
+  updateFilter: function (event) {
+    this.filterValue = event.target.value
+    this.availableView.currentView.filterValue = this.filterValue
+    this.availableView.currentView.render()
+  },
 
-    serialize : function() {
-      return {
-        missions: this.rotationCollection.toJSON(),
-      };
-    },
-  });
-});
+  serverUpdated: function () {
+    this.rotationCollection.set(this.model.get('missions'))
+  },
+
+  serialize: function () {
+    return {
+      missions: this.rotationCollection.toJSON()
+    }
+  }
+})

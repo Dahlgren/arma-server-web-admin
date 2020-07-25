@@ -1,59 +1,31 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
+var sweetAlert = require('sweet-alert')
 
-  "use strict";
+var tpl = require('tpl/mods/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      Ladda               = require('ladda'),
-      swal                = require('sweet-alert'),
-      tpl                 = require('text!tpl/mods/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.ItemView.extend({
+  tagName: 'tr',
+  template: template,
 
-  return Marionette.ItemView.extend({
-    tagName: "tr",
-    template: template,
+  events: {
+    'click .destroy': 'deleteMod'
+  },
 
-    events: {
-      "click .destroy": "destroy",
-      "click .update": "update",
+  deleteMod: function (event) {
+    var self = this
+    sweetAlert({
+      title: 'Are you sure?',
+      text: 'The mod will be deleted from the server!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn-danger',
+      confirmButtonText: 'Yes, delete it!'
     },
-
-    destroy: function (event) {
-      var self = this;
-      sweetAlert({
-        title: "Are you sure?",
-        text: "The mod will be deleted from the server!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
-      },
-      function(){
-        self.model.destroy();
-      });
-    },
-
-    update: function (event) {
-      var self = this;
-      event.preventDefault();
-
-      var $updateBtn = this.$el.find(".update");
-      var laddaBtn = Ladda.create($updateBtn.get(0));
-      laddaBtn.start();
-
-      $.ajax({
-        url: "/api/mods/" + this.model.get('name'),
-        type: 'PUT',
-        success: function (resp) {
-          laddaBtn.stop();
-        },
-        error: function (resp) {
-          laddaBtn.stop();
-        },
-      });
-    },
-  });
-});
+    function () {
+      self.model.destroy()
+    })
+  }
+})

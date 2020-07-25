@@ -1,30 +1,11 @@
 <td>
   <a href='#mods/<%-name%>'><%-name%></a>
-
-  <% if (playWithSix) { %>
-    <img src="/images/playwithsix.png" height="20px" width="20px" />
-  <% } %>
 </td>
 <td>
-  <% if (progress) { %>
-    <div class="progress" style="margin-bottom: 0;">
-      <div class="progress-bar" role="progressbar" aria-valuenow="<%-progress%>" aria-valuemin="0" aria-valuemax="100" style="width: <%-progress%>%; min-width: 2em;">
-        <%-progress%>%
-      </div>
-    </div>
-  <% } else { %>
-    <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">
-      <span class="glyphicon glyphicon-trash"></span>
-      Delete
-    </a>
+  <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">
+    <span class="glyphicon glyphicon-trash"></span>
+    Delete
+  </a>
 
-    <% if (outdated) { %>
-      <a class="btn btn-primary btn-xs update ladda-button pull-right" data-style="expand-left" style="margin-right: 8px">
-        <span class="glyphicon glyphicon-save"></span>
-        Update
-      </a>
-    <% } %>
-
-    <div class="clearfix"></div>
-  <% } %>
+  <div class="clearfix"></div>
 </td>

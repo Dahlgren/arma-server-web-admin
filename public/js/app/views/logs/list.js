@@ -1,19 +1,13 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var ListItemView = require('app/views/logs/list_item')
+var tpl = require('tpl/logs/list.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      ListItemView        = require('app/views/logs/list_item'),
-      tpl                 = require('text!tpl/logs/list.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
-
-  return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
-    template: template,
-  });
-});
+module.exports = Marionette.CompositeView.extend({
+  childView: ListItemView,
+  childViewContainer: 'tbody',
+  template: template
+})

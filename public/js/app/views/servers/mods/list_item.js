@@ -1,24 +1,17 @@
-define(function (require) {
+var _ = require('underscore')
 
-  "use strict";
+var ModListItemView = require('app/views/mods/list_item')
+var tpl = require('tpl/servers/mods/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      ModListItemView     = require('app/views/mods/list_item'),
-      tpl                 = require('text!tpl/servers/mods/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = ModListItemView.extend({
+  tagName: 'tr',
+  template: template,
 
-  return ModListItemView.extend({
-    tagName: "tr",
-    template: template,
-
-    templateHelpers: function(){
-      return {
-        enabled: this.options.server.get('mods').indexOf(this.model.get('name')) > -1
-      }
-    },
-  });
-});
+  templateHelpers: function () {
+    return {
+      enabled: this.options.server.get('mods').indexOf(this.model.get('name')) > -1
+    }
+  }
+})

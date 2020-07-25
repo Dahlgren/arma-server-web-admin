@@ -1,56 +1,32 @@
-define(function (require) {
+var $ = require('jquery')
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var ListItemView = require('app/views/mods/list_item')
+var tpl = require('tpl/mods/list.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      ListItemView        = require('app/views/mods/list_item'),
-      FormView            = require('app/views/mods/form'),
-      tpl                 = require('text!tpl/mods/list.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.CompositeView.extend({
+  childView: ListItemView,
+  childViewContainer: 'tbody',
+  template: template,
 
-  return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
-    template: template,
+  events: {
+    'click #refresh': 'refresh'
+  },
 
-    events: {
-      "click #download": "download",
-      "click #refresh": "refresh",
-    },
+  refresh: function (event) {
+    event.preventDefault()
+    $.ajax({
+      url: '/api/mods/refresh',
+      type: 'POST',
+      success: function (resp) {
 
-    initialize: function (options) {
-      this.listenTo(this.collection, "change reset", this.render);
-    },
+      },
+      error: function (resp) {
 
-    download: function (event) {
-      event.preventDefault();
-      var view = new FormView({mods: this.collection});
-      var modal = new Backbone.BootstrapModal({
-        content: view,
-        animate: true,
-        cancelText: 'Close',
-        okText: 'Search',
-      });
-      view.modal = modal;
-      modal.open();
-    },
-
-    refresh: function (event) {
-      event.preventDefault();
-      $.ajax({
-        url: "/api/mods/refresh",
-        type: 'POST',
-        success: function (resp) {
-
-        },
-        error: function (resp) {
-
-        },
-      });
-    },
-  });
-});
+      }
+    })
+  }
+})

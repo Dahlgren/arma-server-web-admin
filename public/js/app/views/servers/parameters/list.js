@@ -1,47 +1,47 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
 
-  "use strict";
+var Parameter = require('app/models/parameter')
+var Parameters = require('app/collections/parameters')
+var ListItemView = require('app/views/servers/parameters/list_item')
+var tpl = require('tpl/servers/parameters/list.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      Parameter           = require('app/models/parameter'),
-      Parameters          = require('app/collections/parameters'),
-      ListItemView        = require('app/views/servers/parameters/list_item'),
-      tpl                 = require('text!tpl/servers/parameters/list.html');
+module.exports = Marionette.CompositeView.extend({
+  childView: ListItemView,
+  childViewContainer: 'tbody',
+  template: _.template(tpl),
 
-  return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
-    template: _.template(tpl),
+  events: {
+    'click .add-parameter': 'addParameter'
+  },
 
-    events: {
-      "click .add-parameter": "addParameter",
-    },
+  modelEvents: {
+    change: 'serverUpdated'
+  },
 
-    initialize: function (options) {
-      this.model = options.server;
+  initialize: function (options) {
+    this.collection = new Parameters()
+    this.serverUpdated()
+  },
 
-      this.collection = new Parameters(this.model.get('parameters').map(function (parameter) {
-        return new Parameter({
-          parameter: parameter,
-        });
-      }));
-    },
+  addParameter: function (e) {
+    e.preventDefault()
+    this.collection.add(new Parameter())
+  },
 
-    addParameter: function (e) {
-      e.preventDefault();
-      this.collection.add(new Parameter());
-    },
+  serialize: function () {
+    return {
+      parameters: this.collection.map(function (parameter) {
+        return parameter.get('parameter')
+      })
+    }
+  },
 
-    serialize : function() {
-      return {
-        parameters: this.collection.map(function (parameter) {
-          return parameter.get('parameter');
-        }),
-      };
-    },
-  });
-
-});
+  serverUpdated: function () {
+    this.collection.reset(this.model.get('parameters').map(function (parameter) {
+      return new Parameter({
+        parameter: parameter
+      })
+    }))
+  }
+})

@@ -1,16 +1,11 @@
-define(function (require) {
+var Backbone = require('backbone')
 
-  "use strict";
+var Mod = require('app/models/mod')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Mod                 = require('app/models/mod');
-
-  return Backbone.Collection.extend({
-    comparator: 'name',
-    model: Mod,
-    url: '/api/mods/'
-  });
-
-});
+module.exports = Backbone.Collection.extend({
+  comparator: function (a, b) {
+    return a.get('name').toLowerCase().localeCompare(b.get('name').toLowerCase())
+  },
+  model: Mod,
+  url: '/api/mods/'
+})

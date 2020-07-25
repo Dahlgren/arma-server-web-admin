@@ -31,7 +31,7 @@ A simple to use web admin panel for Arma servers.
 - arma2
 - arma2oa
 - arma3
-- arma3_x64 (does not support linux)
+- arma3_x64
 - cwa (does not support linux)
 - ofp
 - ofpresistance
@@ -45,6 +45,7 @@ path | Folder path to game server
 port | Web port to use
 host | IP or Hostname to listen on
 type | Which kind of server to use, can be 'linux', 'windows' or 'wine'
+additionalConfigurationOptions | Additional configuration options appended to server.cfg file
 parameters | Extra startup parameters added to servers and headless clients
 serverMods | Mods that always and only will be used by the game servers
 auth | If both username and password is set, HTTP Basic Auth will be used

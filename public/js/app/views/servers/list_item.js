@@ -1,53 +1,93 @@
-define(function (require) {
+var _ = require('underscore')
+var Marionette = require('marionette')
+var sweetAlert = require('sweet-alert')
 
-  "use strict";
+var tpl = require('tpl/servers/list_item.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      swal                = require('sweet-alert'),
-      tpl                 = require('text!tpl/servers/list_item.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.ItemView.extend({
+  tagName: 'tr',
+  template: template,
 
-  return Marionette.ItemView.extend({
-    tagName: "tr",
-    template: template,
+  events: {
+    'click .clone': 'clone',
+    'click .delete': 'delete',
+    'click .start': 'start',
+    'click .stop': 'stop'
+  },
 
-    events: {
-      "click .clone": "clone",
-      "click .delete": "delete",
+  modelEvents: {
+    change: 'serverUpdated'
+  },
+
+  clone: function (e) {
+    var title = this.model.get('title') + ' Clone'
+    var clone = this.model.clone()
+    clone.set({ id: null, title: title, auto_start: false })
+    clone.save()
+  },
+
+  delete: function (event) {
+    var self = this
+    sweetAlert({
+      title: 'Are you sure?',
+      text: 'Your server configuration will be deleted!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn-danger',
+      confirmButtonText: 'Yes, delete it!'
     },
+    function () {
+      self.model.destroy()
+    })
+  },
 
-    modelEvents: {
-      "change": "serverUpdated",
-    },
+  start: function (event) {
+    var self = this
+    event.preventDefault()
+    this.model.start(function (err) {
+      if (err) {
+        sweetAlert({
+          title: 'Error',
+          text: err.responseText,
+          type: 'error'
+        })
+        return
+      }
 
-    clone: function (e) {
-      var title = this.model.get('title') + ' Clone';
-      var clone = this.model.clone();
-      clone.set({id: null, title: title});
-      clone.save();
-    },
+      self.render()
+    })
+  },
 
-    delete: function (event) {
-      var self = this;
-      sweetAlert({
-        title: "Are you sure?",
-        text: "Your server configuration will be deleted!",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonClass: "btn-danger",
-        confirmButtonText: "Yes, delete it!",
-      },
-      function(){
-        self.model.destroy();
-      });
+  stop: function (event) {
+    var self = this
+    event.preventDefault()
+    sweetAlert({
+      title: 'Are you sure?',
+      text: 'The server will stopped.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonClass: 'btn-warning',
+      confirmButtonText: 'Yes, stop it!'
     },
+    function () {
+      self.model.stop(function (err) {
+        if (err) {
+          sweetAlert({
+            title: 'Error',
+            text: err.responseText,
+            type: 'error'
+          })
+          return
+        }
 
-    serverUpdated: function (event) {
-      this.render();
-    },
-  });
-});
+        self.render()
+      })
+    })
+  },
+
+  serverUpdated: function (event) {
+    this.render()
+  }
+})

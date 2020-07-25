@@ -1,51 +1,42 @@
-define(function (require) {
+var _ = require('underscore')
+var Backbone = require('backbone')
+var Marionette = require('marionette')
 
-  "use strict";
+var Server = require('app/models/server')
+var AddServerView = require('app/views/servers/form')
+var EmptyView = require('app/views/servers/empty')
+var ListItemView = require('app/views/servers/list_item')
+var tpl = require('tpl/servers/list.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      Server              = require('app/models/server'),
-      AddServerView       = require('app/views/servers/form'),
-      EmptyView           = require('app/views/servers/empty'),
-      ListItemView        = require('app/views/servers/list_item'),
-      tpl                 = require('text!tpl/servers/list.html'),
+var template = _.template(tpl)
 
-      template = _.template(tpl);
+module.exports = Marionette.CompositeView.extend({
+  childView: ListItemView,
+  childViewContainer: 'tbody',
+  template: template,
 
-  return Marionette.CompositeView.extend({
-    itemView: ListItemView,
-    itemViewContainer: "tbody",
-    template: template,
+  emptyView: EmptyView,
 
-    emptyView: EmptyView,
+  events: {
+    'click #add-server': 'addServer'
+  },
 
-    events: {
-      "click #add-server": "addServer"
-    },
+  buildChildView: function (item, ChildViewType, childViewOptions) {
+    // build the final list of options for the item view type
+    var options = _.extend({ model: item }, childViewOptions)
 
-    initialize: function (options) {
-      this.listenTo(this.collection, "change reset", this.render);
-    },
+    if (ChildViewType === EmptyView) {
+      options = _.extend({ servers: this.collection }, options)
+    }
 
-    buildItemView: function(item, ItemViewType, itemViewOptions){
-      // build the final list of options for the item view type
-      var options = _.extend({model: item}, itemViewOptions);
+    // create the item view instance
+    var view = new ChildViewType(options)
+    // return it
+    return view
+  },
 
-      if (ItemViewType == EmptyView) {
-        options = _.extend({servers: this.collection}, options);
-      }
-
-      // create the item view instance
-      var view = new ItemViewType(options);
-      // return it
-      return view;
-    },
-
-    addServer: function () {
-      var view = new AddServerView({model: new Server(), servers: this.collection});
-      new Backbone.BootstrapModal({ content: view, servers: this.collection }).open()
-    },
-  });
-});
+  addServer: function () {
+    var view = new AddServerView({ model: new Server(), servers: this.collection })
+    new Backbone.BootstrapModal({ content: view, servers: this.collection }).open()
+  }
+})

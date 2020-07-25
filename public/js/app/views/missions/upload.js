@@ -1,47 +1,36 @@
-define(function (require) {
+var $ = require('jquery')
+var _ = require('underscore')
+var Marionette = require('marionette')
+var Ladda = require('ladda')
 
-  "use strict";
+var tpl = require('tpl/missions/upload.html')
 
-  var $                   = require('jquery'),
-      _                   = require('underscore'),
-      Backbone            = require('backbone'),
-      Marionette          = require('marionette'),
-      Ladda               = require('ladda'),
-      IframeTransport     = require('jquery.iframe-transport'),
-      Mission             = require('app/models/mission'),
-      tpl                 = require('text!tpl/missions/upload.html');
+module.exports = Marionette.ItemView.extend({
+  template: _.template(tpl),
 
-  return Marionette.ItemView.extend({
-    template: _.template(tpl),
+  events: {
+    'click form button': 'submit'
+  },
 
-    events: {
-      'click form button': 'submit',
-    },
+  submit: function (event) {
+    event.preventDefault()
+    var self = this
+    var $form = this.$el.find('form')
 
-    initialize: function (options) {
-      this.missions = options.missions;
-      this.model = new Mission();
-    },
+    var $uploadBtn = $form.find('button[type=submit]')
+    var laddaBtn = Ladda.create($uploadBtn.get(0))
+    laddaBtn.start()
 
-    submit: function () {
-      var self = this;
-      var $form = this.$el.find('form');
-
-      var $uploadBtn = $form.find('button[type=submit]');
-      var laddaBtn = Ladda.create($uploadBtn.get(0));
-      laddaBtn.start();
-
-      $.ajax("/api/missions", {
-        files: $form.find(":file"),
-        iframe: true
-      }).complete(function(data) {
-        self.missions.fetch({success : function () {
-          laddaBtn.stop();
-          self.render();
-        }});
-      }).error(function() {
-        laddaBtn.stop();
-      });
-    },
-  });
-});
+    $.ajax('/api/missions', {
+      success: function (data) {
+        laddaBtn.stop()
+        self.render()
+      },
+      error: function () {
+        laddaBtn.stop()
+      },
+      files: $form.find(':file'),
+      iframe: true
+    })
+  }
+})
