@@ -35,13 +35,21 @@ module.exports = Marionette.LayoutView.extend({
 
     var self = this
 
-    this.availableListView = new AvailableListView({ collection: this.missions, filterValue: this.filterValue })
+    this.availableListView = new AvailableListView({
+      collection: this.missions,
+      filterValue: this.filterValue
+    })
     this.availableListView.on('add', function (model) {
       self.rotationCollection.add([{
+        difficulty: self.model.missionDifficulty(),
         name: model.get('name').replace('.pbo', '')
       }])
     })
-    this.rotationListView = new RotationListView({ collection: this.rotationCollection })
+
+    this.rotationListView = new RotationListView({
+      collection: this.rotationCollection,
+      server: this.model
+    })
   },
 
   onRender: function () {
