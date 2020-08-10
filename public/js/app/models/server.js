@@ -62,5 +62,14 @@ module.exports = Backbone.Model.extend({
         }
       }
     })
+  },
+
+  missionDifficulty: function () {
+    var serverDifficulty = this.get('forcedDifficulty')
+    if (serverDifficulty) {
+      return serverDifficulty.toLowerCase()
+    }
+
+    return undefined
   }
 })

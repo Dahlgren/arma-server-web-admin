@@ -14,8 +14,14 @@ module.exports = Marionette.CompositeView.extend({
     'click .add-mission': 'addMission'
   },
 
+  initialize: function (options) {
+    this.server = options.server
+  },
+
   addMission: function (e) {
     e.preventDefault()
-    this.collection.add(new MissionRotation())
+    this.collection.add(new MissionRotation({
+      difficulty: this.server.missionDifficulty()
+    }))
   }
 })
