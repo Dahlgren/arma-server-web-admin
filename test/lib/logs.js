@@ -1,3 +1,4 @@
+var path = require('path')
 require('should')
 var tk = require('timekeeper')
 
@@ -24,7 +25,7 @@ describe('Logs', function () {
 
   describe('generateLogFilePath()', function () {
     it('should generate valid file path', function () {
-      logs.generateLogFilePath().should.eql('/tmp/logs/arma3server_2015-10-21_19-28-32.log')
+      logs.generateLogFilePath().should.eql(path.join('/tmp', 'logs', 'arma3server_2015-10-21_19-28-32.log'))
     })
   })
 })
