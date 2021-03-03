@@ -57,12 +57,24 @@ module.exports = Marionette.LayoutView.extend({
 
   save: function (e) {
     e.preventDefault()
+
     var self = this
     var oldId = this.model.get('id')
     var data = this.settingsView.currentView.serialize()
+
+    if (!data.title) {
+      sweetAlert({
+        title: 'Error',
+        text: 'Server title cannot be empty',
+        type: 'error'
+      })
+      return
+    }
+
     _.extend(data, this.missionsView.currentView.serialize())
     _.extend(data, this.modsView.currentView.serialize())
     _.extend(data, this.parametersView.currentView.serialize())
+
     this.model.save(data, {
       success: function () {
         var newId = self.model.get('id')

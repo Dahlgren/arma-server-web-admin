@@ -37,7 +37,18 @@ module.exports = Marionette.ItemView.extend({
   submit: function (modal) {
     modal.preventClose()
 
-    this.model.set(this.serialize())
+    var data = this.serialize()
+
+    if (!data.title) {
+      sweetAlert({
+        title: 'Error',
+        text: 'Server title cannot be empty',
+        type: 'error'
+      })
+      return
+    }
+
+    this.model.set(data)
 
     var self = this
 

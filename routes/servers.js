@@ -8,6 +8,11 @@ module.exports = function (manager, mods) {
   })
 
   router.post('/', function (req, res) {
+    if (!req.body.title) {
+      res.status(400).send('Server title cannot be empty')
+      return
+    }
+
     var server = manager.addServer(req.body)
     res.json(server)
   })
@@ -18,6 +23,11 @@ module.exports = function (manager, mods) {
   })
 
   router.put('/:server', function (req, res) {
+    if (!req.body.title) {
+      res.status(400).send('Server title cannot be empty')
+      return
+    }
+
     var server = manager.getServer(req.params.server)
     server.update(req.body)
     manager.save()
