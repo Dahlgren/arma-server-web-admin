@@ -46,6 +46,7 @@ port | Web port to use
 host | IP or Hostname to listen on
 type | Which kind of server to use, can be 'linux', 'windows' or 'wine'
 additionalConfigurationOptions | Additional configuration options appended to server.cfg file
+modsPath | Path where game mods are stored. Leave empty to use game directory
 parameters | Extra startup parameters added to servers and headless clients
 serverMods | Mods that always and only will be used by the game servers
 auth | If both username and password is set, HTTP Basic Auth will be used
