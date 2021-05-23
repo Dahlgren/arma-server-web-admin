@@ -25,7 +25,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 morgan.token('user', function (req) { return req.auth ? req.auth.user : 'anon' })
-app.use(morgan(config.logFormat || 'dev'))
+app.use(morgan(config.logFormat || 'dev', { stream: config.logStream || process.stdout }))
 
 app.use(serveStatic(path.join(__dirname, 'public')))
 
