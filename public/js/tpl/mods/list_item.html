@@ -7,10 +7,19 @@
       <div class="progress-bar progress-bar-striped active" role="progressbar" style="width: 100%"></div>
     </div>
   <% } else { %>
-    <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">
-      <span class="glyphicon glyphicon-trash"></span>
-      Delete
-    </a>
+    <div class="btn-group pull-right" role="group">
+      <% if (needsUpdate) { %>
+        <a class="btn btn-primary btn-xs install ladda-button" data-style="expand-left">
+          <span class="glyphicon glyphicon-save"></span>
+          Update
+        </a>
+      <% } %>
+
+      <a class="btn btn-danger btn-xs destroy ladda-button" data-style="expand-left">
+        <span class="glyphicon glyphicon-trash"></span>
+        Delete
+      </a>
+    </div>
 
     <div class="clearfix"></div>
   <% } %>
