@@ -6,6 +6,12 @@
     <%-name%>
   <% } %>
 </td>
+<td class="hidden-xs hidden-sm" style="text-align: right; white-space: nowrap;">
+  <%- new Date(created).toLocaleString() %>
+</td>
+<td class="hidden-xs hidden-sm" style="text-align: right; white-space: nowrap;">
+  <%- new Date(modified).toLocaleString() %>
+</td>
 <td style="text-align: right; white-space: nowrap;">
   <%-formattedSize%>
 </td>
