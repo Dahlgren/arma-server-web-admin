@@ -19,13 +19,13 @@ describe('Logs', function () {
 
   describe('generateLogFileName()', function () {
     it('should generate valid file name', function () {
-      Logs.generateLogFileName('test').should.eql('arma3server_2015-10-21_19-28-32_test.rpt')
+      Logs.generateLogFileName('prefix', 'suffix').should.eql('prefix_2015-10-21_19-28-32_suffix.rpt')
     })
   })
 
   describe('generateLogFilePath()', function () {
     it('should generate valid file path', function () {
-      logs.generateLogFilePath('test').should.eql(path.join('/tmp', 'logs', 'arma3server_2015-10-21_19-28-32_test.rpt'))
+      logs.generateLogFilePath('prefix', 'suffix').should.eql(path.join('/tmp', 'logs', 'prefix_2015-10-21_19-28-32_suffix.rpt'))
     })
   })
 })
