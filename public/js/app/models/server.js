@@ -18,6 +18,7 @@ module.exports = Backbone.Model.extend({
     password: '',
     persistent: false,
     port: 2302,
+    processes: null,
     state: null,
     title: '',
     von: false,

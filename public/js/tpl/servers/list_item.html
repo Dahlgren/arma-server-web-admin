@@ -21,12 +21,20 @@
     <span class="glyphicon glyphicon-play"></span> Start
   </button>
   <% } %>
-
-
 </td>
 <td><%-port%></td>
 <td style="width: 100%;">
   <a href='#servers/<%-id%>'><%-title%></a>
+</td>
+<td class="text-nowrap">
+  <% if (processes && processes[0]) { %>
+    <%= processes[0].cpuFormatted %>
+  <% } %>
+</td>
+<td class="text-nowrap">
+  <% if (processes && processes[0]) { %>
+    <%= processes[0].memoryFormatted %></td>
+  <% } %>
 </td>
 <td>
   <button type="button" class="btn btn-success btn-xs clone pull-right">
