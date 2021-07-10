@@ -30,33 +30,6 @@ app.use(morgan(config.logFormat || 'dev'))
 
 app.use(serveStatic(path.join(__dirname, 'public')))
 
-/*
-Workaround for Steam Workshop with Linux Arma server
-
-Absolute paths are not supported.
-Create symlink in Arma folder to Workshop folder.
-Rewrite Workshop mods to use relative path to symlinked folder instead.
-*/
-if (config.type === 'linux' && config.steam && config.steam.path) {
-  var tempWorkshopFolder = path.join(config.path, 'workshop')
-  try {
-    var stat = fs.lstatSync(tempWorkshopFolder)
-    if (!stat.isSymbolicLink()) {
-      console.error('Please remove workshop folder from Arma directory manually and restart application')
-      process.exit(1)
-    }
-    fs.unlinkSync(tempWorkshopFolder)
-  } catch (err) {
-    if (err.code !== 'ENOENT') {
-      console.error('Something went wrong when creating workaround for workshop')
-      console.error(err)
-      process.exit(1)
-    }
-  }
-
-  fs.symlinkSync(config.steam.path, tempWorkshopFolder)
-}
-
 var logs = new Logs(config)
 
 var missions = new Missions(config)
