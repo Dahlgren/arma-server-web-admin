@@ -17,7 +17,6 @@ var Settings = require('./lib/settings')
 
 var app = express()
 var server = require('http').Server(app)
-var io = require('socket.io')(server)
 
 setupBasicAuth(config, app)
 
@@ -26,8 +25,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 morgan.token('user', function (req) { return req.auth ? req.auth.user : 'anon' })
 app.use(morgan(config.logFormat || 'dev'))
-
-app.use(serveStatic(path.join(__dirname, 'public')))
 
 var logs = new Logs(config)
 
@@ -40,11 +37,22 @@ mods.updateMods()
 
 var settings = new Settings(config)
 
-app.use('/api/logs', require('./routes/logs')(logs))
-app.use('/api/missions', require('./routes/missions')(missions))
-app.use('/api/mods', require('./routes/mods')(mods))
-app.use('/api/servers', require('./routes/servers')(manager, mods))
-app.use('/api/settings', require('./routes/settings')(settings))
+var baseUrl = config.baseUrl || '/'
+var router = express.Router()
+
+router.use('/api/logs', require('./routes/logs')(logs))
+router.use('/api/missions', require('./routes/missions')(missions))
+router.use('/api/mods', require('./routes/mods')(mods))
+router.use('/api/servers', require('./routes/servers')(manager, mods))
+router.use('/api/settings', require('./routes/settings')(settings))
+router.use('/', require('./routes/main')(baseUrl))
+router.use(serveStatic(path.join(__dirname, 'public')))
+
+app.use(baseUrl, router)
+
+var io = require('socket.io')(server, {
+  path: baseUrl + 'socket.io'
+})
 
 io.on('connection', function (socket) {
   socket.emit('missions', missions.missions)

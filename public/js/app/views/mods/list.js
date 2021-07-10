@@ -19,7 +19,7 @@ module.exports = Marionette.CompositeView.extend({
   refresh: function (event) {
     event.preventDefault()
     $.ajax({
-      url: '/api/mods/refresh',
+      url: 'api/mods/refresh',
       type: 'POST',
       success: function (resp) {
 

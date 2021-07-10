@@ -25,7 +25,7 @@ module.exports = Marionette.ItemView.extend({
     laddaBtn.start()
 
     $.ajax({
-      url: '/api/missions/workshop',
+      url: 'api/missions/workshop',
       type: 'POST',
       data: {
         id: $form.find('input.workshop').val()

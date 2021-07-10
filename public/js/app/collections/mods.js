@@ -7,5 +7,5 @@ module.exports = Backbone.Collection.extend({
     return a.get('name').toLowerCase().localeCompare(b.get('name').toLowerCase())
   },
   model: Mod,
-  url: '/api/mods/'
+  url: 'api/mods/'
 })

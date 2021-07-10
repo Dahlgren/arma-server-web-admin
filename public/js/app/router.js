@@ -37,7 +37,9 @@ module.exports = Backbone.Router.extend({
     var initialized = false
 
     /* global io */
-    var socket = io.connect()
+    var socket = io({
+      path: window.location.pathname + 'socket.io'
+    })
     socket.on('missions', function (_missions) {
       missions.set(_missions)
     })

@@ -42,6 +42,7 @@ Key | Description
 --- | ---
 game | Which game server to launch, see above
 path | Folder path to game server
+baseUrl | URL path used to serve the application, default is '/'. Must end with `/`
 port | Web port to use
 host | IP or Hostname to listen on
 type | Which kind of server to use, can be 'linux', 'windows' or 'wine'

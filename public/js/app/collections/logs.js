@@ -7,5 +7,5 @@ module.exports = Backbone.Collection.extend({
     return b.get('created').localeCompare(a.get('created')) // Descending order
   },
   model: Log,
-  url: '/api/logs/'
+  url: 'api/logs/'
 })
