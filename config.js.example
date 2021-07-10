@@ -13,6 +13,14 @@ module.exports = {
     '@mod1',
     '@mod2',
   ],
+  virtualServer: {
+    enabled: false, // If virtual servers should be used
+    fileExtensions: [ // Extra files in root of server folder that should be copied to virtual servers
+      '.json'
+    ],
+    folders: [ // Extra folders in root of server folder that should be linked to virtual servers
+    ]
+  },
   steam: {
     apiKey: '1234567890ABCDE', // https://steamcommunity.com/dev/apikey
     path: 'path-to-main-steam-folder',
