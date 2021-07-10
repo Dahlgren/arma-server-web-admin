@@ -1,6 +1,10 @@
 var path = require('path')
 var webpack = require('webpack')
 
+var config = require('./config')
+
+var baseUrl = config.baseUrl || '/'
+
 module.exports = {
   // Entry point for static analyzer
   entry: path.join(__dirname, 'public', 'js', 'app.js'),
@@ -13,7 +17,7 @@ module.exports = {
     filename: 'bundle.js',
 
     // Path to use in HTML
-    publicPath: '/'
+    publicPath: baseUrl
   },
 
   resolve: {

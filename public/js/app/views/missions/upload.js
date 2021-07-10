@@ -21,7 +21,7 @@ module.exports = Marionette.ItemView.extend({
     var laddaBtn = Ladda.create($uploadBtn.get(0))
     laddaBtn.start()
 
-    $.ajax('/api/missions', {
+    $.ajax('api/missions', {
       success: function (data) {
         laddaBtn.stop()
         self.render()

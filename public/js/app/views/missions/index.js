@@ -45,7 +45,7 @@ module.exports = Marionette.LayoutView.extend({
   refresh: function (event) {
     event.preventDefault()
     $.ajax({
-      url: '/api/missions/refresh',
+      url: 'api/missions/refresh',
       type: 'POST',
       success: function (resp) {
 

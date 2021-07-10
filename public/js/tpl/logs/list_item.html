@@ -1,7 +1,7 @@
 <td>
   <% if (size < 100 * 1024 * 1024) { %>
     <!-- Only show files under 100 MB -->
-    <a href='/api/logs/<%-name%>/view' target=_blank><%-name%></a>
+    <a href='api/logs/<%-name%>/view' target=_blank><%-name%></a>
   <% } else { %>
     <%-name%>
   <% } %>
@@ -16,7 +16,7 @@
   <%-formattedSize%>
 </td>
 <td>
-  <a class="btn btn-primary btn-xs" href="/api/logs/<%-name%>/download">
+  <a class="btn btn-primary btn-xs" href="api/logs/<%-name%>/download">
     <span class="glyphicon glyphicon-download"></span>
     Download
   </a>

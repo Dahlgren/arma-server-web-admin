@@ -5,5 +5,5 @@ module.exports = Backbone.Model.extend({
     path: '',
     type: ''
   },
-  urlRoot: '/api/settings'
+  urlRoot: 'api/settings'
 })
