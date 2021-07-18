@@ -3,7 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   // Entry point for static analyzer
-  entry: path.join(__dirname, 'public', 'js', 'app.js'),
+  entry: path.join(__dirname, 'react', 'index.jsx'),
 
   output: {
     // Where to build results
@@ -36,6 +36,7 @@ module.exports = {
 
   module: {
     loaders: [
+      { test: /\.js/, loader: 'babel-loader', exclude: /node_modules/ },
       { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
       { test: /\.html$/, loaders: ['raw-loader'] },
       { test: /\.json$/, loaders: ['json-loader'] },

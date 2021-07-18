@@ -75,4 +75,9 @@ if (require.main === module) {
   server.listen(config.port, config.host)
 }
 
+// Serve main HTML file for all other requests
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'))
+})
+
 module.exports = app
