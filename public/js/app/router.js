@@ -6,7 +6,7 @@ var NavigationView = require('app/views/navigation')
 var ServersView = require('app/views/servers/list')
 var LogsListView = require('app/views/logs/list')
 var MissionsView = require('app/views/missions/index')
-var ModsListView = require('app/views/mods/list')
+var ModsView = require('app/views/mods/index')
 var ServerView = require('app/views/servers/view')
 var Logs = require('app/collections/logs')
 var Missions = require('app/collections/missions')
@@ -72,7 +72,7 @@ module.exports = Backbone.Router.extend({
   },
 
   mods: function () {
-    layoutView.content.show(new ModsListView({ collection: mods }))
+    layoutView.content.show(new ModsView({ mods: mods }))
   },
 
   server: function (id) {
