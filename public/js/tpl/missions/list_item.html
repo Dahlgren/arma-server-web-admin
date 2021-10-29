@@ -1,7 +1,8 @@
-<td style="width: 100%;">
+<td style="width: 100%; word-break: break-all;">
   <a href='/api/missions/<%-encodeURI(name)%>'><%-missionName%></a>
+  <span class="visible-xs visible-sm"><%-worldName%></span>
 </td>
-<td><%-worldName%></td>
+<td class="hidden-xs hidden-sm"><%-worldName%></td>
 <td class="text-nowrap"><%-sizeFormatted%></td>
 <td class="text-nowrap"><%-dateModified.substring(0, 10)%></td>
 <td>
