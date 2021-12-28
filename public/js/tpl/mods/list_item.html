@@ -1,5 +1,15 @@
 <td>
-  <a href='#mods/<%-name%>'><%-name%></a>
+  <%-name%>
+  <% if (link) { %>
+    <a href='<%-link%>' target=_blank rel='noopener noreferrer'>
+      <%-title%>
+    </a>
+  <% } else if (title) { %>
+    <%-title%>
+  <% } %>
+</td>
+<td style="text-align: right; white-space: nowrap;">
+  <%-formattedSize%>
 </td>
 <td>
   <a class="btn btn-danger btn-xs destroy ladda-button pull-right" data-style="expand-left">

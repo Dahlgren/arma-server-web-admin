@@ -10,8 +10,32 @@ module.exports = ModListItemView.extend({
   template: template,
 
   templateHelpers: function () {
+    var modFile = this.model.get('modFile')
+    var name = this.model.get('name')
+    var steamMeta = this.model.get('steamMeta')
+
+    var enabled = this.options.server.get('mods').indexOf(name) > -1
+    var link = null
+    var title = null
+
+    if (steamMeta && steamMeta.id) {
+      if (steamMeta.id) {
+        link = 'https://steamcommunity.com/sharedfiles/filedetails/?id=' + steamMeta.id
+      }
+
+      if (steamMeta.name) {
+        title = steamMeta.name
+      }
+    }
+
+    if (modFile && modFile.name) {
+      title = modFile.name
+    }
+
     return {
-      enabled: this.options.server.get('mods').indexOf(this.model.get('name')) > -1
+      enabled: enabled,
+      link: link,
+      title: title
     }
   }
 })
