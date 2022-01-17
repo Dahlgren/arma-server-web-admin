@@ -13,6 +13,16 @@ module.exports = function (logsManager) {
     })
   })
 
+  router.delete('/all', function (req, res) {
+    logsManager.deleteAll(function (err) {
+      if (err) {
+        res.status(500).send(err)
+      } else {
+        res.status(204).send()
+      }
+    })
+  })
+
   router.delete('/:log', function (req, res) {
     var filename = req.params.log
     logsManager.delete(filename, function (err) {
