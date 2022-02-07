@@ -13,8 +13,13 @@ module.exports = function (manager, mods) {
       return
     }
 
-    var server = manager.addServer(req.body)
-    res.json(server)
+    manager.addServer(req.body, function (err, server) {
+      if (err) {
+        return res.status(500).send(err)
+      }
+
+      res.status(201).send(server)
+    })
   })
 
   router.get('/:server', function (req, res) {
@@ -28,15 +33,23 @@ module.exports = function (manager, mods) {
       return
     }
 
-    var server = manager.getServer(req.params.server)
-    server.update(req.body)
-    manager.save()
-    res.json(server)
+    manager.update(req.params.server, req.body, function (err, server) {
+      if (err) {
+        return res.status(500).send(err)
+      }
+
+      res.status(200).send(server)
+    })
   })
 
   router.delete('/:server', function (req, res) {
-    var server = manager.removeServer(req.params.server)
-    res.json(server)
+    manager.removeServer(req.params.server, function (err, server) {
+      if (err) {
+        return res.status(500).send(err)
+      }
+
+      res.status(204).send()
+    })
   })
 
   router.post('/:server/start', function (req, res) {
