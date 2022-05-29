@@ -10,8 +10,8 @@ module.exports = ModListItemView.extend({
   template: template,
   templateHelpers: function () {
     var superTemplateHelpers = ModListItemView.prototype.templateHelpers.call(this)
-    var name = this.model.get('name')
-    var modSelected = this.options.selectedModsCollection.get(name)
+    var id = this.model.get('id')
+    var modSelected = this.options.selectedModsCollection.get(id)
 
     return Object.assign({}, superTemplateHelpers, {
       isDisabledButton: function () {
@@ -27,6 +27,7 @@ module.exports = ModListItemView.extend({
   addMod: function (e) {
     e.preventDefault()
     this.options.selectedModsCollection.add(new ServerMod({
+      id: this.model.get('id'),
       name: this.model.get('name')
     }))
   }

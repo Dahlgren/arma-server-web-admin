@@ -1,5 +1,5 @@
 module.exports = {
-  game: 'arma3', // arma3, arma2oa, arma2, arma1, cwa, ofpresistance, ofp
+  game: 'arma3', // arma3, arma2oa, arma2, arma1, cwa, ofpresistance, ofp, reforger
   path: 'path-to-arma3-directory',
   port: 3000,
   host: '0.0.0.0', // Can be either an IP or a Hostname
@@ -9,6 +9,12 @@ module.exports = {
     '-noSound',
     '-world=empty'
   ],
+  reforger: {
+    configs: 'path-to-configs-folder', // Folder where server config files will be stored
+    profiles: 'path-to-profiles-folder', // Folder where logs and persistence data will be stored. Each server will create a subfolder.
+    region: 'EU', // Region in which servers will be hosted, https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting#region
+    workshop: 'path-to-workshop-folder' // Folder where workshop mods will be stored
+  },
   serverMods: [ // Mods used exclusively by server and not shared with clients
     '@mod1',
     '@mod2',
