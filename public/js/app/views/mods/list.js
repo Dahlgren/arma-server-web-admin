@@ -1,4 +1,3 @@
-var $ = require('jquery')
 var _ = require('underscore')
 var Marionette = require('marionette')
 
@@ -12,21 +11,27 @@ module.exports = Marionette.CompositeView.extend({
   childViewContainer: 'tbody',
   template: template,
 
-  events: {
-    'click #refresh': 'refresh'
+  initialize: function (options) {
+    this.filterValue = options.filterValue
   },
 
-  refresh: function (event) {
-    event.preventDefault()
-    $.ajax({
-      url: '/api/mods/refresh',
-      type: 'POST',
-      success: function (resp) {
+  filter: function (child, index, collection) {
+    var name = child.get('name').toLowerCase()
 
-      },
-      error: function (resp) {
+    if (name.indexOf(this.filterValue.toLowerCase()) >= 0) {
+      return true
+    }
 
-      }
-    })
+    var modFile = child.get('modFile')
+    if (modFile && modFile.name && modFile.name.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0) {
+      return true
+    }
+
+    var steamMeta = child.get('steamMeta')
+    if (steamMeta && steamMeta.name && steamMeta.name.toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0) {
+      return true
+    }
+
+    return false
   }
 })
