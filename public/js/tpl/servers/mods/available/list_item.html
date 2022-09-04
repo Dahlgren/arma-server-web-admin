@@ -1,0 +1,18 @@
+<td>
+  <%-name%>
+  <% if (link) { %>
+    <a href='<%-link%>' target=_blank rel='noopener noreferrer'>
+      <%-title%>
+    </a>
+  <% } else if (title) { %>
+    <%-title%>
+  <% } %>
+</td>
+<td>
+  <a class="btn btn-primary btn-xs pull-right add-mod" <%- isDisabledButton() %>>
+    <span class="glyphicon glyphicon-plus"></span>
+    Add
+  </a>
+
+  <div class="clearfix"></div>
+</td>
