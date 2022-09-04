@@ -9,11 +9,24 @@ var template = _.template(tpl)
 module.exports = ModsView.extend({
   template: template,
 
-  onRender: function () {
-    this.listView.show(new ListView({
+  modelEvents: {
+    change: 'serverUpdated'
+  },
+
+  initialize: function (options) {
+    ModsView.prototype.initialize.call(this, options)
+    this.modsListView = new ListView({
       collection: this.options.mods,
       server: this.options.server,
       filterValue: this.filterValue
-    }))
+    })
+  },
+
+  serverUpdated: function () {
+    this.modsListView.render()
+  },
+
+  serialize: function () {
+    return this.modsListView.serialize()
   }
 })

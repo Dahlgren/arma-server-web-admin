@@ -41,7 +41,7 @@ module.exports = Marionette.LayoutView.extend({
   onRender: function () {
     this.infoView.show(new InfoView({ model: this.model }))
     this.missionsView.show(new MissionsView({ missions: this.missions, model: this.model }))
-    this.modsView.show(new ModsView({ mods: this.mods, server: this.model }))
+    this.modsView.show(new ModsView({ model: this.model, mods: this.mods, server: this.model }))
     this.parametersView.show(new ParametersListView({ model: this.model }))
     this.playersView.show(new PlayersView({ model: this.model }))
     this.settingsView.show(new FormView({ model: this.model }))
@@ -49,7 +49,6 @@ module.exports = Marionette.LayoutView.extend({
 
   serverUpdated: function () {
     this.infoView.currentView.render()
-    this.modsView.currentView.render()
     this.parametersView.currentView.render()
     this.playersView.currentView.render()
     this.settingsView.currentView.render()
