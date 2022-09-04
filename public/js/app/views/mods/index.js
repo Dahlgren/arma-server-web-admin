@@ -26,16 +26,17 @@ module.exports = Marionette.LayoutView.extend({
 
   initialize: function () {
     this.filterValue = ''
+    this.modsListView = new ListView({ collection: this.options.mods, filterValue: this.filterValue })
   },
 
   updateFilter: function (event) {
     this.filterValue = event.target.value
-    this.listView.currentView.filterValue = this.filterValue
-    this.listView.currentView.render()
+    this.modsListView.filterValue = this.filterValue
+    this.modsListView.render()
   },
 
   onRender: function () {
-    this.listView.show(new ListView({ collection: this.options.mods, filterValue: this.filterValue }))
+    this.listView.show(this.modsListView)
   },
 
   refresh: function (event) {
