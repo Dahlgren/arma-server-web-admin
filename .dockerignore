@@ -1,0 +1,7 @@
+.git
+config.js
+Dockerfile
+docker-compose.yml
+node_modules
+package-lock.json
+servers.json
