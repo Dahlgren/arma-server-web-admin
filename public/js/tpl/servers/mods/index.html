@@ -1,8 +1,14 @@
-<form>
-  <div class="form-group">
-    <label for="filterMods">Filter</label>
-    <input type="text" class="form-control" id="filterMods" placeholder="Filter mods..." value="<%-filterValue%>">
-  </div>
-</form>
+<div class="row">
+  <div class="col-sm-6">
+    <form>
+      <div class="form-group">
+        <label for="filterMods">Filter</label>
+        <input type="text" class="form-control" id="filterMods" placeholder="Filter mods..." value="<%-filterValue%>">
+      </div>
+    </form>
 
-<div id="list"></div>
+    <div id="available"></div>
+  </div>
+  <div class="col-sm-6">
+    <div id="selected"></div>
+</div>
