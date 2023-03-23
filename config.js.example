@@ -1,7 +1,7 @@
 module.exports = {
   game: 'arma3', // arma3, arma2oa, arma2, arma1, cwa, ofpresistance, ofp
   path: 'path-to-arma3-directory',
-  logpath: '', // fill this value if you require a custom log directory
+  logsPath: '', // fill this value if the webadmin should read game logs from a custom directory
   port: 3000,
   host: '0.0.0.0', // Can be either an IP or a Hostname
   type: 'linux', // Can be either linux, windows or wine
