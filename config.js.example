@@ -11,8 +11,8 @@ module.exports = {
   ],
   reforger: {
     configs: 'path-to-configs-folder', // Folder where server config files will be stored
+    logs: 'path-to-logs-folder', // Folder where server log files will be stored
     profiles: 'path-to-profiles-folder', // Folder where logs and persistence data will be stored. Each server will create a subfolder.
-    region: 'EU', // Region in which servers will be hosted, https://community.bistudio.com/wiki/Arma_Reforger:Server_Hosting#region
     workshop: 'path-to-workshop-folder' // Folder where workshop mods will be stored
   },
   serverMods: [ // Mods used exclusively by server and not shared with clients

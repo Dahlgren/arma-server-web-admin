@@ -30,8 +30,8 @@ module.exports = {
   },
   reforger: {
     configs: process.env.REFORGER_CONFIGS,
+    logs: process.env.REFORGER_LOGS,
     profiles: process.env.REFORGER_PROFILES,
-    region: process.env.REFORGER_REGION,
     workshop: process.env.REFORGER_WORKSHOP
   },
   prefix: process.env.SERVER_PREFIX,
