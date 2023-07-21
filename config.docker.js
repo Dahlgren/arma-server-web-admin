@@ -6,7 +6,7 @@
 })
 
 if (process.env.GAME_TYPE === 'reforger') {
-  ['REFORGER_CONFIGS', 'REFORGER_PROFILES', 'REFORGER_REGION', 'REFORGER_WORKSHOP'].forEach(function (environmentVariable) {
+  ['REFORGER_CONFIGS', 'REFORGER_LOGS', 'REFORGER_PROFILES', 'REFORGER_WORKSHOP'].forEach(function (environmentVariable) {
     if (!process.env[environmentVariable]) {
       console.log('Missing required environment variable "' + environmentVariable + '"')
       process.exit(1)
