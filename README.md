@@ -42,7 +42,7 @@ Key | Description
 --- | ---
 game | Which game server to launch, see above
 path | Folder path to game server
-logsPath | Where to read the server's logs from
+logsPath | If set, overrides where to read logs on Windows and where to store logs on Linux. Leave empty to use default logs folders
 port | Web port to use
 host | IP or Hostname to listen on
 type | Which kind of server to use, can be 'linux', 'windows' or 'wine'
