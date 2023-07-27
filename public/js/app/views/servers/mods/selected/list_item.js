@@ -12,7 +12,7 @@ module.exports = ModListItemView.extend({
   events: {
     'click button.delete': 'delete',
     'change select#difficulty': 'changed',
-    'change input#name': 'changed'
+    'change input#id': 'changed'
   },
 
   changed: function (e) {

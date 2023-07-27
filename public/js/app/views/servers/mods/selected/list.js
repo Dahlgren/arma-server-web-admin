@@ -16,6 +16,6 @@ module.exports = Marionette.CompositeView.extend({
 
   addMod: function (e) {
     e.preventDefault()
-    this.collection.add(new ServerMod({ name: 'Unlisted' }))
+    this.collection.add(new ServerMod({ id: 'Unlisted' }))
   }
 })

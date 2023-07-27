@@ -55,7 +55,7 @@ module.exports = ModsView.extend({
     return this.model.get('mods')
       .map(function (mod) {
         return {
-          name: mod
+          id: mod
         }
       })
   },
@@ -69,7 +69,7 @@ module.exports = ModsView.extend({
     return {
       mods: this.selectedModsCollection.toJSON()
         .map(function (mod) {
-          return mod.name
+          return mod.id
         })
     }
   }

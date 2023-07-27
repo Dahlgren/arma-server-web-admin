@@ -35,6 +35,7 @@ A simple to use web admin panel for Arma servers.
 - cwa (does not support linux)
 - ofp
 - ofpresistance
+- reforger
 
 ## Config
 

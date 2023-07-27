@@ -14,7 +14,7 @@ module.exports = Marionette.CompositeView.extend({
   },
 
   filter: function (child, index, collection) {
-    return child.get('name').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0
+    return child.get('missionName').toLowerCase().indexOf(this.filterValue.toLowerCase()) >= 0
   },
 
   buildChildView: function (item, ChildViewType, childViewOptions) {

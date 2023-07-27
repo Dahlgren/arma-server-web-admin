@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var fs = require('fs.extra')
 var morgan = require('morgan')
 var path = require('path')
 var serveStatic = require('serve-static')
@@ -14,6 +15,15 @@ var Missions = require('./lib/missions')
 var Mods = require('./lib/mods')
 var Logs = require('./lib/logs')
 var Settings = require('./lib/settings')
+
+if (config.game === 'reforger') {
+  Logs = require('./lib/reforger/logs')
+  Manager = require('./lib/reforger/manager')
+  Missions = require('./lib/reforger/missions')
+  Mods = require('./lib/reforger/mods')
+
+  fs.mkdirp(config.reforger.profiles) // Needs to be created in advance or game will store profiles elsewhere
+}
 
 var app = express()
 var server = require('http').Server(app)

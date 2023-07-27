@@ -7,6 +7,29 @@ var tpl = require('tpl/servers/info.html')
 module.exports = Marionette.LayoutView.extend({
   template: _.template(tpl),
 
+  templateHelpers: function () {
+    var self = this
+    var modNames = this.model.get('mods').map(function (modId) {
+      var mod = self.mods.find(function (mod) {
+        return mod.get('id') === modId
+      })
+
+      if (!mod) {
+        return modId
+      }
+
+      return mod.get('name')
+    })
+
+    return {
+      modNames: modNames.join(', ')
+    }
+  },
+
+  initialize: function (options) {
+    this.mods = options.mods
+  },
+
   events: {
     'click #start': 'start',
     'click #stop': 'stop'
