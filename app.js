@@ -16,7 +16,11 @@ var Logs = require('./lib/logs')
 var Settings = require('./lib/settings')
 
 var app = express()
-var server = require('http').Server(app)
+var fs = require('fs');
+var privateKey  = fs.readFileSync('ssl.key', 'utf8');
+var certificate = fs.readFileSync('ssl.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+var server = require('https').Server(credentials, app)
 var io = require('socket.io')(server)
 
 setupBasicAuth(config, app)
