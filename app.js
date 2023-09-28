@@ -7,6 +7,14 @@ var webpack = require('webpack')
 var webpackMiddleware = require('webpack-dev-middleware')
 
 var config = require('./config')
+
+if( !config.modsPath
+  || typeof config.modsPath !== 'string'
+  || config.modsPath.length < 1)
+{
+  config.modsPath = config.path
+}
+
 var webpackConfig = require('./webpack.config')
 var setupBasicAuth = require('./lib/setup-basic-auth')
 var Manager = require('./lib/manager')
