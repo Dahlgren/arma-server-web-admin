@@ -13,7 +13,7 @@ module.exports = function (logsManager) {
     })
   })
 
-  router.delete('/:log', function (req, res) {
+  router.delete('/:log(*)', function (req, res) {
     var filename = req.params.log
     logsManager.delete(filename, function (err) {
       if (err) {
@@ -24,7 +24,7 @@ module.exports = function (logsManager) {
     })
   })
 
-  router.get('/:log/:mode', function (req, res) {
+  router.get('/:log(*)/:mode', function (req, res) {
     var requestedFilename = req.params.log
     var mode = req.params.mode === 'view' ? 'view' : 'download'
 

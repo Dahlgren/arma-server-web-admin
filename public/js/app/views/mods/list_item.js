@@ -35,6 +35,13 @@ module.exports = Marionette.ItemView.extend({
       title = modFile.name
     }
 
+    var id = this.model.get('id')
+    var name = this.model.get('name')
+    if (id !== name) {
+      title = name
+      link = 'https://reforger.armaplatform.com/workshop/' + id
+    }
+
     return {
       link: link,
       title: title
