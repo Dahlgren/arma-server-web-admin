@@ -38,7 +38,7 @@ var missions = new Missions(config)
 var mods = new Mods(config)
 mods.updateMods()
 
-var settings = new Settings(config)
+var settings = new Settings(config, logs)
 
 app.use('/api/logs', require('./routes/logs')(logs))
 app.use('/api/missions', require('./routes/missions')(missions))
