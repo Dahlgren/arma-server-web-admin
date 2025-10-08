@@ -25,6 +25,15 @@
     </div>
   </div>
 
+<% if (typeof(dedicatedServerId) != "undefined" && dedicatedServerId) { %>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">Server ID</label>
+    <div class="col-sm-11">
+      <p class="form-control-static"><%= dedicatedServerId %></p>
+    </div>
+  </div>
+<% } %>
+
   <div class="form-group">
     <label class="col-sm-1 control-label">Port</label>
     <div class="col-sm-11">
@@ -35,7 +44,7 @@
   <div class="form-group">
     <label class="col-sm-1 control-label">Mods</label>
     <div class="col-sm-11">
-      <p class="form-control-static"><%- mods.join(', ') %></p>
+      <p class="form-control-static"><%- modNames %></p>
     </div>
   </div>
 

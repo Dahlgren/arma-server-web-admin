@@ -16,7 +16,12 @@ module.exports = Marionette.CompositeView.extend({
   },
 
   filter: function (child, index, collection) {
+    var id = child.get('id').toLowerCase()
     var name = child.get('name').toLowerCase()
+
+    if (id.indexOf(this.filterValue.toLowerCase()) >= 0) {
+      return true
+    }
 
     if (name.indexOf(this.filterValue.toLowerCase()) >= 0) {
       return true

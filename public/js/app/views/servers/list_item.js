@@ -24,7 +24,7 @@ module.exports = Marionette.ItemView.extend({
   clone: function (e) {
     var title = this.model.get('title') + ' Clone'
     var clone = this.model.clone()
-    clone.set({ id: null, title: title, auto_start: false })
+    clone.set({ id: null, dedicatedServerId: null, title: title, auto_start: false })
     clone.save()
   },
 
