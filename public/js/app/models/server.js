@@ -8,6 +8,8 @@ module.exports = Backbone.Model.extend({
     allowed_file_patching: 1,
     auto_start: false,
     battle_eye: false,
+    battle_eye_password: '',
+    battle_eye_port: '',
     file_patching: false,
     forcedDifficulty: '',
     max_players: null,
